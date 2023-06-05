@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 const Login = ({ userData }) => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  const [name, setName] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const isName = userData.map((data) => data.name === email);
-    console.log(isName);
+    const isName = userData.filter(
+      (data) => data.lectureDetails.name === email
+    );
+
     if (!isName) return;
 
     localStorage.setItem("user", email);
@@ -19,11 +20,6 @@ const Login = ({ userData }) => {
   return (
     <div className="flex h-screen flex-col justify-center items-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        {/* <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        /> */}
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>

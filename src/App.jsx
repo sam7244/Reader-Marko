@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Login from "./components/Login";
 import { client } from "../lib/client";
-import Home from "./components/Home";
+import { Home, Login } from "./components";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { fetchUser } from "../utils/fetch";
 import { lectureQuery } from "../utils/data";

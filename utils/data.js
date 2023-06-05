@@ -1,4 +1,7 @@
-export const lectureQuery = `*[_type == "lecture"]{
-      name
-    }
+export const lectureQuery = `
+*[_type == 'admin']{
+  lectureDetails->{
+    name
+  }
+}
 `;

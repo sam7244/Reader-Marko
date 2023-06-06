@@ -37,13 +37,13 @@ const FileUpload = () => {
       return result;
     }, {});
 
-    setData(groupedData);
+    setData("this is the data",groupedData);
   };
 
 
-  
+
   return (
-    <div>
+    <div className="flex items-center justify-center min-h-screen">
       <form>
         <label htmlFor="upload">Upload File</label>
         <input

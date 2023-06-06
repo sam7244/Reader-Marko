@@ -2,55 +2,47 @@ import React from "react";
 import * as xlsx from "xlsx";
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
+import Spreadsheet from "react-spreadsheet";
+import { OutTable, ExcelRenderer } from "react-excel-renderer";
 
 const FileUpload = () => {
-  const [data, setData] = useState([]);
+  const [cols, setCols] = useState([]);
+  const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const readUploadFile = async (e) => {
+    let fileObj = e.target.files[0];
 
-  const readUploadFile = (e) => {
-    e.preventDefault();
-    if (e.target.files) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = e.target.result;
-        const workbook = xlsx.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json = xlsx.utils.sheet_to_json(worksheet);
-        setData(json);
-      };
-      reader.readAsArrayBuffer(e.target.files[0]);
-    }
-
-    const groupedData = data.reduce((result, current) => {
-      const studentName = current.sno;
-
-      if (!result[studentName]) {
-        result[studentName] = [];
+    ExcelRenderer(fileObj, (err, resp) => {
+      if (err) {
+        console.log(err);
+      } else {
+        setCols(resp.cols);
+        setRows(resp.rows);
       }
-
-      result[studentName].push(current);
-      console.log(result);
-      return result;
-    }, {});
-
-    setData("this is the data", groupedData);
+    });
   };
 
   return (
-    <div className="flex flex-col p-4 gap-2  items-center justify-center">
-      <p className="font-bold text-xl animate-bounce">Upload File Below</p>
-      <input
-        className=" py-5 text-md  font-semibold px-4 bg-gray-200 rounded-lg"
-        type="file"
-        name="upload"
-        id="upload"
-        placeholder="Choose File"
-        onChange={readUploadFile}
-      />
+    <div className=" p-10  overflow-hidden">
+      <div className="flex flex-col p-4 gap-2  items-center justify-center">
+        <p className="font-bold text-xl animate-bounce">Upload File Below</p>
+        <input
+          className=" py-5 text-md  font-semibold px-4 bg-gray-200 rounded-lg"
+          type="file"
+          name="upload"
+          id="upload"
+          placeholder="Choose File"
+          onChange={readUploadFile}
+        />
+      </div>
+      <div className="max-h-[60vh] overflow-y-scroll">
+        <OutTable
+          data={rows}
+          columns={cols}
+          tableClassName="ExcelTable2010"
+          tableHeaderRowClass="heading"
+        />
+      </div>
     </div>
   );
 };

@@ -37,24 +37,20 @@ const FileUpload = () => {
       return result;
     }, {});
 
-    setData("this is the data",groupedData);
+    setData("this is the data", groupedData);
   };
 
-
-
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <form>
-        <label htmlFor="upload">Upload File</label>
-        <input
-          type="file"
-          name="upload"
-          id="upload"
-          onChange={readUploadFile}
-        />
-      </form>
-
-   {/* // <DropZone /> */}
+    <div className="flex flex-col p-4 gap-2  items-center justify-center">
+      <p className="font-bold text-xl animate-bounce">Upload File Below</p>
+      <input
+        className=" py-5 text-md  font-semibold px-4 bg-gray-200 rounded-lg"
+        type="file"
+        name="upload"
+        id="upload"
+        placeholder="Choose File"
+        onChange={readUploadFile}
+      />
     </div>
   );
 };

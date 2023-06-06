@@ -12,7 +12,7 @@ const Login = ({ userData }) => {
       (data) => data.lectureDetails.name === email
     );
 
-    if (!isName) return;
+    if (!isName.length) return;
 
     localStorage.setItem("user", email);
     navigate("/", { replace: true });

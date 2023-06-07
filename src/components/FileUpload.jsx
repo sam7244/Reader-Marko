@@ -5,18 +5,38 @@ import DropZone from "./DropZone";
 import Spreadsheet from "react-spreadsheet";
 
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
+import ReactPDF from "@react-pdf/renderer";
+import { PDFViewer, Document, Page, Text } from "@react-pdf/renderer";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import PDFComponent from "./PDFComponent";
+import PDFDownloadButton from "./PDFDownloadButton";
+import { data } from "autoprefixer";
 
 const FileUpload = () => {
   const ref = useRef();
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
+  const [data, setData] = useState([]);
 
   const modifidData = [];
 
-  useEffect(() => {}, [cols, rows]);
+  useEffect(() => {
+    const data1 = Object.keys(rows).map((key) => {
+      const row = rows[key];
+      const rowValues = row.filter((value) => value !== "empty");
+
+      return {
+        sno: key,
+        round: rowValues[0],
+        unit1: rowValues[1],
+        unit2: rowValues[2],
+        // Add more key-value pairs as needed for other columns
+      };
+    });
+    setData(data1);
+  }, [cols, rows]);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -71,6 +91,12 @@ const FileUpload = () => {
         />
         <button onClick={handleChange}>Update</button>
       </div>
+      {/* Render your table component here */}
+      <PDFViewer>
+        <PDFComponent data={data} />
+      </PDFViewer>
+      {/* Render the PDF download button */}
+      <PDFDownloadButton data={data} />
       <button onClick={ConverToPdf}>Download</button>
       <div id="table" className=" overflow-y-scroll">
         <OutTable

@@ -5,13 +5,17 @@ import DropZone from "./DropZone";
 
 const FileUpload = () => {
   const [data, setData] = useState([]);
+  const [sums, setSums] = useState(null);
+  const [group, setGroup] = useState({});
 
   useEffect(() => {
+    // console.log(group);
     console.log(data);
-  }, [data]);
+  }, [data, sums, group]);
 
   const readUploadFile = (e) => {
     e.preventDefault();
+
     if (e.target.files) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -33,14 +37,44 @@ const FileUpload = () => {
       }
 
       result[studentName].push(current);
-      console.log(result);
       return result;
     }, {});
 
-    setData("this is the data",groupedData);
+    setGroup(groupedData);
+
+    const maxScoresUnit1 = Object.entries(groupedData).reduce(
+      (result, [studentName, studentData]) => {
+        const maxScoreUnit1 = Math.max(
+          ...studentData.map((data) => data["1a"])
+        );
+        result[studentName] = maxScoreUnit1;
+        return result;
+      },
+      {}
+    );
+
+    const maxScoresUnit2 = Object.entries(groupedData).reduce(
+      (result, [studentName, studentData]) => {
+        const maxScoreUnit1 = Math.max(
+          ...studentData.map((data) => data["1b"])
+        );
+        result[studentName] = maxScoreUnit1;
+        return result;
+      },
+      {}
+    );
+
+    const sums = Object.entries(groupedData).reduce(
+      (result, [studentName, studentData]) => {
+        const sum = maxScoresUnit1[studentName] + maxScoresUnit2[studentName];
+        result[studentName] = sum;
+        return result;
+      },
+      {}
+    );
+
+    setSums(sums);
   };
-
-
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -54,7 +88,7 @@ const FileUpload = () => {
         />
       </form>
 
-   {/* // <DropZone /> */}
+      {/* // <DropZone /> */}
     </div>
   );
 };

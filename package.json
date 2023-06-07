@@ -11,15 +11,17 @@
   },
   "dependencies": {
     "@ant-design/compatible": "^5.1.1",
+    "@react-pdf/renderer": "^3.1.11",
     "@sanity/client": "^6.1.2",
     "antd": "^5.6.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-excel-renderer": "^1.1.0",
     "react-router-dom": "^6.11.2",
-    "react-spreadsheet": "^0.8.3",
-    "xlsx": "^0.18.5"
+    "react-spreadsheet": "^0.8.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

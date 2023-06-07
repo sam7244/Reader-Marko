@@ -1,5 +1,5 @@
 import React from "react";
-import {FileUpload} from "./";
+import FileUpload from './FileUpload'
 const Home = () => {
   return (
     <div>

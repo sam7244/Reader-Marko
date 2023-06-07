@@ -4,10 +4,19 @@ import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
 import Spreadsheet from "react-spreadsheet";
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
+import CheckableTag from "antd/es/tag/CheckableTag";
 
 const FileUpload = () => {
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
+
+  const modifidData = [];
+
+  useEffect(() => {
+    // console.log("this is the rows", rows);
+    // console.log("this is the cols", cols);
+    // console.log(modifidData);
+  }, [cols, rows]);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -16,10 +25,27 @@ const FileUpload = () => {
       if (err) {
         console.log(err);
       } else {
+        console.log(resp.rows);
         setCols(resp.cols);
         setRows(resp.rows);
       }
     });
+  };
+
+  const handleChange = () => {
+    console.log(rows);
+    console.log("text");
+    const data = rows.map((row, idx) => {
+      const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
+
+      const newRow = [...row, idx === 0 ? "sum" : sum];
+
+      return newRow;
+    });
+    setRows(data);
+
+    console.log(cols.push({ name: "E", key: 4 }));
+    setCols(cols);
   };
 
   return (
@@ -34,6 +60,7 @@ const FileUpload = () => {
           placeholder="Choose File"
           onChange={readUploadFile}
         />
+        <button onClick={handleChange}>Update</button>
       </div>
       <div className="max-h-[60vh] overflow-y-scroll">
         <OutTable
@@ -42,6 +69,20 @@ const FileUpload = () => {
           tableClassName="ExcelTable2010"
           tableHeaderRowClass="heading"
         />
+      </div>
+      <div>
+        {}
+
+        {modifidData.forEach((row, index) => {
+          console.log(`Row ${index + 1}:`);
+          Object.entries(row).forEach(([key, value]) => {
+            console.log(`- ${key}: ${value}`);
+            <p>
+              - ${key}: ${value}
+            </p>;
+          });
+          console.log("------------------------");
+        })}
       </div>
     </div>
   );

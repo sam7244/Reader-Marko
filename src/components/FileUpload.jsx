@@ -25,16 +25,24 @@ const FileUpload = () => {
       if (err) {
         console.log(err);
       } else {
-        console.log(resp.rows);
+        setRows(resp.row);
         setCols(resp.cols);
-        setRows(resp.rows);
+        const data = resp.rows.map((row, idx) => {
+          const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
+
+          const newRow = [...row, idx === 0 ? "sum" : sum];
+
+          return newRow;
+        });
+        setRows(data);
+
+        console.log(cols.push({ name: "E", key: 4 }));
+        setCols(cols);
       }
     });
   };
 
   const handleChange = () => {
-    console.log(rows);
-    console.log("text");
     const data = rows.map((row, idx) => {
       const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
 

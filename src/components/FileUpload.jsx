@@ -2,93 +2,47 @@ import React from "react";
 import * as xlsx from "xlsx";
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
+import Spreadsheet from "react-spreadsheet";
+import { OutTable, ExcelRenderer } from "react-excel-renderer";
 
 const FileUpload = () => {
-  const [data, setData] = useState([]);
-  const [sums, setSums] = useState(null);
-  const [group, setGroup] = useState({});
+  const [cols, setCols] = useState([]);
+  const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    // console.log(group);
-    console.log(data);
-  }, [data, sums, group]);
+  const readUploadFile = async (e) => {
+    let fileObj = e.target.files[0];
 
-  const readUploadFile = (e) => {
-    e.preventDefault();
-
-    if (e.target.files) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = e.target.result;
-        const workbook = xlsx.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json = xlsx.utils.sheet_to_json(worksheet);
-        setData(json);
-      };
-      reader.readAsArrayBuffer(e.target.files[0]);
-    }
-
-    const groupedData = data.reduce((result, current) => {
-      const studentName = current.sno;
-
-      if (!result[studentName]) {
-        result[studentName] = [];
+    ExcelRenderer(fileObj, (err, resp) => {
+      if (err) {
+        console.log(err);
+      } else {
+        setCols(resp.cols);
+        setRows(resp.rows);
       }
-
-      result[studentName].push(current);
-      return result;
-    }, {});
-
-    setGroup(groupedData);
-
-    const maxScoresUnit1 = Object.entries(groupedData).reduce(
-      (result, [studentName, studentData]) => {
-        const maxScoreUnit1 = Math.max(
-          ...studentData.map((data) => data["1a"])
-        );
-        result[studentName] = maxScoreUnit1;
-        return result;
-      },
-      {}
-    );
-
-    const maxScoresUnit2 = Object.entries(groupedData).reduce(
-      (result, [studentName, studentData]) => {
-        const maxScoreUnit1 = Math.max(
-          ...studentData.map((data) => data["1b"])
-        );
-        result[studentName] = maxScoreUnit1;
-        return result;
-      },
-      {}
-    );
-
-    const sums = Object.entries(groupedData).reduce(
-      (result, [studentName, studentData]) => {
-        const sum = maxScoresUnit1[studentName] + maxScoresUnit2[studentName];
-        result[studentName] = sum;
-        return result;
-      },
-      {}
-    );
-
-    setSums(sums);
+    });
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <form>
-        <label htmlFor="upload">Upload File</label>
+    <div className=" p-10  overflow-hidden">
+      <div className="flex flex-col p-4 gap-2  items-center justify-center">
+        <p className="font-bold text-xl animate-bounce">Upload File Below</p>
         <input
+          className=" py-5 text-md  font-semibold px-4 bg-gray-200 rounded-lg"
           type="file"
           name="upload"
           id="upload"
+          placeholder="Choose File"
           onChange={readUploadFile}
         />
-      </form>
-
-      {/* // <DropZone /> */}
+      </div>
+      <div className="max-h-[60vh] overflow-y-scroll">
+        <OutTable
+          data={rows}
+          columns={cols}
+          tableClassName="ExcelTable2010"
+          tableHeaderRowClass="heading"
+        />
+      </div>
     </div>
   );
 };

@@ -5,13 +5,23 @@ import DropZone from "./DropZone";
 import Spreadsheet from "react-spreadsheet";
 
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
+
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+
 
 const FileUpload = () => {
   const ref = useRef();
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
+
+  const modifidData = [];
+
+  useEffect(() => {
+    // console.log("this is the rows", rows);
+    // console.log("this is the cols", cols);
+    // console.log(modifidData);
+  }, [cols, rows]);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -20,12 +30,38 @@ const FileUpload = () => {
       if (err) {
         console.log(err);
       } else {
+        setRows(resp.row);
         setCols(resp.cols);
-        setRows(resp.rows);
+        const data = resp.rows.map((row, idx) => {
+          const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
+
+          const newRow = [...row, idx === 0 ? "sum" : sum];
+
+          return newRow;
+        });
+        setRows(data);
+
+        console.log(cols.push({ name: "E", key: 4 }));
+        setCols(cols);
       }
     });
   };
 
+
+  const handleChange = () => {
+    const data = rows.map((row, idx) => {
+      const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
+
+      const newRow = [...row, idx === 0 ? "sum" : sum];
+
+      return newRow;
+    });
+    setRows(data);
+  
+
+    console.log(cols.push({ name: "E", key: 4 }));
+    setCols(cols);
+  }
   const ConverToPdf = () => {
     const capture = document.querySelector("#table");
     html2canvas(document.body).then((canvas) => {
@@ -36,6 +72,7 @@ const FileUpload = () => {
       doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
       doc.save("Document.pdf");
     });
+
   };
 
   return (
@@ -51,6 +88,7 @@ const FileUpload = () => {
           placeholder="Choose File"
           onChange={readUploadFile}
         />
+        <button onClick={handleChange}>Update</button>
       </div>
       <button onClick={ConverToPdf}>Download</button>
       <div id="table" className=" overflow-y-scroll">
@@ -60,6 +98,20 @@ const FileUpload = () => {
           tableClassName="ExcelTable2010"
           tableHeaderRowClass="heading"
         />
+      </div>
+      <div>
+        {}
+
+        {modifidData.forEach((row, index) => {
+          console.log(`Row ${index + 1}:`);
+          Object.entries(row).forEach(([key, value]) => {
+            console.log(`- ${key}: ${value}`);
+            <p>
+              - ${key}: ${value}
+            </p>;
+          });
+          console.log("------------------------");
+        })}
       </div>
     </div>
   );

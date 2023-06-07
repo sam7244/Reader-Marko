@@ -9,7 +9,6 @@ import { OutTable, ExcelRenderer } from "react-excel-renderer";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-
 const FileUpload = () => {
   const ref = useRef();
   const [cols, setCols] = useState([]);
@@ -17,11 +16,7 @@ const FileUpload = () => {
 
   const modifidData = [];
 
-  useEffect(() => {
-    // console.log("this is the rows", rows);
-    // console.log("this is the cols", cols);
-    // console.log(modifidData);
-  }, [cols, rows]);
+  useEffect(() => {}, [cols, rows]);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -30,23 +25,11 @@ const FileUpload = () => {
       if (err) {
         console.log(err);
       } else {
-        setRows(resp.row);
+        setRows(resp.rows);
         setCols(resp.cols);
-        const data = resp.rows.map((row, idx) => {
-          const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
-
-          const newRow = [...row, idx === 0 ? "sum" : sum];
-
-          return newRow;
-        });
-        setRows(data);
-
-        console.log(cols.push({ name: "E", key: 4 }));
-        setCols(cols);
       }
     });
   };
-
 
   const handleChange = () => {
     const data = rows.map((row, idx) => {
@@ -57,11 +40,10 @@ const FileUpload = () => {
       return newRow;
     });
     setRows(data);
-  
 
     console.log(cols.push({ name: "E", key: 4 }));
     setCols(cols);
-  }
+  };
   const ConverToPdf = () => {
     const capture = document.querySelector("#table");
     html2canvas(document.body).then((canvas) => {
@@ -72,7 +54,6 @@ const FileUpload = () => {
       doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
       doc.save("Document.pdf");
     });
-
   };
 
   return (

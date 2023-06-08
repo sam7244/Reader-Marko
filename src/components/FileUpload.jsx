@@ -2,10 +2,7 @@ import React, { useRef } from "react";
 
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
-
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
-
-import jsPdf from "./JsPdf";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -32,7 +29,7 @@ const FileUpload = () => {
     });
   };
 
-  const generatePDF = () => {
+  const generatePDF = async () => {
     const doc = new jsPDF();
 
     doc.autoTable({
@@ -63,7 +60,7 @@ const FileUpload = () => {
               body: table.body, // Use the remaining body data
               startY: 20, // Set the initial y-coordinate for the table on the new page
               styles: {
-                fontSize: 12,
+                fontSize: 5,
                 cellPadding: 5,
                 textColor: [0, 0, 0],
               },
@@ -79,8 +76,8 @@ const FileUpload = () => {
       },
     });
 
-    // Save the PDF file
-    doc.save("YourFinalExcel.pdf");
+    // Save the PDF
+    doc.save("output.pdf");
   };
 
   const handleChange = () => {
@@ -134,7 +131,7 @@ const FileUpload = () => {
         <button onClick={generatePDF}>Generate PDF</button>
       </div>
 
-      <div id="table" className=" overflow-y-scroll">
+      <div id="table" className="h-[70vh] overflow-y-scroll">
         <OutTable
           data={rows}
           columns={cols}
@@ -143,7 +140,9 @@ const FileUpload = () => {
         />
       </div>
       <div>
-        {modifidData.forEach((row, index) => {
+        {}
+
+        {/* {modifidData.forEach((row, index) => {
           console.log(`Row ${index + 1}:`);
           Object.entries(row).forEach(([key, value]) => {
             console.log(`- ${key}: ${value}`);
@@ -152,7 +151,7 @@ const FileUpload = () => {
             </p>;
           });
           console.log("------------------------");
-        })}
+        })} */}
       </div>
     </div>
   );

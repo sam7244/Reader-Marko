@@ -3399,6 +3399,11 @@
   "resolved" "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
   "version" "2.2.3"
 
+"jspdf-autotable@^3.5.29":
+  "integrity" "sha512-LCQ/FwlJJj2U9IEfjSXLmPk0pXizjJPBd46UpS8JysmU8nK8GnKRvbhct3bL9F014OO9wrssqSsRvuprRDd0WA=="
+  "resolved" "https://registry.npmjs.org/jspdf-autotable/-/jspdf-autotable-3.5.29.tgz"
+  "version" "3.5.29"
+
 "jspdf@^2.5.1":
   "integrity" "sha512-hXObxz7ZqoyhxET78+XR34Xu2qFGrJJ2I2bE5w4SM8eFaFEkW2xcGRVUss360fYelwRSid/jT078kbNvmoW0QA=="
   "resolved" "https://registry.npmjs.org/jspdf/-/jspdf-2.5.1.tgz"

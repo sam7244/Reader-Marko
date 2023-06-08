@@ -2,17 +2,10 @@ import React, { useRef } from "react";
 
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
-import Spreadsheet from "react-spreadsheet";
-
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
-import ReactPDF from "@react-pdf/renderer";
-import { PDFViewer, Document, Page, Text } from "@react-pdf/renderer";
-import jsPdf from "./JsPdf";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import PDFComponent from "./PDFComponent";
-import PDFDownloadButton from "./PDFDownloadButton";
-import { data } from "autoprefixer";
+
 import "jspdf-autotable";
 
 const FileUpload = () => {
@@ -22,21 +15,6 @@ const FileUpload = () => {
   const [data, setData] = useState([]);
 
   const modifidData = [];
-
-  useEffect(() => {
-    // const data1 = Object.keys(rows).map((key) => {
-    //   const row = rows[key];
-    //   const rowValues = row.filter((value) => value !== "empty");
-    //   return {
-    //     sno: key,
-    //     round: rowValues[0],
-    //     unit1: rowValues[1],
-    //     unit2: rowValues[2],
-    //     // Add more key-value pairs as needed for other columns
-    //   };
-    // });
-    // setData(data1);
-  }, [cols, rows]);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -51,7 +29,7 @@ const FileUpload = () => {
     });
   };
 
-  const generatePDF = () => {
+  const generatePDF = async () => {
     const doc = new jsPDF();
 
     doc.autoTable({
@@ -82,7 +60,7 @@ const FileUpload = () => {
               body: table.body, // Use the remaining body data
               startY: 20, // Set the initial y-coordinate for the table on the new page
               styles: {
-                fontSize: 12,
+                fontSize: 5,
                 cellPadding: 5,
                 textColor: [0, 0, 0],
               },
@@ -98,7 +76,7 @@ const FileUpload = () => {
       },
     });
 
-    // Save the PDF file
+    // Save the PDF
     doc.save("output.pdf");
   };
 
@@ -153,7 +131,7 @@ const FileUpload = () => {
         <button onClick={generatePDF}>Generate PDF</button>
       </div>
 
-      <div id="table" className=" overflow-y-scroll">
+      <div id="table" className="h-[70vh] overflow-y-scroll">
         <OutTable
           data={rows}
           columns={cols}
@@ -164,7 +142,7 @@ const FileUpload = () => {
       <div>
         {}
 
-        {modifidData.forEach((row, index) => {
+        {/* {modifidData.forEach((row, index) => {
           console.log(`Row ${index + 1}:`);
           Object.entries(row).forEach(([key, value]) => {
             console.log(`- ${key}: ${value}`);
@@ -173,7 +151,7 @@ const FileUpload = () => {
             </p>;
           });
           console.log("------------------------");
-        })}
+        })} */}
       </div>
     </div>
   );

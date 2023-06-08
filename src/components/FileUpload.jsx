@@ -2,17 +2,11 @@ import React, { useRef } from "react";
 
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
-import Spreadsheet from "react-spreadsheet";
 
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
-import ReactPDF from "@react-pdf/renderer";
-import { PDFViewer, Document, Page, Text } from "@react-pdf/renderer";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import PDFComponent from "./PDFComponent";
-import PDFDownloadButton from "./PDFDownloadButton";
-import { data } from "autoprefixer";
 
 const FileUpload = () => {
   const ref = useRef();
@@ -66,9 +60,9 @@ const FileUpload = () => {
   };
   const ConverToPdf = () => {
     const capture = document.querySelector("#table");
-    html2canvas(document.body).then((canvas) => {
+    html2canvas(capture).then((canvas) => {
       const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("p", "mm", "a4");
+      const doc = new jsPDF("l", "px", "a4");
       const componentWidth = doc.internal.pageSize.getWidth();
       const componentHeight = doc.internal.pageSize.getHeight();
       doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
@@ -91,12 +85,7 @@ const FileUpload = () => {
         />
         <button onClick={handleChange}>Update</button>
       </div>
-      {/* Render your table component here */}
-      <PDFViewer>
-        <PDFComponent data={data} />
-      </PDFViewer>
-      {/* Render the PDF download button */}
-      <PDFDownloadButton data={data} />
+
       <button onClick={ConverToPdf}>Download</button>
       <div id="table" className=" overflow-y-scroll">
         <OutTable
@@ -107,8 +96,6 @@ const FileUpload = () => {
         />
       </div>
       <div>
-        {}
-
         {modifidData.forEach((row, index) => {
           console.log(`Row ${index + 1}:`);
           Object.entries(row).forEach(([key, value]) => {

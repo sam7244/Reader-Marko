@@ -75,8 +75,11 @@ const FileUpload = () => {
         }
       },
     });
-
-    // Save the PDF
+    const pdfBlob = doc.output("blob");
+    const pdfFile = new File([pdfBlob], "output.pdf", {
+      type: "application/pdf",
+    });
+    
     doc.save("output.pdf");
   };
 
@@ -88,7 +91,7 @@ const FileUpload = () => {
     });
     setRows(data);
 
-    console.log(cols.push({ name: "E", key: 4 }));
+    cols.push({ name: "E", key: 4 });
     setCols(cols);
   };
   const ConverToPdf = () => {

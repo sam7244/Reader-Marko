@@ -7,7 +7,7 @@ import { lectureQuery } from "../utils/data";
 
 const App = () => {
   const [userData, setUserData] = useState("");
-
+  const [id, setId] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const query = lectureQuery;
@@ -23,8 +23,11 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="login" element={<Login userData={userData} />} />
-        <Route path="/*" element={<Home />} />
+        <Route
+          path="login"
+          element={<Login setId={setId} userData={userData} />}
+        />
+        <Route path="/*" element={<Home id={id} />} />
       </Routes>
     </>
   );

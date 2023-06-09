@@ -1,21 +1,18 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
-import html2canvas from "html2canvas";
+
 import jsPDF from "jspdf";
 
 import "jspdf-autotable";
+import { client } from "../../lib/client";
 
-const FileUpload = () => {
-  const ref = useRef();
+const FileUpload = ({ id }) => {
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
-  const [data, setData] = useState([]);
-
-  const modifidData = [];
-
+  console.log(id);
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
 
@@ -29,6 +26,36 @@ const FileUpload = () => {
     });
   };
 
+  const uploadPDFToSanity = async (pdfFile) => {
+    // Create a new Sanity document for the PDF
+    const document = await client.create({
+      _type: "docs", // Adjust the type name according to your Sanity schema
+      // Add any other fields you want to store with the PDF document
+    });
+
+    // Upload the PDF file to Sanity's file storage
+    const asset = await client.assets.upload("file", pdfFile, {
+      filename: "output.pdf",
+      contentType: "application/pdf",
+      // Set any other metadata properties you need
+    });
+
+    // Associate the uploaded asset with the PDF document
+    await client
+      .patch(document._id)
+      .set({
+        doc: {
+          _type: "file",
+          asset: { _type: "reference", _ref: asset._id },
+        },
+        lectureName: {
+          _type: "reference",
+          _ref: localStorage.getItem("user"),
+        },
+      })
+      .commit();
+  };
+
   const generatePDF = async () => {
     const doc = new jsPDF();
 
@@ -38,7 +65,7 @@ const FileUpload = () => {
       startY: 20, // Set the initial y-coordinate for the table
       styles: {
         fontSize: 12,
-        cellPadding: 5,
+        cellPadding: 10,
         textColor: [0, 0, 0],
       },
       columnStyles: {
@@ -77,6 +104,12 @@ const FileUpload = () => {
     });
 
     // Save the PDF
+    const pdf = doc.output("blob");
+    const pdfFile = new File([pdf], "output.pdf", {
+      type: "application/pdf",
+    });
+
+    uploadPDFToSanity(pdfFile);
     doc.save("output.pdf");
   };
 
@@ -90,17 +123,6 @@ const FileUpload = () => {
 
     console.log(cols.push({ name: "E", key: 4 }));
     setCols(cols);
-  };
-  const ConverToPdf = () => {
-    const capture = document.querySelector("#table");
-    html2canvas(capture).then((canvas) => {
-      const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("l", "px", "a4");
-      const componentWidth = doc.internal.pageSize.getWidth();
-      const componentHeight = doc.internal.pageSize.getHeight();
-      doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
-      doc.save("Document.pdf");
-    });
   };
 
   return (
@@ -118,40 +140,19 @@ const FileUpload = () => {
         />
         <button onClick={handleChange}>Update</button>
       </div>
-      {/* Render your table component here */}
-      {/* <PDFViewer>
-        <PDFComponent data={data} />
-      </PDFViewer> */}
-      {/* Render the PDF download button */}
-      {/* <PDFDownloadButton data={data} /> */}
-      {/* <button onClick={ConverToPdf}>Download</button> */}
 
       <div>
         <h1>Convert Data to PDF</h1>
         <button onClick={generatePDF}>Generate PDF</button>
       </div>
 
-      <div id="table" className="h-[70vh] overflow-y-scroll">
+      <div id="table" className="max-h-[70vh] overflow-y-scroll">
         <OutTable
           data={rows}
           columns={cols}
           tableClassName="ExcelTable2010"
           tableHeaderRowClass="heading"
         />
-      </div>
-      <div>
-        {}
-
-        {/* {modifidData.forEach((row, index) => {
-          console.log(`Row ${index + 1}:`);
-          Object.entries(row).forEach(([key, value]) => {
-            console.log(`- ${key}: ${value}`);
-            <p>
-              - ${key}: ${value}
-            </p>;
-          });
-          console.log("------------------------");
-        })} */}
       </div>
     </div>
   );

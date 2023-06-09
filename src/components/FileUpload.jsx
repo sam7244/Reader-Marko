@@ -96,9 +96,9 @@ const FileUpload = () => {
   };
   const ConverToPdf = () => {
     const capture = document.querySelector("#table");
-    html2canvas(document.body).then((canvas) => {
+    html2canvas(capture).then((canvas) => {
       const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("p", "mm", "a4");
+      const doc = new jsPDF("l", "px", "a4");
       const componentWidth = doc.internal.pageSize.getWidth();
       const componentHeight = doc.internal.pageSize.getHeight();
       doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);

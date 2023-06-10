@@ -62,59 +62,52 @@ const FileUpload = ({ id }) => {
   const generatePDF = async () => {
     const doc = new jsPDF();
 
-    doc.autoTable({
-      startY: finalY + 20,
-      html: ".table",
-      useCss: true,
-    });
-
     const pdfBlob = doc.output("blob");
 
     console.log(rows[0]);
-    // doc.autoTable({
-    //   head: [rows[0]], // Use the first row as table headers
-    //   body: rows.slice(1), // Exclude the first row from table body
-    //   startY: 20, // Set the initial y-coordinate for the table
-    //   theme: "grid",
+    doc.autoTable({
+      head: [rows[0]], // Use the first row as table headers
+      body: rows.slice(1), // Exclude the first row from table body
+      startY: 20, // Set the initial y-coordinate for the table
+      theme: "grid",
 
-    //   styles: {
-    //     fontSize: 12,
-    //     cellPadding: 5,
-    //     textColor: [1, 1, 0],
-    //   },
-    //   columnStyles: {
-    //     // Add more column styles as needed
-    //   },
-    //   didDrawPage: function (rows) {
-    //     const { table, pageNumber } = rows;
-    //     const totalPages = doc.internal.getNumberOfPages();
+      styles: {
+        fontSize: 12,
+        cellPadding: 5,
+        textColor: [1, 1, 0],
+      },
+      columnStyles: {
+        // Add more column styles as needed
+      },
+      didDrawPage: function (rows) {
+        const { table, pageNumber } = rows;
+        const totalPages = doc.internal.getNumberOfPages();
 
-    //     if (pageNumber === totalPages) {
-    //       // Check if the table height exceeds the available space on the page
-    //       if (table.height > doc.internal.pageSize.getHeight() - 20) {
-    //         doc.addPage(); // Add a new page
-    //         doc.autoTable({
-    //           head: [rows[0]], // Repeat the table headers on the new page
-    //           body: rows.slice(1), // Use the remaining body data
-    //           startY: 20, // Set the initial y-coordinate for the table on the new page
+        if (pageNumber === totalPages) {
+          // Check if the table height exceeds the available space on the page
+          if (table.height > doc.internal.pageSize.getHeight() - 20) {
+            doc.addPage(); // Add a new page
+            doc.autoTable({
+              head: [rows[0]], // Repeat the table headers on the new page
+              body: rows.slice(1), // Use the remaining body data
+              startY: 20, // Set the initial y-coordinate for the table on the new page
 
-    //           styles: {
-    //             fontSize: 5,
-    //             cellPadding: 10,
-    //             textColor: [0, 0, 0],
-    //           },
-    //           columnStyles: {
-    //             0: { cellWidth: "auto" },
-    //             1: { cellWidth: "auto" },
-    //             2: { cellWidth: "auto" },
-    //             // Add more column styles as needed
-    //           },
-    //         });
-    //       }
-    //     }
-    //   },
-    // });
-
+              styles: {
+                fontSize: 5,
+                cellPadding: 10,
+                textColor: [0, 0, 0],
+              },
+              columnStyles: {
+                0: { cellWidth: "auto" },
+                1: { cellWidth: "auto" },
+                2: { cellWidth: "auto" },
+                // Add more column styles as needed
+              },
+            });
+          }
+        }
+      },
+    });
 
     // Save the PDF
     const pdf = doc.output("blob");
@@ -122,9 +115,7 @@ const FileUpload = ({ id }) => {
       type: "application/pdf",
     });
 
-
     uploadPDFToSanity(pdfFile);
-
 
     // uploadPDFToSanity(pdfFile);
     doc.save("output.pdf");

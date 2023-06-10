@@ -1,18 +1,18 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
-import html2canvas from "html2canvas";
+import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
 
 import "jspdf-autotable";
+import { client } from "../../lib/client";
 
-const FileUpload = () => {
+const FileUpload = ({ id }) => {
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
-
-  const modifidData = [];
+  console.log(id);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -20,6 +20,7 @@ const FileUpload = () => {
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
         console.log(err);
+        toast.error("Oops Something Went Wrong!");
       } else {
         setRows(resp.rows);
         setCols(resp.cols);
@@ -27,9 +28,39 @@ const FileUpload = () => {
     });
   };
 
+  const uploadPDFToSanity = async (pdfFile) => {
+    // Create a new Sanity document for the PDF
+    const document = await client.create({
+      _type: "docs", // Adjust the type name according to your Sanity schema
+      // Add any other fields you want to store with the PDF document
+    });
+
+    // Upload the PDF file to Sanity's file storage
+    const asset = await client.assets.upload("file", pdfFile, {
+      filename: "output.pdf",
+      contentType: "application/pdf",
+      // Set any other metadata properties you need
+    });
+
+    // Associate the uploaded asset with the PDF document
+    await client
+      .patch(document._id)
+      .set({
+        doc: {
+          _type: "file",
+          asset: { _type: "reference", _ref: asset._id },
+        },
+        lectureName: {
+          _type: "reference",
+          _ref: localStorage.getItem("user"),
+        },
+      })
+      .commit();
+  };
+
   const generatePDF = async () => {
     const doc = new jsPDF();
-
+    console.log(rows[0]);
     doc.autoTable({
       head: [rows[0]], // Use the first row as table headers
       body: rows.slice(1), // Exclude the first row from table body
@@ -37,7 +68,7 @@ const FileUpload = () => {
       styles: {
         fontSize: 12,
         cellPadding: 5,
-        textColor: [0, 0, 0],
+        textColor: [1, 1, 0],
       },
       columnStyles: {
         0: { cellWidth: "auto" }, // Set the first column width to 'auto'
@@ -74,11 +105,16 @@ const FileUpload = () => {
       },
     });
     const pdfBlob = doc.output("blob");
-    const pdfFile = new File([pdfBlob], "output.pdf", {
+
+    // Save the PDF
+    const pdf = doc.output("blob");
+    const pdfFile = new File([pdf], "output.pdf", {
       type: "application/pdf",
     });
 
-    doc.save("output.pdf");
+    uploadPDFToSanity(pdfFile);
+
+    toast.success("Pdf Downloaded Successfully");
   };
 
   const handleChange = () => {
@@ -119,6 +155,7 @@ const FileUpload = () => {
 
     cols.push({ name: "D", key: 4 });
     setCols(cols);
+
     setRows(updatedData);
   };
 
@@ -143,7 +180,7 @@ const FileUpload = () => {
         <button onClick={generatePDF}>Generate PDF</button>
       </div>
 
-      <div id="table" className="h-[70vh] overflow-y-scroll">
+      <div id="table" className="max-h-[70vh] overflow-y-scroll">
         <OutTable
           data={rows}
           columns={cols}

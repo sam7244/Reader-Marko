@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ userData }) => {
+const Login = ({ userData, setId }) => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
@@ -13,8 +13,9 @@ const Login = ({ userData }) => {
     );
 
     if (!isName.length) return;
+    localStorage.setItem("user", isName[0].lectureDetails._id);
+    setId(isName[0].lectureDetails._id);
 
-    localStorage.setItem("user", email);
     navigate("/", { replace: true });
   };
   return (

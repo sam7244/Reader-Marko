@@ -9,10 +9,8 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 const FileUpload = () => {
-  const ref = useRef();
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
-  const [data, setData] = useState([]);
 
   const modifidData = [];
 
@@ -79,31 +77,49 @@ const FileUpload = () => {
     const pdfFile = new File([pdfBlob], "output.pdf", {
       type: "application/pdf",
     });
-    
+
     doc.save("output.pdf");
   };
 
   const handleChange = () => {
-    const data = rows.map((row, idx) => {
-      const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
-      const newRow = [...row, idx === 0 ? "sum" : sum];
-      return newRow;
-    });
-    setRows(data);
+    // Create a map to track rows with the same RollNo
+    const rollNoMap = new Map();
 
-    cols.push({ name: "E", key: 4 });
-    setCols(cols);
-  };
-  const ConverToPdf = () => {
-    const capture = document.querySelector("#table");
-    html2canvas(capture).then((canvas) => {
-      const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("l", "px", "a4");
-      const componentWidth = doc.internal.pageSize.getWidth();
-      const componentHeight = doc.internal.pageSize.getHeight();
-      doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
-      doc.save("Document.pdf");
+    // Iterate over the data rows starting from index 1
+    for (let i = 1; i < rows.length; i++) {
+      const [rollNo, u1, u2] = rows[i];
+
+      // Check if the RollNo already exists in the map
+      if (rollNoMap.has(rollNo)) {
+        const existingRow = rollNoMap.get(rollNo);
+
+        // Compare u1 and u2 values and update if necessary
+        if (u1 > existingRow.u1) {
+          existingRow.u1 = u1;
+        }
+        if (u2 > existingRow.u2) {
+          existingRow.u2 = u2;
+        }
+      } else {
+        // If the RollNo doesn't exist, add it to the map
+        rollNoMap.set(rollNo, { u1, u2 });
+      }
+    }
+    const updatedData = rows.map((row) => {
+      if (row[0] === "RollNo") {
+        // If it's the header row, add the 'Sum' column header
+        return [...row, "Sum"];
+      } else {
+        const rollNo = row[0];
+        const maxMarks = rollNoMap.get(rollNo);
+        const sum = maxMarks.u1 + maxMarks.u2;
+        return [...row, sum];
+      }
     });
+
+    cols.push({ name: "D", key: 4 });
+    setCols(cols);
+    setRows(updatedData);
   };
 
   return (
@@ -121,13 +137,6 @@ const FileUpload = () => {
         />
         <button onClick={handleChange}>Update</button>
       </div>
-      {/* Render your table component here */}
-      {/* <PDFViewer>
-        <PDFComponent data={data} />
-      </PDFViewer> */}
-      {/* Render the PDF download button */}
-      {/* <PDFDownloadButton data={data} /> */}
-      {/* <button onClick={ConverToPdf}>Download</button> */}
 
       <div>
         <h1>Convert Data to PDF</h1>
@@ -141,20 +150,6 @@ const FileUpload = () => {
           tableClassName="ExcelTable2010"
           tableHeaderRowClass="heading"
         />
-      </div>
-      <div>
-        {}
-
-        {/* {modifidData.forEach((row, index) => {
-          console.log(`Row ${index + 1}:`);
-          Object.entries(row).forEach(([key, value]) => {
-            console.log(`- ${key}: ${value}`);
-            <p>
-              - ${key}: ${value}
-            </p>;
-          });
-          console.log("------------------------");
-        })} */}
       </div>
     </div>
   );

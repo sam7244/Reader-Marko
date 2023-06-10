@@ -22,8 +22,9 @@ const FileUpload = ({ id }) => {
         console.log(err);
         toast.error("Oops Something Went Wrong!");
       } else {
-        setRows(resp.rows);
-        setCols(resp.cols);
+        const { rows, cols } = resp;
+        setRows(rows);
+        setCols(cols);
       }
     });
   };
@@ -60,51 +61,60 @@ const FileUpload = ({ id }) => {
 
   const generatePDF = async () => {
     const doc = new jsPDF();
-    console.log(rows[0]);
-    doc.autoTable({
-      head: [rows[0]], // Use the first row as table headers
-      body: rows.slice(1), // Exclude the first row from table body
-      startY: 20, // Set the initial y-coordinate for the table
-      styles: {
-        fontSize: 12,
-        cellPadding: 5,
-        textColor: [1, 1, 0],
-      },
-      columnStyles: {
-        0: { cellWidth: "auto" }, // Set the first column width to 'auto'
-        1: { cellWidth: "auto" },
-        2: { cellWidth: "auto" },
-        // Add more column styles as needed
-      },
-      didDrawPage: function (rows) {
-        const { table, pageNumber } = rows;
-        const totalPages = doc.internal.getNumberOfPages();
 
-        if (pageNumber === totalPages) {
-          // Check if the table height exceeds the available space on the page
-          if (table.height > doc.internal.pageSize.getHeight() - 20) {
-            doc.addPage(); // Add a new page
-            doc.autoTable({
-              head: [table.head], // Repeat the table headers on the new page
-              body: table.body, // Use the remaining body data
-              startY: 20, // Set the initial y-coordinate for the table on the new page
-              styles: {
-                fontSize: 5,
-                cellPadding: 5,
-                textColor: [0, 0, 0],
-              },
-              columnStyles: {
-                0: { cellWidth: "auto" },
-                1: { cellWidth: "auto" },
-                2: { cellWidth: "auto" },
-                // Add more column styles as needed
-              },
-            });
-          }
-        }
-      },
+    doc.autoTable({
+      startY: finalY + 20,
+      html: ".table",
+      useCss: true,
     });
+
     const pdfBlob = doc.output("blob");
+
+    console.log(rows[0]);
+    // doc.autoTable({
+    //   head: [rows[0]], // Use the first row as table headers
+    //   body: rows.slice(1), // Exclude the first row from table body
+    //   startY: 20, // Set the initial y-coordinate for the table
+    //   theme: "grid",
+
+    //   styles: {
+    //     fontSize: 12,
+    //     cellPadding: 5,
+    //     textColor: [1, 1, 0],
+    //   },
+    //   columnStyles: {
+    //     // Add more column styles as needed
+    //   },
+    //   didDrawPage: function (rows) {
+    //     const { table, pageNumber } = rows;
+    //     const totalPages = doc.internal.getNumberOfPages();
+
+    //     if (pageNumber === totalPages) {
+    //       // Check if the table height exceeds the available space on the page
+    //       if (table.height > doc.internal.pageSize.getHeight() - 20) {
+    //         doc.addPage(); // Add a new page
+    //         doc.autoTable({
+    //           head: [rows[0]], // Repeat the table headers on the new page
+    //           body: rows.slice(1), // Use the remaining body data
+    //           startY: 20, // Set the initial y-coordinate for the table on the new page
+
+    //           styles: {
+    //             fontSize: 5,
+    //             cellPadding: 10,
+    //             textColor: [0, 0, 0],
+    //           },
+    //           columnStyles: {
+    //             0: { cellWidth: "auto" },
+    //             1: { cellWidth: "auto" },
+    //             2: { cellWidth: "auto" },
+    //             // Add more column styles as needed
+    //           },
+    //         });
+    //       }
+    //     }
+    //   },
+    // });
+
 
     // Save the PDF
     const pdf = doc.output("blob");
@@ -112,7 +122,12 @@ const FileUpload = ({ id }) => {
       type: "application/pdf",
     });
 
+
     uploadPDFToSanity(pdfFile);
+
+
+    // uploadPDFToSanity(pdfFile);
+    doc.save("output.pdf");
 
     toast.success("Pdf Downloaded Successfully");
   };
@@ -180,12 +195,15 @@ const FileUpload = ({ id }) => {
         <button onClick={generatePDF}>Generate PDF</button>
       </div>
 
-      <div id="table" className="max-h-[70vh] overflow-y-scroll">
+      <div
+        id="table"
+        className="max-h-[400px] table-auto  w-auto mx-auto  overflow-y-scroll "
+      >
         <OutTable
           data={rows}
           columns={cols}
-          tableClassName="ExcelTable2010"
-          tableHeaderRowClass="heading"
+          tableClassName="w-auto mx-auto bg-[#c6e6f5]  rounded-md gap-4  p-4 table-auto font-bold text-center  px-7 py-4   "
+          // tableHeaderRowClass="heading"
         />
       </div>
     </div>

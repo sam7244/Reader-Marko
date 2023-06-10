@@ -5,6 +5,7 @@ import DropZone from "./DropZone";
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
 import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
+import ExcelTable from "./ExcelTable";
 
 import "jspdf-autotable";
 import { client } from "../../lib/client";
@@ -196,6 +197,10 @@ const FileUpload = ({ id }) => {
           tableClassName="w-auto mx-auto bg-[#c6e6f5]  rounded-md gap-4  p-4 table-auto font-bold text-center  px-7 py-4   "
           // tableHeaderRowClass="heading"
         />
+      </div>
+      {console.log(rows)}
+      <div>
+        <ExcelTable rows={rows} />
       </div>
     </div>
   );

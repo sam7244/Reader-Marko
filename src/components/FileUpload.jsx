@@ -23,6 +23,7 @@ const FileUpload = ({ id }) => {
         toast.error("Oops Something Went Wrong!");
       } else {
         const { rows, cols } = resp;
+        cols.push({ name: "D", key: 3 });
         setRows(rows);
         setCols(cols);
       }
@@ -159,7 +160,7 @@ const FileUpload = ({ id }) => {
       }
     });
 
-    cols.push({ name: "D", key: 4 });
+    cols.push({ name: "E", key: 4 });
     setCols(cols);
 
     setRows(updatedData);
@@ -188,12 +189,12 @@ const FileUpload = ({ id }) => {
 
       <div
         id="table"
-        className="max-h-[400px] table-auto  w-auto mx-auto  overflow-y-scroll "
+        className="max-h-[400px] table-auto overflow-y-scroll w-[30vw]   mx-auto   "
       >
         <OutTable
           data={rows}
           columns={cols}
-          tableClassName="w-auto mx-auto bg-[#c6e6f5]  rounded-md gap-4  p-4 table-auto font-bold text-center  px-7 py-4   "
+          tableClassName="w-[30vw] border-separate px-4 py-2 mx-auto bg-[#c6e6f5]    table-auto font-bold text-center     "
           // tableHeaderRowClass="heading"
         />
       </div>

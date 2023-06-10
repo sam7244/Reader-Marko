@@ -13,6 +13,7 @@ const FileUpload = ({ id }) => {
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
   console.log(id);
+
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
 
@@ -66,6 +67,9 @@ const FileUpload = ({ id }) => {
       html: ".table",
       useCss: true,
     });
+
+    const pdfBlob = doc.output("blob");
+
     console.log(rows[0]);
     // doc.autoTable({
     //   head: [rows[0]], // Use the first row as table headers
@@ -111,27 +115,63 @@ const FileUpload = ({ id }) => {
     //   },
     // });
 
+
     // Save the PDF
     const pdf = doc.output("blob");
     const pdfFile = new File([pdf], "output.pdf", {
       type: "application/pdf",
     });
 
+
+    uploadPDFToSanity(pdfFile);
+
+
     // uploadPDFToSanity(pdfFile);
     doc.save("output.pdf");
+
     toast.success("Pdf Downloaded Successfully");
   };
 
   const handleChange = () => {
-    const data = rows.map((row, idx) => {
-      const sum = (Number(row[2]) || 0) + (Number(row[3]) || 0);
-      const newRow = [...row, idx === 0 ? "sum" : sum];
-      return newRow;
-    });
-    setRows(data);
+    // Create a map to track rows with the same RollNo
+    const rollNoMap = new Map();
 
-    console.log(cols.push({ name: "E", key: 4 }));
+    // Iterate over the data rows starting from index 1
+    for (let i = 1; i < rows.length; i++) {
+      const [rollNo, u1, u2] = rows[i];
+
+      // Check if the RollNo already exists in the map
+      if (rollNoMap.has(rollNo)) {
+        const existingRow = rollNoMap.get(rollNo);
+
+        // Compare u1 and u2 values and update if necessary
+        if (u1 > existingRow.u1) {
+          existingRow.u1 = u1;
+        }
+        if (u2 > existingRow.u2) {
+          existingRow.u2 = u2;
+        }
+      } else {
+        // If the RollNo doesn't exist, add it to the map
+        rollNoMap.set(rollNo, { u1, u2 });
+      }
+    }
+    const updatedData = rows.map((row) => {
+      if (row[0] === "RollNo") {
+        // If it's the header row, add the 'Sum' column header
+        return [...row, "Sum"];
+      } else {
+        const rollNo = row[0];
+        const maxMarks = rollNoMap.get(rollNo);
+        const sum = maxMarks.u1 + maxMarks.u2;
+        return [...row, sum];
+      }
+    });
+
+    cols.push({ name: "D", key: 4 });
     setCols(cols);
+
+    setRows(updatedData);
   };
 
   return (

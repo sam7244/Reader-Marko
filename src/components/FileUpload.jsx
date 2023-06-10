@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
 import { OutTable, ExcelRenderer } from "react-excel-renderer";
-
+import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
 
 import "jspdf-autotable";
@@ -19,6 +19,7 @@ const FileUpload = ({ id }) => {
     ExcelRenderer(fileObj, (err, resp) => {
       if (err) {
         console.log(err);
+        toast.error("Oops Something Went Wrong!");
       } else {
         setRows(resp.rows);
         setCols(resp.cols);
@@ -58,15 +59,15 @@ const FileUpload = ({ id }) => {
 
   const generatePDF = async () => {
     const doc = new jsPDF();
-
+    console.log(rows[0]);
     doc.autoTable({
       head: [rows[0]], // Use the first row as table headers
       body: rows.slice(1), // Exclude the first row from table body
       startY: 20, // Set the initial y-coordinate for the table
       styles: {
         fontSize: 12,
-        cellPadding: 10,
-        textColor: [0, 0, 0],
+        cellPadding: 5,
+        textColor: [1, 1, 0],
       },
       columnStyles: {
         0: { cellWidth: "auto" }, // Set the first column width to 'auto'
@@ -111,6 +112,7 @@ const FileUpload = ({ id }) => {
 
     uploadPDFToSanity(pdfFile);
     doc.save("output.pdf");
+    toast.success("Pdf Downloaded Successfully");
   };
 
   const handleChange = () => {

@@ -196,7 +196,6 @@ const FileUpload = ({ id }) => {
           data={rows}
           columns={cols}
           tableClassName="w-[30vw] border-separate px-4 py-2 mx-auto bg-[#c6e6f5]    table-auto font-bold text-center     "
-          // tableHeaderRowClass="heading"
         />
       </div>
 

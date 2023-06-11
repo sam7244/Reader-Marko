@@ -3,7 +3,6 @@ import "./ExcelTable.module.css";
 
 const ExcelTable = ({ rows }) => {
   const renderTable = (rows) => {
-    console.log(rows);
     //return (
     //   <table>
     //     <thead>

@@ -7,29 +7,13 @@ const Home = ({ id }) => {
     window.location.reload();
   };
 
-  const worksheets = [
-    {
-      name: "Requests",
-      columns: [
-        { label: "Full Name", value: "name" },
-        { label: "Email", value: "email" },
-        { label: "Template", value: "template" },
-      ],
-      data: [
-        {
-          name: "Bob Ross",
-          email: "boss_ross@gmail.com",
-          template: "Accounts Receivables",
-        },
-      ],
-    },
-  ];
-
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <FileUpload id={id} />
-      <button onClick={handleClick}>sign OUt</button>
-      <DemoExcelExport filename="requests.xlsx" worksheets={worksheets} />
+      <button className=" border-y-2 border-gray-700" onClick={handleClick}>
+        sign OUt
+      </button>
+      <DemoExcelExport />
     </div>
   );
 };

@@ -13,7 +13,6 @@ import { client } from "../../lib/client";
 const FileUpload = ({ id }) => {
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
-  console.log(id);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -66,7 +65,6 @@ const FileUpload = ({ id }) => {
 
     const pdfBlob = doc.output("blob");
 
-    console.log(rows[0]);
     doc.autoTable({
       head: [rows[0]], // Use the first row as table headers
       body: rows.slice(1), // Exclude the first row from table body
@@ -150,11 +148,10 @@ const FileUpload = ({ id }) => {
       }
     }
     const updatedData = rows.map((row) => {
-      
-      if (row[0] === "RollNo" && row.at(-1)!=="Sum") {
+      if (row[0] === "RollNo" && row.at(-1) !== "Sum") {
         // If it's the header row, add the 'Sum' column header
         return [...row, "Sum"];
-      } else if (row.length < 4){
+      } else if (row.length < 4) {
         const rollNo = row[0];
         const maxMarks = rollNoMap.get(rollNo);
         const sum = maxMarks.u1 + maxMarks.u2;
@@ -163,9 +160,8 @@ const FileUpload = ({ id }) => {
       return row;
     });
 
-    if (cols.length === 4)
-      cols.push({ name: "E", key: 4 });
-    console.log(cols);
+    if (cols.length === 4) cols.push({ name: "E", key: 4 });
+
     setCols(cols);
 
     setRows(updatedData);
@@ -203,7 +199,7 @@ const FileUpload = ({ id }) => {
           // tableHeaderRowClass="heading"
         />
       </div>
-      {console.log(rows)}
+
       <div>
         <ExcelTable rows={rows} />
       </div>

@@ -1,0 +1,14 @@
+.excel-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.excel-table-container th,
+.excel-table-container td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.excel-table-container th {
+  background-color: #f2f2f2;
+}

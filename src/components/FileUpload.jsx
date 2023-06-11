@@ -149,18 +149,22 @@ const FileUpload = ({ id }) => {
       }
     }
     const updatedData = rows.map((row) => {
-      if (row[0] === "RollNo") {
+      
+      if (row[0] === "RollNo" && row.at(-1)!=="Sum") {
         // If it's the header row, add the 'Sum' column header
         return [...row, "Sum"];
-      } else {
+      } else if (row.length < 4){
         const rollNo = row[0];
         const maxMarks = rollNoMap.get(rollNo);
         const sum = maxMarks.u1 + maxMarks.u2;
         return [...row, sum];
       }
+      return row;
     });
 
-    cols.push({ name: "E", key: 4 });
+    if (cols.length === 4)
+      cols.push({ name: "E", key: 4 });
+    console.log(cols);
     setCols(cols);
 
     setRows(updatedData);

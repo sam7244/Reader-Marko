@@ -15,12 +15,12 @@ import {
 
 export default function UserProfile({ open, setOpen }) {
   return (
-    <div>
+    <div className="">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button variant="outline">Open</Button>
         </SheetTrigger>
-        <SheetContent position="bottom" size="sm">
+        <SheetContent position="right" size="sm">
           <SheetHeader>
             <SheetTitle>Edit profile</SheetTitle>
             <SheetDescription>

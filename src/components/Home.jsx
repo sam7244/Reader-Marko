@@ -25,16 +25,16 @@ const Home = ({ id }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="h-screen">
+    <div className=" items-center flex  h-[200] justify-center">
       <UserProfile open={open} setOpen={setOpen} />
-
+      {/* 
       <div className="items-center flex justify-center h-full">
         <FileUpload id={id} />
         <button className=" border-y-2 border-gray-700" onClick={handleClick}>
           sign OUt
         </button>
         <DemoExcelExport />
-      </div>
+      </div> */}
     </div>
   );
 };

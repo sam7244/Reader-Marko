@@ -9,6 +9,7 @@ import ExcelTable from "./ExcelTable";
 
 import "jspdf-autotable";
 import { client } from "../../lib/client";
+import data from "../../utils/getData";
 
 const FileUpload = ({ id }) => {
   const [cols, setCols] = useState([]);
@@ -167,6 +168,138 @@ const FileUpload = ({ id }) => {
     setRows(updatedData);
   };
 
+  const threshhold = () => {
+    const THRESH_HOLD = 60;
+    const STUDENT_COUNT = data.length;
+
+    var u1Sum = 0;
+    var u2Sum = 0;
+    var u3Sum = 0;
+    var u4Sum = 0;
+
+    // for (var i = 1; i < data.length; i++) {
+    //   u1Sum += data[i][0];
+    //   u2Sum += data[i][1];
+    //   u3Sum += data[i][2];
+    //   u4Sum += data[i][3];
+    // }
+
+    // console.log("u1 sum:", u1Sum);
+    // console.log("u2 sum:", u2Sum);
+    // console.log("u3 sum:", u3Sum);
+    // console.log("u4 sum:", u4Sum);
+
+    let thirty_per = parseInt((30 * STUDENT_COUNT) / 100);
+    let forty_per = parseInt((40 * STUDENT_COUNT) / 100);
+    let fifty_per = parseInt((50 * STUDENT_COUNT) / 100);
+    let sixty_per = parseInt((60 * STUDENT_COUNT) / 100);
+    let seventy_per = parseInt((70 * STUDENT_COUNT) / 100);
+
+    let u1 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
+    let u2 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
+    let u3 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
+    let u4 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
+
+    console.log("u1 sum:", u1);
+    console.log("u2 sum:", u2);
+    console.log("u3 sum:", u3);
+    console.log("u4 sum:", u4);
+
+    var u1Sum = 0;
+
+    for (var i = 1; i < data.length; i++) {
+      if (data[i][0] > u1) {
+        u1Sum++;
+      }
+      if (data[i][1] > u2) {
+        u2Sum++;
+      }
+      if (data[i][2] > u3) {
+        u3Sum++;
+      }
+      if (data[i][3] > u3) {
+        u4Sum++;
+      }
+    }
+
+    console.log("u1  total:", u1Sum);
+    console.log("u2 total:", u2Sum);
+    console.log("u3 total:", u3Sum);
+    console.log("u4 total:", u4Sum);
+
+    console.log("30 percentile:", thirty_per);
+    console.log("40 percentile:", forty_per);
+    console.log("50 percentile:", fifty_per);
+    console.log("60 percentile:", sixty_per);
+    console.log("70 percentile:", seventy_per);
+
+    let U1Level;
+    let U2Level;
+    let U3Level;
+    let U4Level;
+
+    if (u1Sum > thirty_per && u1Sum < forty_per) {
+      U1Level = "L1";
+    } else if (u1Sum > forty_per && u1Sum < fifty_per) {
+      U1Level = "L2";
+    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+      U1Level = "L3";
+    } else if (u1Sum > sixty_per && u1Sum < seventy_per) {
+      U1Level = "L4";
+    } else if (u1Sum > seventy_per && u1Sum < STUDENT_COUNT) {
+      U1Level = "L5";
+    } else {
+      U1Level = "Invalid";
+    }
+
+    if (u2Sum > thirty_per && u2Sum < forty_per) {
+      U2Level = "L1";
+    } else if (u2Sum > forty_per && u2Sum < fifty_per) {
+      U2Level = "L2";
+    } else if (u2Sum > fifty_per && u2Sum < sixty_per) {
+      U2Level = "L3";
+    } else if (u2Sum > sixty_per && u2Sum < seventy_per) {
+      U2Level = "L4";
+    } else if (u2Sum > seventy_per && u2Sum < STUDENT_COUNT) {
+      U2Level = "L5";
+    } else {
+      U2Level = "Invalid";
+    }
+
+    if (u3Sum > thirty_per && u3Sum < forty_per) {
+      U3Level = "L1";
+    } else if (u3Sum > forty_per && u3Sum < fifty_per) {
+      U3Level = "L2";
+    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+      U1Level = "L3";
+    } else if (u3Sum > sixty_per && u3Sum < seventy_per) {
+      U3Level = "L4";
+    } else if (u3Sum > seventy_per && u3Sum < STUDENT_COUNT) {
+      U3Level = "L5";
+    } else {
+      U3Level = "Invalid";
+    }
+
+    if (u4Sum > thirty_per && u4Sum < forty_per) {
+      U4Level = "L1";
+    } else if (u4Sum > forty_per && u4Sum < fifty_per) {
+      U4Level = "L2";
+    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+      U1Level = "L3";
+    } else if (u4Sum > sixty_per && u4Sum < seventy_per) {
+      U4Level = "L4";
+    } else if (u4Sum > seventy_per && u4Sum < STUDENT_COUNT) {
+      U4Level = "L5";
+    } else {
+      U4Level = "Invalid";
+    }
+
+    console.log("u1 level:", U1Level);
+    console.log("u2 level:", U2Level);
+    console.log("u3 level:", U3Level);
+    console.log("u4 level:", U4Level);
+  };
+
   return (
     <div className=" p-10  overflow-hidden">
       <div className="flex flex-col p-4 gap-2  items-center justify-center">
@@ -201,6 +334,9 @@ const FileUpload = ({ id }) => {
 
       <div>
         <ExcelTable rows={rows} />
+      </div>
+      <div onClick={threshhold}>
+        <button>dummy</button>
       </div>
     </div>
   );

@@ -10,11 +10,12 @@ import ExcelTable from "./ExcelTable";
 import "jspdf-autotable";
 import { client } from "../../lib/client";
 import data from "../../utils/getData";
+import OutputTable from "./OutputTable";
 
 const FileUpload = ({ id }) => {
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
-
+  const [isUploaded, setIsUploaded] = useState(false);
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
 
@@ -27,6 +28,7 @@ const FileUpload = ({ id }) => {
         cols.push({ name: "D", key: 3 });
         setRows(rows);
         setCols(cols);
+        setIsUploaded(true);
       }
     });
   };
@@ -301,23 +303,36 @@ const FileUpload = ({ id }) => {
   };
 
   return (
-    <div className=" p-10  overflow-hidden">
-      <div className="flex flex-col p-4 gap-2  items-center justify-center">
-        <p className="font-bold text-xl animate-bounce">Upload File Below</p>
+    <div className=" p-10 h-screen  overflow-hidden">
+      {!isUploaded && (
+        <div
+          style={{ borderRadius: "9px" }}
+          className="flex flex-col w-full p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-center"
+        >
+          <p className="font-bold text-xl  animate-bounce">Upload File Below</p>
 
-        <input
-          className=" py-5 text-md  font-semibold px-4 bg-gray-200 rounded-lg"
-          type="file"
-          name="upload"
-          id="upload"
-          placeholder="Choose File"
-          onChange={readUploadFile}
-        />
-        <button onClick={handleChange}>Update</button>
-      </div>
+          <input
+            className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
+            style={{ borderRadius: "10px" }}
+            type="file"
+            name="upload"
+            id="upload"
+            placeholder="Choose File"
+            onChange={readUploadFile}
+          />
 
+          {/* <button onClick={handleChange}>Update</button> */}
+        </div>
+      )}
+
+      {isUploaded && (
+        <div className=" grid md:grid-cols-2">
+          <OutputTable rows={rows} />
+          <div className="flex justify-center items-center">hii</div>
+        </div>
+      )}
+      {/* 
       <div>
-        <h1>Convert Data to PDF</h1>
         <button onClick={generatePDF}>Generate PDF</button>
       </div>
 
@@ -328,7 +343,7 @@ const FileUpload = ({ id }) => {
         <OutTable
           data={rows}
           columns={cols}
-          tableClassName="w-[30vw] border-separate px-4 py-2 mx-auto bg-[#c6e6f5]    table-auto font-bold text-center     "
+          tableClassName="w-[30vw] border-separate mx-auto bg-[#c6e6f5]    table-auto font-bold text-center     "
         />
       </div>
 
@@ -337,7 +352,7 @@ const FileUpload = ({ id }) => {
       </div>
       <div onClick={threshhold}>
         <button>dummy</button>
-      </div>
+      </div> */}
     </div>
   );
 };

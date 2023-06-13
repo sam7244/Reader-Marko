@@ -200,10 +200,10 @@ const FileUpload = ({ id }) => {
     let u3 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
     let u4 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
 
-    console.log("u1 sum:", u1);
-    console.log("u2 sum:", u2);
-    console.log("u3 sum:", u3);
-    console.log("u4 sum:", u4);
+    // console.log("u1 sum:", u1);
+    // console.log("u2 sum:", u2);
+    // console.log("u3 sum:", u3);
+    // console.log("u4 sum:", u4);
 
     var u1Sum = 0;
 
@@ -222,16 +222,16 @@ const FileUpload = ({ id }) => {
       }
     }
 
-    console.log("u1  total:", u1Sum);
-    console.log("u2 total:", u2Sum);
-    console.log("u3 total:", u3Sum);
-    console.log("u4 total:", u4Sum);
+    // console.log("u1  total:", u1Sum);
+    // console.log("u2 total:", u2Sum);
+    // console.log("u3 total:", u3Sum);
+    // console.log("u4 total:", u4Sum);
 
-    console.log("30 percentile:", thirty_per);
-    console.log("40 percentile:", forty_per);
-    console.log("50 percentile:", fifty_per);
-    console.log("60 percentile:", sixty_per);
-    console.log("70 percentile:", seventy_per);
+    // console.log("30 percentile:", thirty_per);
+    // console.log("40 percentile:", forty_per);
+    // console.log("50 percentile:", fifty_per);
+    // console.log("60 percentile:", sixty_per);
+    // console.log("70 percentile:", seventy_per);
 
     let U1Level;
     let U2Level;
@@ -294,10 +294,48 @@ const FileUpload = ({ id }) => {
       U4Level = "Invalid";
     }
 
-    console.log("u1 level:", U1Level);
-    console.log("u2 level:", U2Level);
-    console.log("u3 level:", U3Level);
-    console.log("u4 level:", U4Level);
+    // console.log("u1 level:", U1Level);
+    // console.log("u2 level:", U2Level);
+    // console.log("u3 level:", U3Level);
+    // console.log("u4 level:", U4Level);
+
+    const LevelArrayCIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
+    const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
+    const SumArrayCIE = [u1Sum, u2Sum, u3Sum, u4Sum, 60];
+    const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, 60];
+    const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
+
+    const LevelMap = new Map();
+
+    LevelMap.set("L1", 1);
+    LevelMap.set("L2", 2);
+    LevelMap.set("L3", 3);
+    LevelMap.set("L4", 4);
+    LevelMap.set("L5", 5);
+
+    let AttainmentData = [];
+
+    for (let i = 0; i < 5; i++) {
+      var AvgAttainent = (
+        (parseInt(LevelMap.get(LevelArrayCIE[i])) +
+          parseInt(LevelMap.get(LevelArraySIE[i]))) /
+        2
+      ).toFixed(1);
+
+      var PercetAttainment = (100 * AvgAttainent) / 5;
+
+      AttainmentData.push([
+        NameArray[i],
+        SumArrayCIE[i],
+        parseInt(LevelMap.get(LevelArrayCIE[i])),
+        SumArraySIE[i],
+        parseInt(LevelMap.get(LevelArraySIE[i])),
+        AvgAttainent,
+        PercetAttainment,
+      ]);
+
+      console.log(AttainmentData);
+    }
   };
 
   return (

@@ -4,6 +4,18 @@ import DemoExcelExport from "./DemoExcelExport";
 import UserProfile from "./UserProfile";
 
 import { useState } from "react";
+import NavBar from "./NavBar";
+
+//  <button className=" border-y-2 border-gray-700" onClick={handleClick}>
+//    sign OUt
+//  </button>;
+
+{
+  /* <FileUpload id={id} />; */
+}
+// <DemoExcelExport />;
+
+// <UserProfile open={open} setOpen={setOpen} />;
 
 const Home = ({ id }) => {
   const handleClick = () => {
@@ -13,15 +25,16 @@ const Home = ({ id }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="h-screen w-full p-4">
-      <UserProfile open={open} setOpen={setOpen} />
-
-      <div className="flex justify-between mt-10 w-full items-center">
-        <FileUpload id={id} />
-        <button className=" border-y-2 border-gray-700" onClick={handleClick}>
-          sign OUt
-        </button>
+    <div className="h-screen   mx-auto">
+      <div className="p-4">
+        <NavBar />
+      </div>
+      <div className="flex max-w-8xl items-center h-20 justify-center gap-5">
         <DemoExcelExport />
+        <DemoExcelExport />
+      </div>
+      <div>
+        <FileUpload />
       </div>
     </div>
   );

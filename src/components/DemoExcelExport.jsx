@@ -9,11 +9,11 @@ const data1 = [
 ];
 
 const DemoExcelExport = () => (
-  <div className="">
+  <div className="p-4 h-full flex items-center">
     <Workbook
       filename="example.xlsx"
       element={
-        <button className="px-4 py-2 rounded-lg bg-gray-300 mt-10">
+        <button className="px-3 py-2 rounded-lg  bg-black font-semibold text-white ">
           DownLoad Example
         </button>
       }

@@ -359,13 +359,13 @@ const FileUpload = ({ id }) => {
             onChange={readUploadFile}
           />
 
-          {/* <button onClick={handleChange}>Update</button> */}
+          {/*  */}
         </div>
       )}
 
       {isUploaded && (
         <div className=" grid md:grid-cols-2">
-          <OutputTable rows={rows} />
+          <OutputTable rows={rows} handleChange={handleChange} />
           <div className="flex justify-center items-center">hii</div>
         </div>
       )}

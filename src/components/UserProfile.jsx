@@ -24,8 +24,6 @@ export default function UserProfile({
 }) {
   const saveThresholdOnChange = async (e) => {
     e.preventDefault();
-    console.log("coming here", threshold);
-    console.log("this", adminId);
     client
       .patch(adminId)
       .set({ threshold: Number(threshold) })
@@ -39,11 +37,7 @@ export default function UserProfile({
           <Button variant="outline">Open</Button>
         </SheetTrigger>
 
-        <SheetContent
-          // onSubmit={saveThresholdOnChange}
-          position="right"
-          size="sm"
-        >
+        <SheetContent position="right" size="sm">
           <SheetHeader>
             <SheetTitle>Settings</SheetTitle>
             <SheetDescription>Set Threshold value below</SheetDescription>

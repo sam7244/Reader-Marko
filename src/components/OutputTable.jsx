@@ -10,7 +10,7 @@ import {
 } from "../../components/ui/table";
 const OutputTable = ({ rows, handleChange, setIsUploaded }) => {
   return (
-    <div className="max-h-[450px] max-w-2xl overflow-y-scroll">
+    <div className="max-h-[450px] max-w-2xl overflow-y-scroll ">
       <div className="flex justify-between items-center">
         <div
           style={{ borderRadius: "8px" }}

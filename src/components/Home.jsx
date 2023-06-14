@@ -18,7 +18,7 @@ const Home = ({ adminId, id, threshold, setThreshold, userData }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="h-screen   mx-auto">
+    <div className="min-h-screen   mx-auto">
       <div className="p-4">
         <NavBar
           adminId={adminId}

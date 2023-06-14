@@ -365,7 +365,11 @@ const FileUpload = ({ id }) => {
 
       {isUploaded && (
         <div className=" grid md:grid-cols-2">
-          <OutputTable rows={rows} handleChange={handleChange} />
+          <OutputTable
+            rows={rows}
+            setIsUploaded={setIsUploaded}
+            handleChange={handleChange}
+          />
           <div className="flex justify-center items-center">hii</div>
         </div>
       )}

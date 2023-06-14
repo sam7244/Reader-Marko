@@ -8,16 +8,24 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/table";
-const OutputTable = ({ rows, handleChange }) => {
+const OutputTable = ({ rows, handleChange, setIsUploaded }) => {
   return (
     <div className="max-h-[450px] max-w-2xl overflow-y-scroll">
-      <div
-        style={{ borderRadius: "8px" }}
-        className="h-15 m-2 bg-blue-400 rounded-lg w-20 px-4 py-2"
-      >
-        <button className="" onClick={handleChange}>
-          Update
-        </button>
+      <div className="flex justify-between items-center">
+        <div
+          style={{ borderRadius: "8px" }}
+          className="h-15 m-2 bg-blue-400 rounded-lg w-20 px-4 py-2"
+        >
+          <button className="" onClick={handleChange}>
+            Update
+          </button>
+        </div>
+        <div
+          style={{ borderRadius: "8px" }}
+          className="h-15 m-2 bg-red-400 rounded-lg w-25 px-4 py-2 "
+        >
+          <button onClick={() => setIsUploaded(false)}>Re-Upload</button>
+        </div>
       </div>
 
       <Table>

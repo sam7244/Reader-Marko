@@ -6,6 +6,11 @@ import { ExcelRenderer } from "react-excel-renderer";
 import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
 
+import ExcelTable from "./ExcelTable";
+import OutputTableSec from "./OutputTableSec";
+import BarGraph from "./BarGraph";
+
+
 import "jspdf-autotable";
 import { client } from "../../lib/client";
 import data from "../../utils/getData";
@@ -373,7 +378,30 @@ const FileUpload = ({ id }) => {
             handleChange={handleChange}
             isUploaded={isUploaded}
           />
-          <div className="flex justify-center items-center">hii</div>
+          <div className="flex flex-col">
+            <div className="flex h-1/2 justify-center items-center  ">
+              <BarGraph />
+            </div>
+            <div className=" flex flex-col md:flex-row h-1/2">
+              <div className=" flex w-1/2 justify-center items-center">
+                <OutputTableSec
+                  rows={rows}
+                  setIsUploaded={setIsUploaded}
+                  handleChange={handleChange}
+                  threshhold={threshhold}
+                />
+              </div>
+              <div className="flex w-1/2 justify-center items-center">
+                <OutputTableSec
+                  rows={rows}
+                  setIsUploaded={setIsUploaded}
+                  handleChange={handleChange}
+                  threshhold={threshhold}
+                />
+              </div>
+            </div>
+          </div>
+          
         </div>
       )}
       {/* 
@@ -395,9 +423,7 @@ const FileUpload = ({ id }) => {
       <div>
         <ExcelTable rows={rows} />
       </div>
-      <div onClick={threshhold}>
-        <button>dummy</button>
-      </div> */}
+     */}
     </div>
   );
 };

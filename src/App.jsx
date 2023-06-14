@@ -7,6 +7,7 @@ import { lectureQuery } from "../utils/data";
 
 const App = () => {
   const [userData, setUserData] = useState("");
+  const [adminId, setAdminId] = useState("");
   const [id, setId] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -19,15 +20,33 @@ const App = () => {
       navigate("/login");
     }
   }, []);
-
+  const [threshold, setThreshold] = useState(60);
   return (
     <>
       <Routes>
         <Route
           path="login"
-          element={<Login setId={setId} userData={userData} />}
+          element={
+            <Login
+              setAdminId={setAdminId}
+              setId={setId}
+              setThreshold={setThreshold}
+              userData={userData}
+            />
+          }
         />
-        <Route path="/*" element={<Home id={id} />} />
+        <Route
+          path="/*"
+          element={
+            <Home
+              adminId={adminId}
+              setThreshold={setThreshold}
+              threshold={threshold}
+              userData={userData}
+              id={id}
+            />
+          }
+        />
       </Routes>
     </>
   );

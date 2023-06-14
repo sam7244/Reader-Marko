@@ -11,7 +11,7 @@ export const metadata = {
   description: "Authentication forms built using the components.",
 };
 
-export default function Login({ userData, setId }) {
+export default function Login({ setAdminId, userData, setId, setThreshold }) {
   return (
     <>
       <div className="md:hidden">
@@ -51,7 +51,12 @@ export default function Login({ userData, setId }) {
                 Enter your email approved by the admin
               </p>
             </div>
-            <UserAuthForm userData={userData} setId={setId} />
+            <UserAuthForm
+              setAdminId={setAdminId}
+              setThreshold={setThreshold}
+              userData={userData}
+              setId={setId}
+            />
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <a

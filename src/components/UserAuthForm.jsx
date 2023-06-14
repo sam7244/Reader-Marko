@@ -11,6 +11,8 @@ import { Loader2 } from "lucide-react";
 // import { Icons } from "@/components/icons";
 
 export function UserAuthForm({
+  setAdminId,
+  setThreshold,
   className,
   userData,
   setIsSuccess,
@@ -39,6 +41,8 @@ export function UserAuthForm({
     if (!isName.length) return;
     localStorage.setItem("user", isName[0].lectureDetails._id);
     setId(isName[0].lectureDetails._id);
+    setAdminId(isName[0]._id);
+    setThreshold(isName[0].threshold);
     navigate("/", { replace: true });
   };
 

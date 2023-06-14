@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/table";
-const OutputTable = ({ rows, handleChange, setIsUploaded }) => {
+const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
   return (
     <div className="max-h-[450px] max-w-2xl overflow-y-scroll ">
       <div className="flex justify-between items-center">
@@ -29,7 +29,9 @@ const OutputTable = ({ rows, handleChange, setIsUploaded }) => {
       </div>
 
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption className="font-bold text-lg underline">
+          {isUploaded ? "Your Excel Data" : "Updated Excel Data"}
+        </TableCaption>
 
         <TableHeader>
           <TableRow>

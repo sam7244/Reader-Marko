@@ -10,14 +10,7 @@ import NavBar from "./NavBar";
 //    sign OUt
 //  </button>;
 
-{
-  /* <FileUpload id={id} />; */
-}
-// <DemoExcelExport />;
-
-// <UserProfile open={open} setOpen={setOpen} />;
-
-const Home = ({ id }) => {
+const Home = ({ adminId, id, threshold, setThreshold, userData }) => {
   const handleClick = () => {
     localStorage.removeItem("user");
     window.location.reload();
@@ -27,7 +20,11 @@ const Home = ({ id }) => {
   return (
     <div className="h-screen   mx-auto">
       <div className="p-4">
-        <NavBar />
+        <NavBar
+          adminId={adminId}
+          setThreshold={setThreshold}
+          threshold={threshold}
+        />
       </div>
       <div className="flex max-w-8xl items-center h-20 justify-center gap-5">
         <DemoExcelExport />

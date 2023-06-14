@@ -2,12 +2,14 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
-import { OutTable, ExcelRenderer } from "react-excel-renderer";
+import { ExcelRenderer } from "react-excel-renderer";
 import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
+
 import ExcelTable from "./ExcelTable";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
+
 
 import "jspdf-autotable";
 import { client } from "../../lib/client";
@@ -15,6 +17,8 @@ import data from "../../utils/getData";
 import OutputTable from "./OutputTable";
 
 const FileUpload = ({ id }) => {
+  const [Threshold, setThreshold] = useState(0);
+  const [setsaveThreshold, setSetsaveThreshold] = useState(Threshold);
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -337,8 +341,6 @@ const FileUpload = ({ id }) => {
         AvgAttainent,
         PercetAttainment,
       ]);
-
-      console.log(AttainmentData);
     }
   };
 
@@ -368,9 +370,13 @@ const FileUpload = ({ id }) => {
       {isUploaded && (
         <div className=" grid md:grid-cols-2">
           <OutputTable
+            Threshold={Threshold}
+            setsaveThreshold={setsaveThreshold}
+            setThreshold={setThreshold}
             rows={rows}
             setIsUploaded={setIsUploaded}
             handleChange={handleChange}
+            isUploaded={isUploaded}
           />
           <div className="flex flex-col">
             <div className="flex h-1/2 justify-center items-center  ">

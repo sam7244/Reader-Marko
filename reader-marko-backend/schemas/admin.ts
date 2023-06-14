@@ -9,10 +9,18 @@ export default {
       type: 'string',
     },
     {
+      name:'threshold',
+      title:'Threshold',
+      type:'number'
+    },
+    {
       name: 'lectureDetails',
       title: 'Lecture Details',
       type: 'reference',
       to: [{type: 'lecture'}],
     },
   ],
+   initialValue: {
+    threshold: 60
+  }
 }

@@ -222,9 +222,9 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     "to-fast-properties" "^2.0.0"
 
-"@esbuild/linux-x64@0.17.19":
-  "integrity" "sha512-68ngA9lg2H6zkZcyp22tsVt38mlhWde8l3eJLWkyLrp4HwMUr3c1s/M2t7+kHIhvMjglIBrFpncX1SzMckomGw=="
-  "resolved" "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.17.19.tgz"
+"@esbuild/win32-x64@0.17.19":
+  "integrity" "sha512-lAhycmKnVOuRYNtRtatQR1LPQf2oYCkRGkSFnseDAKPl8lu5SOsK/e1sXe5a0Pc5kHIHe6P2I/ilntNv2xf3cA=="
+  "resolved" "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.17.19.tgz"
   "version" "0.17.19"
 
 "@eslint-community/eslint-utils@^4.2.0":
@@ -2405,6 +2405,11 @@
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.2.tgz"
   "version" "1.15.2"
 
+"font-family-papandreou@^0.2.0-patch1":
+  "integrity" "sha512-l/YiRdBSH/eWv6OF3sLGkwErL+n0MqCICi9mppTZBOCL5vixWGDqCYvRcuxB2h7RGCTzaTKOHT2caHvCXQPRlw=="
+  "resolved" "https://registry.npmjs.org/font-family-papandreou/-/font-family-papandreou-0.2.0-patch2.tgz"
+  "version" "0.2.0-patch2"
+
 "fontkit@^2.0.2":
   "integrity" "sha512-jc4k5Yr8iov8QfS6u8w2CnHWVmbOGtdBtOXMze5Y+QD966Rx6PEVWXSEGwXlsDlKtu1G12cJjcsybnqhSk/+LA=="
   "resolved" "https://registry.npmjs.org/fontkit/-/fontkit-2.0.2.tgz"
@@ -3197,7 +3202,7 @@
   "resolved" "https://registry.npmjs.org/jspdf-autotable/-/jspdf-autotable-3.5.29.tgz"
   "version" "3.5.29"
 
-"jspdf@^2.5.1":
+"jspdf@^2.0.0", "jspdf@^2.5.1":
   "integrity" "sha512-hXObxz7ZqoyhxET78+XR34Xu2qFGrJJ2I2bE5w4SM8eFaFEkW2xcGRVUss360fYelwRSid/jT078kbNvmoW0QA=="
   "resolved" "https://registry.npmjs.org/jspdf/-/jspdf-2.5.1.tgz"
   "version" "2.5.1"
@@ -4599,6 +4604,11 @@
   "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
   "version" "0.6.1"
 
+"specificity@^0.4.1":
+  "integrity" "sha512-1klA3Gi5PD1Wv9Q0wUoOQN1IWAuPu0D1U03ThXTr0cJ20+/iq2tHSDnK7Kk/0LXJ1ztUB2/1Os0wKmfyNgUQfg=="
+  "resolved" "https://registry.npmjs.org/specificity/-/specificity-0.4.1.tgz"
+  "version" "0.4.1"
+
 "speedometer@~1.0.0":
   "integrity" "sha512-lgxErLl/7A5+vgIIXsh9MbeukOaCb2axgQ+bKCdIE+ibNT4XNYGNCR1qFEGq6F+YDASXK3Fh/c5FgtZchFolxw=="
   "resolved" "https://registry.npmjs.org/speedometer/-/speedometer-1.0.0.tgz"
@@ -4771,6 +4781,21 @@
   "integrity" "sha512-qsjeeq5YjBZ5eMdFuUa4ZosMLxgr5RZ+F+Y1OrDhuOCEInRMA3x74XdBtggJcj9kOeInz0WE+LgCPDkZFlBYJw=="
   "resolved" "https://registry.npmjs.org/svg-pathdata/-/svg-pathdata-6.0.3.tgz"
   "version" "6.0.3"
+
+"svg2pdf.js@^2.2.1":
+  "integrity" "sha512-gJsFT42tb+pYTuFudkKgpMws54DvsJW7wmzGRUY1b9CUJpRMoBU5B4HrCMUTlK2lpcdPL5cOyr84hy2BEj1/Ag=="
+  "resolved" "https://registry.npmjs.org/svg2pdf.js/-/svg2pdf.js-2.2.1.tgz"
+  "version" "2.2.1"
+  dependencies:
+    "cssesc" "^3.0.0"
+    "font-family-papandreou" "^0.2.0-patch1"
+    "specificity" "^0.4.1"
+    "svgpath" "^2.3.0"
+
+"svgpath@^2.3.0":
+  "integrity" "sha512-OIWR6bKzXvdXYyO4DK/UWa1VA1JeKq8E+0ug2DG98Y/vOmMpfZNj+TIG988HjfYSqtcy/hFOtZq/n/j5GSESNg=="
+  "resolved" "https://registry.npmjs.org/svgpath/-/svgpath-2.6.0.tgz"
+  "version" "2.6.0"
 
 "tailwind-merge@^1.13.1":
   "integrity" "sha512-tRtRN22TDokGi2TuYSvuHQuuW6BJ/zlUEG+iYpAQ9i66msc/0eU/+HPccbPnNNH0mCPp0Ob8thaC8Uy9CxHitQ=="

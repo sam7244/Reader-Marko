@@ -1,5 +1,5 @@
 import React from "react";
-
+import html2canvas from "html2canvas";
 import { useState, useEffect } from "react";
 import DropZone from "./DropZone";
 import { ExcelRenderer } from "react-excel-renderer";
@@ -9,7 +9,6 @@ import jsPDF from "jspdf";
 import ExcelTable from "./ExcelTable";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
-
 
 import "jspdf-autotable";
 import { client } from "../../lib/client";
@@ -22,6 +21,8 @@ const FileUpload = ({ id }) => {
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
+  const [attainment, setAttainment] = useState([]);
+
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
 
@@ -74,6 +75,16 @@ const FileUpload = ({ id }) => {
 
     const pdfBlob = doc.output("blob");
 
+    const addHeading = (heading) => {
+      doc.setFontSize(16);
+      const textWidth =
+        (doc.getStringUnitWidth(heading) * doc.internal.getFontSize()) /
+        doc.internal.scaleFactor;
+      const textOffset = (doc.internal.pageSize.getWidth() - textWidth) / 2;
+      doc.text(heading, textOffset, 15);
+    };
+
+    addHeading("Table Given by the god");
     doc.autoTable({
       head: [rows[0]], // Use the first row as table headers
       body: rows.slice(1), // Exclude the first row from table body
@@ -117,6 +128,76 @@ const FileUpload = ({ id }) => {
         }
       },
     });
+
+    doc.addPage();
+
+    addHeading("Attainment Table");
+    doc.autoTable({
+      head: [attainment[0]], // Use the first row as table headers
+      body: attainment.slice(1), // Exclude the first row from table body
+      startY: 20, // Set the initial y-coordinate for the table
+      theme: "grid",
+
+      styles: {
+        fontSize: 12,
+        cellPadding: 5,
+        textColor: [1, 1, 0],
+      },
+      columnStyles: {
+        // Add more column styles as needed
+      },
+      didDrawPage: function (attainment) {
+        const { table, pageNumber } = attainment;
+        const totalPages = doc.internal.getNumberOfPages();
+
+        if (pageNumber === totalPages) {
+          // Check if the table height exceeds the available space on the page
+          if (table.height > doc.internal.pageSize.getHeight() - 20) {
+            doc.addPage(); // Add a new page
+            doc.autoTable({
+              head: [attainment[0]], // Repeat the table headers on the new page
+              body: attainment.slice(1), // Use the remaining body data
+              startY: 20, // Set the initial y-coordinate for the table on the new page
+
+              styles: {
+                fontSize: 5,
+                cellPadding: 10,
+                textColor: [0, 0, 0],
+              },
+              columnStyles: {
+                0: { cellWidth: "auto" },
+                1: { cellWidth: "auto" },
+                2: { cellWidth: "auto" },
+                // Add more column styles as needed
+              },
+            });
+          }
+        }
+      },
+    });
+
+    doc.addPage();
+
+    addHeading("Bar Graph");
+    // Capture the graph element as an image
+    const graphElement = document.getElementById("graph");
+    const canvas = await html2canvas(graphElement);
+    const imageData = canvas.toDataURL("image/png");
+
+    // Calculate the PDF dimensions
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = doc.internal.pageSize.getHeight();
+
+    // Calculate the image dimensions
+    const imageWidth = pdfWidth - 10;
+    const imageHeight = pdfHeight / 4 + 10;
+
+    // Calculate the image position in the middle of the PDF
+    const imageX = (pdfWidth - imageWidth) / 2;
+    const imageY = 25;
+
+    // Add the image to the PDF
+    doc.addImage(imageData, "PNG", imageX, imageY, imageWidth, imageHeight);
 
     // Save the PDF
     const pdf = doc.output("blob");
@@ -176,174 +257,6 @@ const FileUpload = ({ id }) => {
     setRows(updatedData);
   };
 
-  const threshhold = () => {
-    const THRESH_HOLD = 60;
-    const STUDENT_COUNT = data.length;
-
-    var u1Sum = 0;
-    var u2Sum = 0;
-    var u3Sum = 0;
-    var u4Sum = 0;
-
-    // for (var i = 1; i < data.length; i++) {
-    //   u1Sum += data[i][0];
-    //   u2Sum += data[i][1];
-    //   u3Sum += data[i][2];
-    //   u4Sum += data[i][3];
-    // }
-
-    // console.log("u1 sum:", u1Sum);
-    // console.log("u2 sum:", u2Sum);
-    // console.log("u3 sum:", u3Sum);
-    // console.log("u4 sum:", u4Sum);
-
-    let thirty_per = parseInt((30 * STUDENT_COUNT) / 100);
-    let forty_per = parseInt((40 * STUDENT_COUNT) / 100);
-    let fifty_per = parseInt((50 * STUDENT_COUNT) / 100);
-    let sixty_per = parseInt((60 * STUDENT_COUNT) / 100);
-    let seventy_per = parseInt((70 * STUDENT_COUNT) / 100);
-
-    let u1 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
-    let u2 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
-    let u3 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
-    let u4 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
-
-    // console.log("u1 sum:", u1);
-    // console.log("u2 sum:", u2);
-    // console.log("u3 sum:", u3);
-    // console.log("u4 sum:", u4);
-
-    var u1Sum = 0;
-
-    for (var i = 1; i < data.length; i++) {
-      if (data[i][0] > u1) {
-        u1Sum++;
-      }
-      if (data[i][1] > u2) {
-        u2Sum++;
-      }
-      if (data[i][2] > u3) {
-        u3Sum++;
-      }
-      if (data[i][3] > u3) {
-        u4Sum++;
-      }
-    }
-
-    // console.log("u1  total:", u1Sum);
-    // console.log("u2 total:", u2Sum);
-    // console.log("u3 total:", u3Sum);
-    // console.log("u4 total:", u4Sum);
-
-    // console.log("30 percentile:", thirty_per);
-    // console.log("40 percentile:", forty_per);
-    // console.log("50 percentile:", fifty_per);
-    // console.log("60 percentile:", sixty_per);
-    // console.log("70 percentile:", seventy_per);
-
-    let U1Level;
-    let U2Level;
-    let U3Level;
-    let U4Level;
-
-    if (u1Sum > thirty_per && u1Sum < forty_per) {
-      U1Level = "L1";
-    } else if (u1Sum > forty_per && u1Sum < fifty_per) {
-      U1Level = "L2";
-    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
-      U1Level = "L3";
-    } else if (u1Sum > sixty_per && u1Sum < seventy_per) {
-      U1Level = "L4";
-    } else if (u1Sum > seventy_per && u1Sum < STUDENT_COUNT) {
-      U1Level = "L5";
-    } else {
-      U1Level = "Invalid";
-    }
-
-    if (u2Sum > thirty_per && u2Sum < forty_per) {
-      U2Level = "L1";
-    } else if (u2Sum > forty_per && u2Sum < fifty_per) {
-      U2Level = "L2";
-    } else if (u2Sum > fifty_per && u2Sum < sixty_per) {
-      U2Level = "L3";
-    } else if (u2Sum > sixty_per && u2Sum < seventy_per) {
-      U2Level = "L4";
-    } else if (u2Sum > seventy_per && u2Sum < STUDENT_COUNT) {
-      U2Level = "L5";
-    } else {
-      U2Level = "Invalid";
-    }
-
-    if (u3Sum > thirty_per && u3Sum < forty_per) {
-      U3Level = "L1";
-    } else if (u3Sum > forty_per && u3Sum < fifty_per) {
-      U3Level = "L2";
-    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
-      U1Level = "L3";
-    } else if (u3Sum > sixty_per && u3Sum < seventy_per) {
-      U3Level = "L4";
-    } else if (u3Sum > seventy_per && u3Sum < STUDENT_COUNT) {
-      U3Level = "L5";
-    } else {
-      U3Level = "Invalid";
-    }
-
-    if (u4Sum > thirty_per && u4Sum < forty_per) {
-      U4Level = "L1";
-    } else if (u4Sum > forty_per && u4Sum < fifty_per) {
-      U4Level = "L2";
-    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
-      U1Level = "L3";
-    } else if (u4Sum > sixty_per && u4Sum < seventy_per) {
-      U4Level = "L4";
-    } else if (u4Sum > seventy_per && u4Sum < STUDENT_COUNT) {
-      U4Level = "L5";
-    } else {
-      U4Level = "Invalid";
-    }
-
-    // console.log("u1 level:", U1Level);
-    // console.log("u2 level:", U2Level);
-    // console.log("u3 level:", U3Level);
-    // console.log("u4 level:", U4Level);
-
-    const LevelArrayCIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
-    const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
-    const SumArrayCIE = [u1Sum, u2Sum, u3Sum, u4Sum, 60];
-    const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, 60];
-    const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
-
-    const LevelMap = new Map();
-
-    LevelMap.set("L1", 1);
-    LevelMap.set("L2", 2);
-    LevelMap.set("L3", 3);
-    LevelMap.set("L4", 4);
-    LevelMap.set("L5", 5);
-
-    let AttainmentData = [];
-
-    for (let i = 0; i < 5; i++) {
-      var AvgAttainent = (
-        (parseInt(LevelMap.get(LevelArrayCIE[i])) +
-          parseInt(LevelMap.get(LevelArraySIE[i]))) /
-        2
-      ).toFixed(1);
-
-      var PercetAttainment = (100 * AvgAttainent) / 5;
-
-      AttainmentData.push([
-        NameArray[i],
-        SumArrayCIE[i],
-        parseInt(LevelMap.get(LevelArrayCIE[i])),
-        SumArraySIE[i],
-        parseInt(LevelMap.get(LevelArraySIE[i])),
-        AvgAttainent,
-        PercetAttainment,
-      ]);
-    }
-  };
-
   return (
     <div className=" p-10 h-screen  overflow-hidden">
       {!isUploaded && (
@@ -379,36 +292,43 @@ const FileUpload = ({ id }) => {
             isUploaded={isUploaded}
           />
           <div className="flex flex-col">
-            <div className="flex h-1/2 justify-center items-center  ">
+            <div
+              className="flex h-1/2 justify-center items-center  "
+              id="graph"
+            >
               <BarGraph />
             </div>
             <div className=" flex flex-col md:flex-row h-1/2">
               <div className=" flex w-1/2 justify-center items-center">
                 <OutputTableSec
                   rows={rows}
+                  isUploaded={isUploaded}
                   setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
-                  threshhold={threshhold}
+                  attainment={attainment}
+                  setAttainment={setAttainment}
                 />
               </div>
               <div className="flex w-1/2 justify-center items-center">
                 <OutputTableSec
                   rows={rows}
+                  isUploaded={isUploaded}
                   setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
-                  threshhold={threshhold}
+                  attainment={attainment}
+                  setAttainment={setAttainment}
                 />
               </div>
             </div>
           </div>
-          
         </div>
       )}
-      {/* 
       <div>
         <button onClick={generatePDF}>Generate PDF</button>
       </div>
 
+      {/* 
+     
       <div
         id="table"
         className="max-h-[400px] table-auto overflow-y-scroll w-[30vw]   mx-auto   "

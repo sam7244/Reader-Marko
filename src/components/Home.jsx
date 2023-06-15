@@ -10,7 +10,14 @@ import NavBar from "./NavBar";
 //    sign OUt
 //  </button>;
 
-const Home = ({ adminId, id, threshold, setThreshold, userData }) => {
+const Home = ({
+  adminId,
+  id,
+  threshold,
+  setThreshold,
+  userData,
+  userCourses,
+}) => {
   const handleClick = () => {
     localStorage.removeItem("user");
     window.location.reload();
@@ -21,6 +28,7 @@ const Home = ({ adminId, id, threshold, setThreshold, userData }) => {
     <div className="min-h-screen   mx-auto">
       <div className="p-4">
         <NavBar
+          userCourses={userCourses}
           adminId={adminId}
           setThreshold={setThreshold}
           threshold={threshold}

@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
 import {
   Sheet,
   SheetClose,
@@ -14,21 +20,37 @@ import {
   SheetTrigger,
 } from "../../components/ui/sheet";
 import { client } from "../../lib/client";
+import CourseCodeSelector from "./CourseCodeSelector";
 
 export default function UserProfile({
+  userCourses,
   open,
   setThreshold,
-  adminId,
   setOpen,
   threshold,
 }) {
+  useEffect(() => {
+    setThreshold(
+      userCourses?.[0]?.threshold ? userCourses?.[0]?.threshold : 60
+    );
+  }, []);
+
+  const userName = userCourses[0]?.lectureDetails?.name
+    ? userCourses[0]?.lectureDetails?.name
+    : "xyz@gmail.com";
+  console.log("threshold", threshold);
+
   const saveThresholdOnChange = async (e) => {
     e.preventDefault();
+
     client
-      .patch(adminId)
+      .patch(userCourses[0]._id)
       .set({ threshold: Number(threshold) })
       .commit()
-      .then(() => window.location.reload());
+      .then(() => {
+        setThreshold(threshold);
+        window.location.reload();
+      });
   };
   return (
     <div className="">
@@ -50,7 +72,7 @@ export default function UserProfile({
               <Input
                 id="username"
                 readOnly
-                value="@peduarte"
+                placeholder={userName}
                 className="col-span-3"
               />
             </div>
@@ -60,13 +82,22 @@ export default function UserProfile({
               </Label>
               <Input
                 onChange={(e) => setThreshold(e.target.value)}
-                id="username"
+                id="threshold"
                 value={threshold}
                 className="col-span-3"
               />
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right ">CourseCode:</Label>
+              <div className="ml-1 col-span-3">
+                <CourseCodeSelector
+                  setThreshold={setThreshold}
+                  userCourses={userCourses}
+                />
+              </div>
+            </div>
           </div>
-          <SheetFooter>
+          <SheetFooter className="">
             <SheetClose asChild>
               <Button onClick={saveThresholdOnChange}> Save Changes</Button>
             </SheetClose>

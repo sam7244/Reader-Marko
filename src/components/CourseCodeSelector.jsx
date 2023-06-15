@@ -8,32 +8,28 @@ import {
 import React, { useState } from "react";
 
 const CourseCodeSelector = ({ userCourses, setThreshold }) => {
-  const [courseCode, setCourseCode] = useState("");
-  const handleCourseChanges = () => {
-    const selectedCourse = e.target.value;
-    setCourseCode(selectedCourse);
-    console.log(selectedCourse);
-    const getThresholdOfSelectedCourse = userCourses?.filter(
-      (item) => item.courseCode === courseCode
-    );
-    console.log("here", getThresholdOfSelectedCourse);
-    setThreshold(getThresholdOfSelectedCourse?.threshold);
-  };
-  console.log(courseCode);
+  const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
+
   return (
     <div className="col-span-3">
-      <Select>
+      <Select
+        defaultValue="1234"
+        onValueChange={(courseCode) => {
+          setCourseCode(courseCode);
+          const getThresholdOfSelectedCourse = userCourses?.filter(
+            (item) => item.courseCode === courseCode
+          );
+          console.log(getThresholdOfSelectedCourse);
+          setThreshold(getThresholdOfSelectedCourse[0]?.threshold);
+        }}
+        value={courseCode}
+      >
         <SelectTrigger className="">
           <SelectValue placeholder="Codes" />
         </SelectTrigger>
-        <SelectContent onSelect={handleCourseChanges}>
+        <SelectContent>
           {userCourses?.map((item) => (
-            <SelectItem
-              onSelect={(e) => setCourseCode(e.target.value)}
-              value={item.courseCode}
-            >
-              {item.courseCode}
-            </SelectItem>
+            <SelectItem value={item.courseCode}>{item.courseCode}</SelectItem>
           ))}
         </SelectContent>
       </Select>

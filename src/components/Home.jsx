@@ -29,7 +29,11 @@ const Home = ({ adminId, id, threshold, setThreshold, userData }) => {
       <div className="flex max-w-8xl items-center h-20 justify-center gap-5">
         <DemoExcelExport />
         <DemoExcelExport />
+        <button className="px-3 py-2 rounded-lg  bg-black font-semibold text-white ">
+          Generate PDF
+        </button>
       </div>
+
       <div>
         <FileUpload />
       </div>

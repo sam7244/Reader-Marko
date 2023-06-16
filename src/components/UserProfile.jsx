@@ -52,11 +52,15 @@ export default function UserProfile({
         window.location.reload();
       });
   };
+  const handleClick = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
   return (
     <div className="">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button variant="outline">Open</Button>
+          <Button variant="outline">Settings</Button>
         </SheetTrigger>
 
         <SheetContent position="right" size="sm">
@@ -97,11 +101,30 @@ export default function UserProfile({
               </div>
             </div>
           </div>
-          <SheetFooter className="">
-            <SheetClose asChild>
-              <Button onClick={saveThresholdOnChange}> Save Changes</Button>
-            </SheetClose>
-          </SheetFooter>
+          <div className="flex  justify-between p-2">
+            <SheetFooter className="">
+              <SheetClose asChild>
+                <Button
+                  className="w-32 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-gray-600 bg-black"
+                  onClick={handleClick}
+                >
+                  {" "}
+                  Logout
+                </Button>
+              </SheetClose>
+            </SheetFooter>
+            <SheetFooter className="">
+              <SheetClose asChild>
+                <Button
+                  className="text-white  w-38 text-base transition duration-150 hover:scale-110  rounded-full hover:bg-gray-600 bg-black"
+                  onClick={saveThresholdOnChange}
+                >
+                  {" "}
+                  Save Changes
+                </Button>
+              </SheetClose>
+            </SheetFooter>
+          </div>
         </SheetContent>
       </Sheet>
     </div>

@@ -10,7 +10,6 @@ import ExcelTable from "./ExcelTable";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
 
-
 import "jspdf-autotable";
 import { client } from "../../lib/client";
 import data from "../../utils/getData";
@@ -302,11 +301,6 @@ const FileUpload = ({ id }) => {
       U4Level = "Invalid";
     }
 
-    // console.log("u1 level:", U1Level);
-    // console.log("u2 level:", U2Level);
-    // console.log("u3 level:", U3Level);
-    // console.log("u4 level:", U4Level);
-
     const LevelArrayCIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
     const SumArrayCIE = [u1Sum, u2Sum, u3Sum, u4Sum, 60];
@@ -401,29 +395,8 @@ const FileUpload = ({ id }) => {
               </div>
             </div>
           </div>
-          
         </div>
       )}
-      {/* 
-      <div>
-        <button onClick={generatePDF}>Generate PDF</button>
-      </div>
-
-      <div
-        id="table"
-        className="max-h-[400px] table-auto overflow-y-scroll w-[30vw]   mx-auto   "
-      >
-        <OutTable
-          data={rows}
-          columns={cols}
-          tableClassName="w-[30vw] border-separate mx-auto bg-[#c6e6f5]    table-auto font-bold text-center     "
-        />
-      </div>
-
-      <div>
-        <ExcelTable rows={rows} />
-      </div>
-     */}
     </div>
   );
 };

@@ -68,7 +68,7 @@ export default function UserProfile({
             <SheetTitle>Settings</SheetTitle>
             <SheetDescription>Set Threshold value below</SheetDescription>
           </SheetHeader>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-4 py-4 ">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
                 Username
@@ -101,18 +101,7 @@ export default function UserProfile({
               </div>
             </div>
           </div>
-          <div className="flex  justify-between p-2">
-            <SheetFooter className="">
-              <SheetClose asChild>
-                <Button
-                  className="w-32 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-gray-600 bg-black"
-                  onClick={handleClick}
-                >
-                  {" "}
-                  Logout
-                </Button>
-              </SheetClose>
-            </SheetFooter>
+          <div className="grid justify-end gap-8 py-10  ">
             <SheetFooter className="">
               <SheetClose asChild>
                 <Button
@@ -121,6 +110,17 @@ export default function UserProfile({
                 >
                   {" "}
                   Save Changes
+                </Button>
+              </SheetClose>
+            </SheetFooter>
+            <SheetFooter className="">
+              <SheetClose asChild>
+                <Button
+                  className="w-30 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
+                  onClick={handleClick}
+                >
+                  {" "}
+                  Logout
                 </Button>
               </SheetClose>
             </SheetFooter>

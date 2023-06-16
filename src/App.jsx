@@ -9,6 +9,7 @@ const App = () => {
   const [userData, setUserData] = useState("");
   const [adminId, setAdminId] = useState("");
   const [id, setId] = useState("");
+  const [userCourses, setUserCourses] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const query = lectureQuery;
@@ -18,6 +19,24 @@ const App = () => {
     const user = fetchUser();
     if (!user) {
       navigate("/login");
+    } else {
+      const query = `
+      *[_type == "admin"] {
+        _id,
+        threshold,
+        courseCode,
+        "lectureDetails": lectureDetails->{
+        ...,
+      }
+}`;
+      client.fetch(query).then((data) => {
+        const loggedUserData = data.filter(
+          (item) => item.lectureDetails._id === user
+        );
+        setUserCourses(loggedUserData);
+        console.log(loggedUserData);
+        setThreshold(loggedUserData[0]?.threshold);
+      });
     }
   }, []);
   const [threshold, setThreshold] = useState(60);
@@ -28,6 +47,7 @@ const App = () => {
           path="login"
           element={
             <Login
+              set
               setAdminId={setAdminId}
               setId={setId}
               setThreshold={setThreshold}
@@ -39,6 +59,7 @@ const App = () => {
           path="/*"
           element={
             <Home
+              userCourses={userCourses}
               adminId={adminId}
               setThreshold={setThreshold}
               threshold={threshold}

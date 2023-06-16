@@ -152,7 +152,7 @@ const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   DialogContentProps
 >(({ position, size, className, children, ...props }, ref) => (
-  <SheetPortal position={position}>
+  <SheetPortal  position={position}>
     <SheetOverlay />
     <SheetPrimitive.Content
       ref={ref}

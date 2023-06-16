@@ -30,6 +30,7 @@
     "react-fast-marquee": "^1.6.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.11.2",
+    "svg2pdf.js": "^2.2.1",
     "tailwind-merge": "^1.13.1",
     "tailwindcss-animate": "^1.0.6"
   },

@@ -266,18 +266,6 @@ const FileUpload = ({ id }) => {
     var u3Sum = 0;
     var u4Sum = 0;
 
-    // for (var i = 1; i < data.length; i++) {
-    //   u1Sum += data[i][0];
-    //   u2Sum += data[i][1];
-    //   u3Sum += data[i][2];
-    //   u4Sum += data[i][3];
-    // }
-
-    // console.log("u1 sum:", u1Sum);
-    // console.log("u2 sum:", u2Sum);
-    // console.log("u3 sum:", u3Sum);
-    // console.log("u4 sum:", u4Sum);
-
     let thirty_per = parseInt((30 * STUDENT_COUNT) / 100);
     let forty_per = parseInt((40 * STUDENT_COUNT) / 100);
     let fifty_per = parseInt((50 * STUDENT_COUNT) / 100);
@@ -288,11 +276,6 @@ const FileUpload = ({ id }) => {
     let u2 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
     let u3 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
     let u4 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
-
-    // console.log("u1 sum:", u1);
-    // console.log("u2 sum:", u2);
-    // console.log("u3 sum:", u3);
-    // console.log("u4 sum:", u4);
 
     var u1Sum = 0;
 
@@ -310,17 +293,6 @@ const FileUpload = ({ id }) => {
         u4Sum++;
       }
     }
-
-    // console.log("u1  total:", u1Sum);
-    // console.log("u2 total:", u2Sum);
-    // console.log("u3 total:", u3Sum);
-    // console.log("u4 total:", u4Sum);
-
-    // console.log("30 percentile:", thirty_per);
-    // console.log("40 percentile:", forty_per);
-    // console.log("50 percentile:", fifty_per);
-    // console.log("60 percentile:", sixty_per);
-    // console.log("70 percentile:", seventy_per);
 
     let U1Level;
     let U2Level;

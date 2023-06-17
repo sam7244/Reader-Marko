@@ -257,7 +257,6 @@ const FileUpload = ({ id }) => {
     setRows(updatedData);
   };
 
-
   const threshhold = () => {
     const THRESH_HOLD = 60;
     const STUDENT_COUNT = data.length;
@@ -439,8 +438,6 @@ const FileUpload = ({ id }) => {
             placeholder="Choose File"
             onChange={readUploadFile}
           />
-
-         
         </div>
       )}
 
@@ -484,15 +481,12 @@ const FileUpload = ({ id }) => {
                 />
               </div>
             </div>
+            <div className=" border-2 ml-auto mt-2 bg-red-400 text-white font-bold py-3  flex justify-end  px-6">
+              <button onClick={generatePDF}>Generate PDF</button>
+            </div>
           </div>
         </div>
       )}
-
-      <div>
-        <button onClick={generatePDF}>Generate PDF</button>
-      </div>
-
-   
     </div>
   );
 };

@@ -459,8 +459,8 @@ const FileUpload = ({ id }) => {
             >
               <BarGraph />
             </div>
-            <div className=" flex flex-col md:flex-row h-1/2">
-              <div className=" flex w-1/2 justify-center items-center">
+            <div className=" grid grid-cols-2 h-full">
+              <div className=" grid w-full justify-center items-center">
                 <OutputTableSec
                   rows={rows}
                   isUploaded={isUploaded}
@@ -470,7 +470,7 @@ const FileUpload = ({ id }) => {
                   setAttainment={setAttainment}
                 />
               </div>
-              <div className="flex w-1/2 justify-center items-center">
+              <div className="grid w-full justify-center items-center">
                 <OutputTableSec
                   rows={rows}
                   isUploaded={isUploaded}
@@ -481,7 +481,10 @@ const FileUpload = ({ id }) => {
                 />
               </div>
             </div>
-            <div className=" border-2 ml-auto mt-2 bg-red-400 text-white font-bold py-3  flex justify-end  px-6">
+            <div
+              style={{ borderRadius: "10px" }}
+              className=" border-2 ml-auto mt-2 bg-red-400 text-white font-bold py-3  flex justify-end  px-6"
+            >
               <button onClick={generatePDF}>Generate PDF</button>
             </div>
           </div>

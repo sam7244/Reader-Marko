@@ -209,7 +209,6 @@ const FileUpload = ({ id }) => {
 
     uploadPDFToSanity(pdfFile);
 
-    // uploadPDFToSanity(pdfFile);
     doc.save("output.pdf");
 
     toast.success("Pdf Downloaded Successfully");

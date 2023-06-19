@@ -394,7 +394,7 @@ const FileUpload = ({ id }) => {
   };
 
   return (
-    <div className=" p-10 h-screen  overflow-hidden">
+    <div className=" p-10 min-h-screen  overflow-hidden">
       {!isUploaded && (
         <div
           style={{ borderRadius: "9px" }}
@@ -425,9 +425,9 @@ const FileUpload = ({ id }) => {
             handleChange={handleChange}
             isUploaded={isUploaded}
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             <div
-              className="flex h-1/2 justify-center items-center  "
+              className="flex w-[300px] md:w-auto h-1/2 justify-center items-center  "
               id="graph"
             >
               <BarGraph />

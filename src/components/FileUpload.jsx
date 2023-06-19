@@ -307,6 +307,7 @@ const FileUpload = ({ id }) => {
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
   };
+ // console.log(attainment);
 
   return (
     <div className=" p-10 min-h-screen  overflow-hidden">
@@ -345,7 +346,7 @@ const FileUpload = ({ id }) => {
               className="flex w-[300px] md:w-auto h-1/2 justify-center items-center  "
               id="graph"
             >
-              <BarGraph />
+              <BarGraph attainment={attainment} />
             </div>
             <div className=" grid grid-cols-2 h-full">
               <div className=" grid w-full justify-center items-center">

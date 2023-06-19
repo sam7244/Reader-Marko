@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarGraph = () => {
+const BarGraph = ({ attainment }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -9,28 +9,26 @@ const BarGraph = () => {
 
     const ctx = chartRef.current.getContext("2d");
 
-    // Dummy data
-    const data = {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    // Extract labels and data from the attainment array
+    const labels = attainment.slice(1).map((row) => row[0]);
+    const data = attainment.slice(1).map((row) => row[row.length - 1]);
+
+    const chartData = {
+      labels: labels,
       datasets: [
         {
-          label: "Dummy Data",
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.5)",
-            "rgba(54, 162, 235, 0.5)",
-            "rgba(255, 206, 86, 0.5)",
-            "rgba(75, 192, 192, 0.5)",
-            "rgba(153, 102, 255, 0.5)",
-            "rgba(255, 159, 64, 0.5)",
-          ],
+          label: "Attainment",
+          data: data,
+         backgroundColor: "rgba(54, 162, 235, 0.8)",
+          hoverBackgroundColor: "rgba(54, 162, 235, 1)",
         },
       ],
     };
 
     const options = {
       responsive: true,
-      maintainAspectRatio: false,
+  maintainAspectRatio: false,
+  
     };
 
     if (chartRef.current) {
@@ -40,7 +38,7 @@ const BarGraph = () => {
 
       chartInstance = new Chart(ctx, {
         type: "bar",
-        data: data,
+        data: chartData,
         options: options,
       });
     }
@@ -50,7 +48,7 @@ const BarGraph = () => {
         chartInstance.destroy();
       }
     };
-  }, []);
+  }, [attainment]);
 
   return <canvas ref={chartRef} />;
 };

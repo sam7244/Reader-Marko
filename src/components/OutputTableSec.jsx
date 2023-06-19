@@ -19,8 +19,8 @@ const OutputTableSec = ({
   isUploaded,
 }) => {
   let AttainmentData = [["CO", "CIE", "Level", "SIE", "level", "Avg", "Total"]];
-
   useEffect(() => {
+    AttainmentData = [["CO", "CIE", "Level", "SIE", "level", "Avg", "Total"]];
     const THRESH_HOLD = 60;
     const STUDENT_COUNT = data.length;
 
@@ -132,6 +132,7 @@ const OutputTableSec = ({
     LevelMap.set("L4", 4);
     LevelMap.set("L5", 5);
 
+    
     for (let i = 0; i < 5; i++) {
       var AvgAttainent = (
         (parseInt(LevelMap.get(LevelArrayCIE[i])) +
@@ -151,8 +152,9 @@ const OutputTableSec = ({
         PercetAttainment,
       ]);
     }
-    setAttainment(AttainmentData);
 
+    console.log(AttainmentData);
+    setAttainment(AttainmentData);
   }, [isUploaded]);
 
   return (

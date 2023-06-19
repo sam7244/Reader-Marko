@@ -175,7 +175,7 @@ const calculateTable2Data = () => {
   updatedTable2Data.push(avgRow);
 
   //setmappedData(updatedTable2Data);
-  console.log(updatedTable2Data);
+  //console.log(updatedTable2Data);
   return updatedTable2Data;
 };
 

@@ -19,7 +19,7 @@ const CourseCodeSelector = ({ userCourses, setThreshold }) => {
           const getThresholdOfSelectedCourse = userCourses?.filter(
             (item) => item.courseCode === courseCode
           );
-          console.log(getThresholdOfSelectedCourse);
+          //console.log(getThresholdOfSelectedCourse);
           setThreshold(getThresholdOfSelectedCourse[0]?.threshold);
         }}
         value={courseCode}

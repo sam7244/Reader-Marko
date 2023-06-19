@@ -38,7 +38,7 @@ export default function UserProfile({
   const userName = userCourses[0]?.lectureDetails?.name
     ? userCourses[0]?.lectureDetails?.name
     : "xyz@gmail.com";
- // console.log("threshold", threshold);
+  // console.log("threshold", threshold);
 
   const saveThresholdOnChange = async (e) => {
     e.preventDefault();
@@ -105,7 +105,7 @@ export default function UserProfile({
             <SheetFooter className="">
               <SheetClose asChild>
                 <Button
-                  className="text-white  w-38 text-base transition duration-150 hover:scale-110  rounded-full hover:bg-gray-600 bg-black"
+                  className="text-white  w-40 text-base transition duration-150 hover:scale-110  rounded-full hover:bg-gray-600 bg-black"
                   onClick={saveThresholdOnChange}
                 >
                   {" "}
@@ -116,7 +116,7 @@ export default function UserProfile({
             <SheetFooter className="">
               <SheetClose asChild>
                 <Button
-                  className="w-30 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
+                  className="w-40 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
                   onClick={handleClick}
                 >
                   {" "}

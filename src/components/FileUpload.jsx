@@ -15,6 +15,8 @@ import { client } from "../../lib/client";
 import data from "../../utils/getData";
 import OutputTable from "./OutputTable";
 
+import Calculate from "./Calculate";
+
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
   const [setsaveThreshold, setSetsaveThreshold] = useState(Threshold);
@@ -452,6 +454,7 @@ const FileUpload = ({ id }) => {
                   setAttainment={setAttainment}
                 />
               </div>
+              <Calculate />
             </div>
             <div
               style={{ borderRadius: "10px" }}

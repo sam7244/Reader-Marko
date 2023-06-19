@@ -38,7 +38,7 @@ export default function UserProfile({
   const userName = userCourses[0]?.lectureDetails?.name
     ? userCourses[0]?.lectureDetails?.name
     : "xyz@gmail.com";
-  console.log("threshold", threshold);
+ // console.log("threshold", threshold);
 
   const saveThresholdOnChange = async (e) => {
     e.preventDefault();

@@ -8,6 +8,11 @@ export default {
       title: 'CourseCode',
       type: 'string',
     },
+      {
+      name: 'map',
+      title: 'PO | CO Map',
+      type: 'file',
+    },
     {
       name:'threshold',
       title:'Threshold',

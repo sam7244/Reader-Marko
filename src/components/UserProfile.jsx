@@ -4,13 +4,6 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
-import {
   Sheet,
   SheetClose,
   SheetContent,
@@ -22,7 +15,6 @@ import {
 } from "../../components/ui/sheet";
 import { client } from "../../lib/client";
 import CourseCodeSelector from "./CourseCodeSelector";
-import DemoExcelExport from "./DemoExcelExport";
 import POCODemo from "../../utils/POCODemo";
 
 export default function UserProfile({
@@ -36,7 +28,11 @@ export default function UserProfile({
     setThreshold(
       userCourses?.[0]?.threshold ? userCourses?.[0]?.threshold : 60
     );
+
+    setAdminId(userCourses[0]?._id ? userCourses[0]?._id : "sdfa");
   }, []);
+
+  const [adminId, setAdminId] = useState("");
 
   const uploadImage = (e) => {
     const selectedFile = e.target.files[0];
@@ -50,7 +46,7 @@ export default function UserProfile({
         // Here you can decide what to do with the returned asset document.
         // If you want to set a specific asset field you can to the following:
         return client
-          .patch("fcd53381-69a7-4d90-9b79-acd3ee82c7b3")
+          .patch(adminId)
           .set({
             map: {
               _type: "file",

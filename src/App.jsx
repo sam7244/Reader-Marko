@@ -34,7 +34,7 @@ const App = () => {
           (item) => item.lectureDetails._id === user
         );
         setUserCourses(loggedUserData);
-        //console.log(loggedUserData);
+
         setThreshold(loggedUserData[0]?.threshold);
       });
     }

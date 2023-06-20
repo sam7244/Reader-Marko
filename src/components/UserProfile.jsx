@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
+
 import {
   Select,
   SelectContent,
@@ -21,6 +22,8 @@ import {
 } from "../../components/ui/sheet";
 import { client } from "../../lib/client";
 import CourseCodeSelector from "./CourseCodeSelector";
+import DemoExcelExport from "./DemoExcelExport";
+import POCODemo from "../../utils/POCODemo";
 
 export default function UserProfile({
   userCourses,
@@ -34,6 +37,32 @@ export default function UserProfile({
       userCourses?.[0]?.threshold ? userCourses?.[0]?.threshold : 60
     );
   }, []);
+
+  const uploadImage = (e) => {
+    const selectedFile = e.target.files[0];
+    console.log(selectedFile?.name);
+    // uploading asset to sanity
+    client.assets
+      .upload("file", selectedFile, {
+        filename: selectedFile?.name,
+      })
+      .then((fileAsset) => {
+        // Here you can decide what to do with the returned asset document.
+        // If you want to set a specific asset field you can to the following:
+        return client
+          .patch("fcd53381-69a7-4d90-9b79-acd3ee82c7b3")
+          .set({
+            map: {
+              _type: "file",
+              asset: { _type: "reference", _ref: fileAsset._id },
+            },
+          })
+          .commit();
+      })
+      .then(() => {
+        console.log("Done!");
+      });
+  };
 
   const userName = userCourses[0]?.lectureDetails?.name
     ? userCourses[0]?.lectureDetails?.name
@@ -81,6 +110,15 @@ export default function UserProfile({
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right ">CourseCode:</Label>
+              <div className="  col-span-3">
+                <CourseCodeSelector
+                  setThreshold={setThreshold}
+                  userCourses={userCourses}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
                 Threshold
               </Label>
@@ -91,12 +129,27 @@ export default function UserProfile({
                 className="col-span-3"
               />
             </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right ">CourseCode:</Label>
-              <div className="ml-1 col-span-3">
-                <CourseCodeSelector
-                  setThreshold={setThreshold}
-                  userCourses={userCourses}
+              <Label className="text-center ">Sample PO|CO</Label>
+              <div className="ml-1  col-span-3 ">
+                <POCODemo />
+              </div>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-center">
+                {" "}
+                <p> POCO</p>{" "}
+              </Label>
+              <div className="mx-auto col-span-3 ">
+                <input
+                  className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
+                  style={{ borderRadius: "10px" }}
+                  type="file"
+                  name="upload"
+                  id="upload"
+                  placeholder="Choose File"
+                  onChange={uploadImage}
                 />
               </div>
             </div>

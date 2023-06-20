@@ -24,19 +24,26 @@ export default function UserProfile({
   setOpen,
   threshold,
 }) {
+  const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
   useEffect(() => {
     setThreshold(
       userCourses?.[0]?.threshold ? userCourses?.[0]?.threshold : 60
     );
-
-    setAdminId(userCourses[0]?._id ? userCourses[0]?._id : "sdfa");
-  }, []);
+    const query = `
+      *[_type == 'admin' && courseCode == '${courseCode}']{
+       _id
+      }
+    `;
+    client.fetch(query).then((doc) => {
+      console.log(doc);
+      setAdminId(doc[0]?._id);
+    });
+  }, [courseCode]);
 
   const [adminId, setAdminId] = useState("");
-
   const uploadImage = (e) => {
     const selectedFile = e.target.files[0];
-    console.log(selectedFile?.name);
+
     // uploading asset to sanity
     client.assets
       .upload("file", selectedFile, {
@@ -109,6 +116,8 @@ export default function UserProfile({
               <Label className="text-right ">CourseCode:</Label>
               <div className="  col-span-3">
                 <CourseCodeSelector
+                  courseCode={courseCode}
+                  setCourseCode={setCourseCode}
                   setThreshold={setThreshold}
                   userCourses={userCourses}
                 />

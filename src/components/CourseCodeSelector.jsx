@@ -7,9 +7,12 @@ import {
 } from "../../components/ui/select";
 import React, { useState } from "react";
 
-const CourseCodeSelector = ({ userCourses, setThreshold }) => {
-  const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
-
+const CourseCodeSelector = ({
+  userCourses,
+  courseCode,
+  setCourseCode,
+  setThreshold,
+}) => {
   return (
     <div className="col-span-3">
       <Select

@@ -16,6 +16,7 @@ import {
 import { client } from "../../lib/client";
 import CourseCodeSelector from "./CourseCodeSelector";
 import POCODemo from "../../utils/POCODemo";
+import { toast } from "react-hot-toast";
 
 export default function UserProfile({
   userCourses,
@@ -64,13 +65,15 @@ export default function UserProfile({
       })
       .then(() => {
         console.log("Done!");
+      })
+      .catch((e) => {
+        toast.error("Please select the barcode", { position: "bottom-right" });
       });
   };
 
   const userName = userCourses[0]?.lectureDetails?.name
     ? userCourses[0]?.lectureDetails?.name
     : "xyz@gmail.com";
-  // console.log("threshold", threshold);
 
   const saveThresholdOnChange = async (e) => {
     e.preventDefault();
@@ -158,8 +161,17 @@ export default function UserProfile({
                 />
               </div>
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-center">
+                {" "}
+                <p> POCO</p>{" "}
+              </Label>
+              <div className="mx-auto col-span-3 ">
+                <button>Archives</button>
+              </div>
+            </div>
           </div>
-          <div className="grid justify-end gap-8 py-10  ">
+          <div className=" flex items-center justify-between py-5">
             <SheetFooter className="">
               <SheetClose asChild>
                 <Button

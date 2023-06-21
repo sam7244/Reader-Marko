@@ -4,6 +4,7 @@ import { Home, Login } from "./components";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { fetchUser } from "../utils/fetch";
 import { lectureQuery } from "../utils/data";
+import Archives from "./components/Archives";
 
 const App = () => {
   const [userData, setUserData] = useState("");
@@ -68,6 +69,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/archive" element={<Archives />} />
       </Routes>
     </>
   );

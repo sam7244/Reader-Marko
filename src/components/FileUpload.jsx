@@ -15,6 +15,8 @@ import OutputTable from "./OutputTable";
 import OutputTableThird from "./OutputTableThird";
 import Calculate from "./Calculate";
 import calculateTable2Data from "../../utils/calculateTable2Data";
+import MainExcel from "./MainExcel";
+import calculateUnitScores from "../../utils/CalculateExcelData";
 
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
@@ -24,6 +26,8 @@ const FileUpload = ({ id }) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [attainment, setAttainment] = useState([]);
   const [mappedData, setmappedData] = useState([]);
+  const [marks, setMarks] = useState([]);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -41,6 +45,12 @@ const FileUpload = ({ id }) => {
       }
     });
   };
+
+  useEffect(() => {
+    const marksData = calculateUnitScores(setMarks);
+    // console.log(marksData);
+    setMarks(marksData);
+  }, []);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -88,8 +98,8 @@ const FileUpload = ({ id }) => {
 
     addHeading("Table Given by the god");
     doc.autoTable({
-      head: [rows[0]], // Use the first row as table headers
-      body: rows.slice(1), // Exclude the first row from table body
+      head: [marks[0]], // Use the first row as table headers
+      body: marks.slice(1), // Exclude the first row from table body
       startY: 20, // Set the initial y-coordinate for the table
       theme: "grid",
 
@@ -101,8 +111,8 @@ const FileUpload = ({ id }) => {
       columnStyles: {
         // Add more column styles as needed
       },
-      didDrawPage: function (rows) {
-        const { table, pageNumber } = rows;
+      didDrawPage: function (marks) {
+        const { table, pageNumber } = marks;
         const totalPages = doc.internal.getNumberOfPages();
 
         if (pageNumber === totalPages) {
@@ -110,8 +120,8 @@ const FileUpload = ({ id }) => {
           if (table.height > doc.internal.pageSize.getHeight() - 20) {
             doc.addPage(); // Add a new page
             doc.autoTable({
-              head: [rows[0]], // Repeat the table headers on the new page
-              body: rows.slice(1), // Use the remaining body data
+              head: [marks[0]], // Repeat the table headers on the new page
+              body: marks.slice(1), // Use the remaining body data
               startY: 20, // Set the initial y-coordinate for the table on the new page
 
               styles: {
@@ -261,47 +271,53 @@ const FileUpload = ({ id }) => {
   };
 
   const handleChange = () => {
+    setIsUpdated(true);
+    const marksData = calculateUnitScores(setMarks);
+    // console.log(marksData);
+    setMarks(marksData);
+    console.log(marks);
     // Create a map to track rows with the same RollNo
-    const rollNoMap = new Map();
+    //const rollNoMap = new Map();
+    //setRows(marksData);
+    // // Iterate over the data rows starting from index 1
+    // for (let i = 1; i < rows.length; i++) {
+    //   const [rollNo, u1, u2] = rows[i];
 
-    // Iterate over the data rows starting from index 1
-    for (let i = 1; i < rows.length; i++) {
-      const [rollNo, u1, u2] = rows[i];
+    //   // Check if the RollNo already exists in the map
+    //   if (rollNoMap.has(rollNo)) {
+    //     const existingRow = rollNoMap.get(rollNo);
 
-      // Check if the RollNo already exists in the map
-      if (rollNoMap.has(rollNo)) {
-        const existingRow = rollNoMap.get(rollNo);
+    //     // Compare u1 and u2 values and update if necessary
+    //     if (u1 > existingRow.u1) {
+    //       existingRow.u1 = u1;
+    //     }
+    //     if (u2 > existingRow.u2) {
+    //       existingRow.u2 = u2;
+    //     }
+    //   } else {
+    //     // If the RollNo doesn't exist, add it to the map
+    //     rollNoMap.set(rollNo, { u1, u2 });
+    //   }
+    // }
 
-        // Compare u1 and u2 values and update if necessary
-        if (u1 > existingRow.u1) {
-          existingRow.u1 = u1;
-        }
-        if (u2 > existingRow.u2) {
-          existingRow.u2 = u2;
-        }
-      } else {
-        // If the RollNo doesn't exist, add it to the map
-        rollNoMap.set(rollNo, { u1, u2 });
-      }
-    }
-    const updatedData = rows.map((row) => {
-      if (row[0] === "RollNo" && row.at(-1) !== "Sum") {
-        // If it's the header row, add the 'Sum' column header
-        return [...row, "Sum"];
-      } else if (row.length < 4) {
-        const rollNo = row[0];
-        const maxMarks = rollNoMap.get(rollNo);
-        const sum = maxMarks.u1 + maxMarks.u2;
-        return [...row, sum];
-      }
-      return row;
-    });
+    // const updatedData = rows.map((row) => {
+    //   if (row[0] === "RollNo" && row.at(-1) !== "Sum") {
+    //     // If it's the header row, add the 'Sum' column header
+    //     return [...row, "Sum"];
+    //   } else if (row.length < 4) {
+    //     const rollNo = row[0];
+    //     const maxMarks = rollNoMap.get(rollNo);
+    //     const sum = maxMarks.u1 + maxMarks.u2;
+    //     return [...row, sum];
+    //   }
+    //   return row;
+    // });
 
-    if (cols.length === 4) cols.push({ name: "E", key: 4 });
+    // if (cols.length === 4) cols.push({ name: "E", key: 4 });
 
-    setCols(cols);
+    // setCols(cols);
 
-    setRows(updatedData);
+    // setRows(updatedData);
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
   };
@@ -334,7 +350,7 @@ const FileUpload = ({ id }) => {
             Threshold={Threshold}
             setsaveThreshold={setsaveThreshold}
             setThreshold={setThreshold}
-            rows={rows}
+            rows={marks}
             setIsUploaded={setIsUploaded}
             handleChange={handleChange}
             isUploaded={isUploaded}
@@ -344,17 +360,17 @@ const FileUpload = ({ id }) => {
               className="flex w-[300px] md:w-auto h-1/2 justify-center items-center  "
               id="graph"
             >
-              <BarGraph attainment={attainment} />
+              <BarGraph attainment={attainment} isUpdated={isUpdated} />
             </div>
             <div className=" grid grid-cols-2 h-full">
               <div className=" grid w-full justify-center items-center">
                 <OutputTableSec
-                  rows={rows}
-                  isUploaded={isUploaded}
-                  setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
                   attainment={attainment}
                   setAttainment={setAttainment}
+                  isUpdated={isUpdated}
+                  marks={marks}
+                  threshold={Threshold}
                 />
               </div>
 
@@ -365,6 +381,7 @@ const FileUpload = ({ id }) => {
                   setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
                   mappedData={mappedData}
+                  isUpdated={isUpdated}
                 />
               </div>
             </div>
@@ -372,6 +389,7 @@ const FileUpload = ({ id }) => {
               style={{ borderRadius: "10px" }}
               className=" border-2 ml-auto mt-2 bg-red-400 text-white font-bold py-3  flex justify-end  px-6"
             >
+              <MainExcel />
               <button onClick={generatePDF}>Generate PDF</button>
             </div>
           </div>

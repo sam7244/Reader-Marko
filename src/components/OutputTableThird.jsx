@@ -15,7 +15,16 @@ const OutputTableThird = ({
   handleChange,
   setIsUploaded,
   mappedData,
+  isUpdated
 }) => {
+  if (!isUpdated) {
+    return (
+      <div className="flex justify-center items-center">
+        <p>please update the excel form</p>
+      </div>
+    );
+  }
+  
   return (
     <div className="max-h-[200px] max-w-2xl overflow-y-scroll ">
       {/* <div className="flex justify-between items-center">

@@ -17,6 +17,7 @@ import { client } from "../../lib/client";
 import CourseCodeSelector from "./CourseCodeSelector";
 import POCODemo from "../../utils/POCODemo";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile({
   userCourses,
@@ -91,6 +92,7 @@ export default function UserProfile({
     localStorage.removeItem("user");
     window.location.reload();
   };
+  const navigate = useNavigate();
   return (
     <div className="">
       <Sheet open={open} onOpenChange={setOpen}>
@@ -149,7 +151,7 @@ export default function UserProfile({
                 {" "}
                 <p> POCO</p>{" "}
               </Label>
-              <div className="mx-auto col-span-3 ">
+              <div className="w-[200px] col-span-3 ">
                 <input
                   className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
                   style={{ borderRadius: "10px" }}
@@ -164,10 +166,20 @@ export default function UserProfile({
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center">
                 {" "}
-                <p> POCO</p>{" "}
+                <p> Archives</p>{" "}
               </Label>
-              <div className="mx-auto col-span-3 ">
-                <button>Archives</button>
+              <div
+                style={{ borderRadius: "10px" }}
+                className=" w-[250px] transition duration-150 ease-in-out hover:scale-110 m-2 col-span-3 bg-gray-300  "
+              >
+                <button
+                  onClick={() => {
+                    navigate("/archive");
+                  }}
+                  className="py-3 font-bold text-xl  px-4 flex mx-auto"
+                >
+                  Archives
+                </button>
               </div>
             </div>
           </div>

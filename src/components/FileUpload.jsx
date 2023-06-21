@@ -5,8 +5,6 @@ import DropZone from "./DropZone";
 import { ExcelRenderer } from "react-excel-renderer";
 import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
-
-import ExcelTable from "./ExcelTable";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
 
@@ -307,7 +305,7 @@ const FileUpload = ({ id }) => {
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
   };
- // console.log(attainment);
+  // console.log(attainment);
 
   return (
     <div className=" p-10 min-h-screen  overflow-hidden">

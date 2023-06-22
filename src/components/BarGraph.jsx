@@ -1,7 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarGraph = ({ attainment }) => {
+const BarGraph = ({ attainment, isUpdated }) => {
+  if (!isUpdated) {
+    return (
+      <div className="flex justify-center items-center">
+        <p>please update the excel form</p>
+      </div>
+    );
+  }
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +26,7 @@ const BarGraph = ({ attainment }) => {
         {
           label: "Attainment",
           data: data,
-         backgroundColor: "rgba(54, 162, 235, 0.8)",
+          backgroundColor: "rgba(54, 162, 235, 0.8)",
           hoverBackgroundColor: "rgba(54, 162, 235, 1)",
         },
       ],
@@ -27,8 +34,7 @@ const BarGraph = ({ attainment }) => {
 
     const options = {
       responsive: true,
-  maintainAspectRatio: false,
-  
+      maintainAspectRatio: false,
     };
 
     if (chartRef.current) {
@@ -54,3 +60,4 @@ const BarGraph = ({ attainment }) => {
 };
 
 export default BarGraph;
+BarGraph.__isStatic = true;

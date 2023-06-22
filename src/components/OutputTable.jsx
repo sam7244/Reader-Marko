@@ -35,7 +35,7 @@ const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
 
         <TableHeader>
           <TableRow>
-            {rows[0].map((item, idx) => (
+            {rows[0]?.map((item, idx) => (
               <TableHead key={item} className="font-bold  text-lg w-[100px]">
                 {item}
               </TableHead>
@@ -44,7 +44,7 @@ const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
         </TableHeader>
 
         <TableBody>
-          {rows.slice(1).map((items, idx) => (
+          {rows?.slice(1).map((items, idx) => (
             <TableRow key={`${items}----${idx + Math.random()}`}>
               {items.map((val) => (
                 <TableCell

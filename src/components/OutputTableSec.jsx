@@ -11,23 +11,33 @@ import {
 import data from "../../utils/getData";
 
 const OutputTableSec = ({
-  rows,
-  handleChange,
-  setIsUploaded,
   attainment,
   setAttainment,
   isUploaded,
+  isUpdated,
+  marks,
+  threshold,
 }) => {
+  if (!isUpdated) {
+    return (
+      <div className="flex justify-center items-center">
+        <p>please update the excel form</p>
+      </div>
+    );
+  }
+
   let AttainmentData = [["CO", "CIE", "Level", "SIE", "level", "Avg", "Total"]];
   useEffect(() => {
     AttainmentData = [["CO", "CIE", "Level", "SIE", "level", "Avg", "Total"]];
-    const THRESH_HOLD = 60;
-    const STUDENT_COUNT = data.length;
+    console.log(threshold);
+    const THRESH_HOLD = parseInt(threshold);
+    const STUDENT_COUNT = marks.length;
 
     var u1Sum = 0;
     var u2Sum = 0;
     var u3Sum = 0;
     var u4Sum = 0;
+    var u5Sum = 0;
 
     let thirty_per = parseInt((30 * STUDENT_COUNT) / 100);
     let forty_per = parseInt((40 * STUDENT_COUNT) / 100);
@@ -39,21 +49,25 @@ const OutputTableSec = ({
     let u2 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
     let u3 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
     let u4 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
+    let u5 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
 
     var u1Sum = 0;
 
-    for (var i = 1; i < data.length; i++) {
-      if (data[i][0] > u1) {
+    for (var i = 1; i < marks.length; i++) {
+      if (marks[i][0] > u1) {
         u1Sum++;
       }
-      if (data[i][1] > u2) {
+      if (marks[i][1] > u2) {
         u2Sum++;
       }
-      if (data[i][2] > u3) {
+      if (marks[i][2] > u3) {
         u3Sum++;
       }
-      if (data[i][3] > u3) {
+      if (marks[i][3] > u4) {
         u4Sum++;
+      }
+      if (marks[i][4] > u5) {
+        u5Sum++;
       }
     }
 
@@ -61,6 +75,7 @@ const OutputTableSec = ({
     let U2Level;
     let U3Level;
     let U4Level;
+    let U5Level;
 
     if (u1Sum > thirty_per && u1Sum < forty_per) {
       U1Level = "L1";
@@ -95,7 +110,7 @@ const OutputTableSec = ({
     } else if (u3Sum > forty_per && u3Sum < fifty_per) {
       U3Level = "L2";
     } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
-      U1Level = "L3";
+      U3Level = "L3";
     } else if (u3Sum > sixty_per && u3Sum < seventy_per) {
       U3Level = "L4";
     } else if (u3Sum > seventy_per && u3Sum < STUDENT_COUNT) {
@@ -109,7 +124,7 @@ const OutputTableSec = ({
     } else if (u4Sum > forty_per && u4Sum < fifty_per) {
       U4Level = "L2";
     } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
-      U1Level = "L3";
+      U4Level = "L3";
     } else if (u4Sum > sixty_per && u4Sum < seventy_per) {
       U4Level = "L4";
     } else if (u4Sum > seventy_per && u4Sum < STUDENT_COUNT) {
@@ -118,10 +133,24 @@ const OutputTableSec = ({
       U4Level = "Invalid";
     }
 
-    const LevelArrayCIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
-    const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, "L5"];
-    const SumArrayCIE = [u1Sum, u2Sum, u3Sum, u4Sum, 60];
-    const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, 60];
+    if (u5Sum > thirty_per && u5Sum < forty_per) {
+      U5Level = "L1";
+    } else if (u5Sum > forty_per && u5Sum < fifty_per) {
+      U5Level = "L2";
+    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+      U5Level = "L3";
+    } else if (u5Sum > sixty_per && u5Sum < seventy_per) {
+      U5Level = "L4";
+    } else if (u5Sum > seventy_per && u5Sum < STUDENT_COUNT) {
+      U5Level = "L5";
+    } else {
+      U5Level = "Invalid";
+    }
+
+    const LevelArrayCIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
+    const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
+    const SumArrayCIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
+    const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
     const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
 
     const LevelMap = new Map();
@@ -132,7 +161,6 @@ const OutputTableSec = ({
     LevelMap.set("L4", 4);
     LevelMap.set("L5", 5);
 
-    
     for (let i = 0; i < 5; i++) {
       var AvgAttainent = (
         (parseInt(LevelMap.get(LevelArrayCIE[i])) +
@@ -153,7 +181,7 @@ const OutputTableSec = ({
       ]);
     }
 
-    console.log(AttainmentData);
+    //console.log(AttainmentData);
     setAttainment(AttainmentData);
   }, [isUploaded]);
 

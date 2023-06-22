@@ -17,6 +17,7 @@ const OutputTableSec = ({
   isUpdated,
   marks,
   threshold,
+  rowsCIE,
 }) => {
   if (!isUpdated) {
     return (
@@ -29,15 +30,22 @@ const OutputTableSec = ({
   let AttainmentData = [["CO", "CIE", "Level", "SIE", "level", "Avg", "Total"]];
   useEffect(() => {
     AttainmentData = [["CO", "CIE", "Level", "SIE", "level", "Avg", "Total"]];
-    console.log(threshold);
-    const THRESH_HOLD = parseInt(threshold);
+
+    const THRESH_HOLD = 60;
     const STUDENT_COUNT = marks.length;
+    const STUDENT_CIE_COUNT = rowsCIE.length;
 
     var u1Sum = 0;
     var u2Sum = 0;
     var u3Sum = 0;
     var u4Sum = 0;
     var u5Sum = 0;
+
+    var u1SumCIE = 0;
+    var u2SumCIE = 0;
+    var u3SumCIE = 0;
+    var u4SumCIE = 0;
+    var u5SumCIE = 0;
 
     let thirty_per = parseInt((30 * STUDENT_COUNT) / 100);
     let forty_per = parseInt((40 * STUDENT_COUNT) / 100);
@@ -51,7 +59,11 @@ const OutputTableSec = ({
     let u4 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
     let u5 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
 
-    var u1Sum = 0;
+    let u1CIE = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
+    let u2CIE = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
+    let u3CIE = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
+    let u4CIE = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
+    let u5CIE = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
 
     for (var i = 1; i < marks.length; i++) {
       if (marks[i][0] > u1) {
@@ -71,11 +83,35 @@ const OutputTableSec = ({
       }
     }
 
+    for (var i = 1; i < rowsCIE.length; i++) {
+      if (rowsCIE[i][2] > u1CIE) {
+        u1SumCIE++;
+      }
+      if (rowsCIE[i][3] > u2CIE) {
+        u2SumCIE++;
+      }
+      if (rowsCIE[i][4] > u3CIE) {
+        u3SumCIE++;
+      }
+      if (rowsCIE[i][5] > u4CIE) {
+        u4SumCIE++;
+      }
+      if (rowsCIE[i][7] > u5CIE) {
+        u5SumCIE++;
+      }
+    }
+
     let U1Level;
     let U2Level;
     let U3Level;
     let U4Level;
     let U5Level;
+
+    let U1LevelCIE;
+    let U2LevelCIE;
+    let U3LevelCIE;
+    let U4LevelCIE;
+    let U5LevelCIE;
 
     if (u1Sum > thirty_per && u1Sum < forty_per) {
       U1Level = "L1";
@@ -147,9 +183,88 @@ const OutputTableSec = ({
       U5Level = "Invalid";
     }
 
-    const LevelArrayCIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
+    if (u1SumCIE > thirty_per && u1SumCIE < forty_per) {
+      U1LevelCIE = "L1";
+    } else if (u1SumCIE > forty_per && u1SumCIE < fifty_per) {
+      U1LevelCIE = "L2";
+    } else if (u1SumCIE > fifty_per && u1SumCIE < sixty_per) {
+      U1LevelCIE = "L3";
+    } else if (u1SumCIE > sixty_per && u1SumCIE < seventy_per) {
+      U1LevelCIE = "L4";
+    } else if (u1SumCIE > seventy_per && u1SumCIE < STUDENT_COUNT) {
+      U1LevelCIE = "L5";
+    } else {
+      U1LevelCIE = "Invalid";
+    }
+
+    if (u2SumCIE > thirty_per && u2SumCIE < forty_per) {
+      U2LevelCIE = "L1";
+    } else if (u2SumCIE > forty_per && u2SumCIE < fifty_per) {
+      U2LevelCIE = "L2";
+    } else if (u2SumCIE > fifty_per && u2SumCIE < sixty_per) {
+      U2LevelCIE = "L3";
+    } else if (u2SumCIE > sixty_per && u2SumCIE < seventy_per) {
+      U2LevelCIE = "L4";
+    } else if (u2SumCIE > seventy_per && u2SumCIE < STUDENT_COUNT) {
+      U2LevelCIE = "L5";
+    } else {
+      U2LevelCIE = "Invalid";
+    }
+
+    if (u3SumCIE > thirty_per && u3SumCIE < forty_per) {
+      U3LevelCIE = "L1";
+    } else if (u3SumCIE > forty_per && u3SumCIE < fifty_per) {
+      U3LevelCIE = "L2";
+    } else if (u3SumCIE > fifty_per && u3SumCIE < sixty_per) {
+      U3LevelCIE = "L3";
+    } else if (u3SumCIE > sixty_per && u3SumCIE < seventy_per) {
+      U3LevelCIE = "L4";
+    } else if (u3SumCIE > seventy_per && u3SumCIE < STUDENT_COUNT) {
+      U3LevelCIE = "L5";
+    } else {
+      U3LevelCIE = "Invalid";
+    }
+
+    if (u4SumCIE > thirty_per && u4SumCIE < forty_per) {
+      U4LevelCIE = "L1";
+    } else if (u4SumCIE > forty_per && u4SumCIE < fifty_per) {
+      U4LevelCIE = "L2";
+    } else if (u4SumCIE > fifty_per && u4SumCIE < sixty_per) {
+      U4LevelCIE = "L3";
+    } else if (u4SumCIE > sixty_per && u4SumCIE < seventy_per) {
+      U4LevelCIE = "L4";
+    } else if (u4SumCIE > seventy_per && u4SumCIE < STUDENT_COUNT) {
+      U4LevelCIE = "L5";
+    } else {
+      U4LevelCIE = "Invalid";
+    }
+
+    if (u5SumCIE > thirty_per && u5SumCIE < forty_per) {
+      U5LevelCIE = "L1";
+    } else if (u5Sum > forty_per && u5SumCIE < fifty_per) {
+      U5LevelCIE = "L2";
+    } else if (u5SumCIE > fifty_per && u5SumCIE < sixty_per) {
+      U5LevelCIE = "L3";
+    } else if (u5SumCIE > sixty_per && u5SumCIE < seventy_per) {
+      U5LevelCIE = "L4";
+    } else if (u5SumCIE > seventy_per && u5SumCIE < STUDENT_COUNT) {
+      U5LevelCIE = "L5";
+    } else {
+      U5LevelCIE = "Invalid";
+    }
+
+    const LevelArrayCIE = [
+      U1LevelCIE,
+      U2LevelCIE,
+      U3LevelCIE,
+      U4LevelCIE,
+      U5LevelCIE,
+    ];
+
+    
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
-    const SumArrayCIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
+    const SumArrayCIE = [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE];
+    console.log(SumArrayCIE);
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
     const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
 

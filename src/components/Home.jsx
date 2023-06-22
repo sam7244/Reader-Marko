@@ -5,6 +5,7 @@ import UserProfile from "./UserProfile";
 
 import { useState } from "react";
 import NavBar from "./NavBar";
+import Home2 from "../../container/Home";
 
 const Home = ({
   adminId,
@@ -17,7 +18,7 @@ const Home = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-primary w-full overflow-hidden  mx-auto">
+    <div className="min-h-screen bg-white w-full overflow-hidden  mx-auto">
       <div className="p-4">
         <NavBar
           userCourses={userCourses}
@@ -33,6 +34,7 @@ const Home = ({
       <div>
         <FileUpload />
       </div>
+      {/* <Home2 /> */}
     </div>
   );
 };

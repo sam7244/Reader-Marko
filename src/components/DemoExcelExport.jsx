@@ -13,7 +13,7 @@ const DemoExcelExport = () => (
     <Workbook
       filename="example.xlsx"
       element={
-        <button className="px-3 py-2 rounded-lg  bg-black font-semibold text-white ">
+        <button className="px-3 py-2  text-xl  bg-white text-black font-semibold  rounded-xl ">
           DownLoad Example
         </button>
       }

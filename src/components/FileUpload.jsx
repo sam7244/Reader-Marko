@@ -345,7 +345,7 @@ const FileUpload = ({ id }) => {
       )}
 
       {isUploaded && (
-        <div className=" grid md:grid-cols-2">
+        <div className="">
           <OutputTable
             Threshold={Threshold}
             setsaveThreshold={setsaveThreshold}
@@ -355,15 +355,15 @@ const FileUpload = ({ id }) => {
             handleChange={handleChange}
             isUploaded={isUploaded}
           />
-          <div className="flex flex-col ">
+          <div className=" grid-cols-6 my-4 ">
             <div
-              className="flex w-[300px] md:w-auto h-1/2 justify-center items-center  "
+              className=" col-span-2 w-[300px] md:w-auto h-[200px] md:h-[350px] justify-center items-center  "
               id="graph"
             >
               <BarGraph attainment={attainment} isUpdated={isUpdated} />
             </div>
-            <div className=" grid grid-cols-2 h-full">
-              <div className=" grid w-full justify-center items-center">
+            <div className="h-full flex ">
+              <div className="  col-span-2  ">
                 <OutputTableSec
                   handleChange={handleChange}
                   attainment={attainment}
@@ -374,7 +374,7 @@ const FileUpload = ({ id }) => {
                 />
               </div>
 
-              <div className="grid w-full justify-center items-center">
+              <div className="  ">
                 <OutputTableThird
                   rows={rows}
                   isUploaded={isUploaded}
@@ -385,13 +385,18 @@ const FileUpload = ({ id }) => {
                 />
               </div>
             </div>
-            <div
-              style={{ borderRadius: "10px" }}
-              className=" border-2 ml-auto mt-2 bg-red-400 text-white font-bold py-3  flex justify-end  px-6"
+          </div>
+          <div
+            style={{ borderRadius: "10px" }}
+            className="transition duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
+          >
+            <MainExcel />
+            <button
+              className="flex items-center justify-center mx-auto"
+              onClick={generatePDF}
             >
-              <MainExcel />
-              <button onClick={generatePDF}>Generate PDF</button>
-            </div>
+              Generate PDF
+            </button>
           </div>
         </div>
       )}

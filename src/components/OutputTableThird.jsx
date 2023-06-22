@@ -15,18 +15,18 @@ const OutputTableThird = ({
   handleChange,
   setIsUploaded,
   mappedData,
-  isUpdated
+  isUpdated,
 }) => {
   if (!isUpdated) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex w-full justify-center items-center">
         <p>please update the excel form</p>
       </div>
     );
   }
-  
+
   return (
-    <div className="max-h-[200px] max-w-2xl overflow-y-scroll ">
+    <div className="max-h-[450px] w-full overflow-y-scroll ">
       {/* <div className="flex justify-between items-center">
         <div
           style={{ borderRadius: "8px" }}
@@ -43,7 +43,7 @@ const OutputTableThird = ({
           <button onClick={() => setIsUploaded(false)}>Re-Upload</button>
         </div>
       </div> */}
-      <div className="flex justify-center">
+      <div className="flex  justify-center">
         <p className="">Mapped Data</p>
       </div>
 
@@ -53,7 +53,10 @@ const OutputTableThird = ({
         <TableHeader>
           <TableRow>
             {mappedData[0]?.map((item, idx) => (
-              <TableHead key={idx} className="font-bold  text-lg w-[100px]">
+              <TableHead
+                key={idx}
+                className="font-bold text-white  text-lg w-[100px]"
+              >
                 {item}
               </TableHead>
             ))}
@@ -66,7 +69,7 @@ const OutputTableThird = ({
               {items.map((val) => (
                 <TableCell
                   key={`${items}--${val + Math.random()}--${idx}`}
-                  className="font-medium"
+                  className="font-medium text-white"
                 >
                   {val}
                 </TableCell>

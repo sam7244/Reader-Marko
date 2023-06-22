@@ -10,7 +10,7 @@ import {
 } from "../../components/ui/table";
 const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
   return (
-    <div className="max-h-[450px] max-w-2xl overflow-y-scroll ">
+    <div className="max-h-[450px] w-full border-2 border-white overflow-y-scroll ">
       <div className="flex justify-between items-center">
         <div
           style={{ borderRadius: "8px" }}
@@ -36,7 +36,10 @@ const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
         <TableHeader>
           <TableRow>
             {rows[0]?.map((item, idx) => (
-              <TableHead key={item} className="font-bold  text-lg w-[100px]">
+              <TableHead
+                key={item}
+                className="font-bold text-white text-lg w-[100px]"
+              >
                 {item}
               </TableHead>
             ))}
@@ -49,7 +52,7 @@ const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
               {items.map((val) => (
                 <TableCell
                   key={`${items}--${val + Math.random()}--${idx}`}
-                  className="font-medium"
+                  className="font-medium text-white"
                 >
                   {val}
                 </TableCell>

@@ -10,8 +10,8 @@ const NavBar = ({ threshold, setThreshold, adminId, userCourses }) => {
         alt=""
         className="h-10 w-10 rounded-full"
       />
-      <div className="text-xl flex-1">
-        <Marquee style={{ color: "red" }}>
+      <div className="text-xl flex-1 ">
+        <Marquee style={{ color: "white", textDecoration: "underline" }}>
           Please download the demo excel sheets
         </Marquee>
       </div>

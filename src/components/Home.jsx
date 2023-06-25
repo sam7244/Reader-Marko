@@ -18,7 +18,7 @@ const Home = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white w-full overflow-hidden  mx-auto">
+    <div className="min-h-scree w-full overflow-hidden bg-black  mx-auto">
       <div className="p-4">
         <NavBar
           userCourses={userCourses}

@@ -25,7 +25,7 @@ const OutputTableThird = ({
   }
 
   return (
-    <div className="max-h-[450px] w-[500px] overflow-y-scroll ">
+    <div className="max-h-[450px] overflow-y-scroll ">
       <div className="flex  justify-center">
         <p className="">Mapped Data</p>
       </div>

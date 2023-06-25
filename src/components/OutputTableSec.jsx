@@ -96,10 +96,13 @@ const OutputTableSec = ({
       if (rowsCIE[i][5] > u4CIE) {
         u4SumCIE++;
       }
-      if (rowsCIE[i][7] > u5CIE) {
+      if (rowsCIE[i][6] > u5CIE) {
         u5SumCIE++;
       }
     }
+
+    console.log("SIE", [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum]);
+    console.log("CIE", [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE]);
 
     let U1Level;
     let U2Level;
@@ -191,7 +194,7 @@ const OutputTableSec = ({
       U1LevelCIE = "L3";
     } else if (u1SumCIE > sixty_per && u1SumCIE < seventy_per) {
       U1LevelCIE = "L4";
-    } else if (u1SumCIE > seventy_per && u1SumCIE < STUDENT_COUNT) {
+    } else if (u1SumCIE > seventy_per && u1SumCIE < STUDENT_CIE_COUNT) {
       U1LevelCIE = "L5";
     } else {
       U1LevelCIE = "Invalid";
@@ -205,7 +208,7 @@ const OutputTableSec = ({
       U2LevelCIE = "L3";
     } else if (u2SumCIE > sixty_per && u2SumCIE < seventy_per) {
       U2LevelCIE = "L4";
-    } else if (u2SumCIE > seventy_per && u2SumCIE < STUDENT_COUNT) {
+    } else if (u2SumCIE > seventy_per && u2SumCIE < STUDENT_CIE_COUNT) {
       U2LevelCIE = "L5";
     } else {
       U2LevelCIE = "Invalid";
@@ -219,7 +222,7 @@ const OutputTableSec = ({
       U3LevelCIE = "L3";
     } else if (u3SumCIE > sixty_per && u3SumCIE < seventy_per) {
       U3LevelCIE = "L4";
-    } else if (u3SumCIE > seventy_per && u3SumCIE < STUDENT_COUNT) {
+    } else if (u3SumCIE > seventy_per && u3SumCIE < STUDENT_CIE_COUNT) {
       U3LevelCIE = "L5";
     } else {
       U3LevelCIE = "Invalid";
@@ -233,7 +236,7 @@ const OutputTableSec = ({
       U4LevelCIE = "L3";
     } else if (u4SumCIE > sixty_per && u4SumCIE < seventy_per) {
       U4LevelCIE = "L4";
-    } else if (u4SumCIE > seventy_per && u4SumCIE < STUDENT_COUNT) {
+    } else if (u4SumCIE > seventy_per && u4SumCIE < STUDENT_CIE_COUNT) {
       U4LevelCIE = "L5";
     } else {
       U4LevelCIE = "Invalid";
@@ -247,24 +250,19 @@ const OutputTableSec = ({
       U5LevelCIE = "L3";
     } else if (u5SumCIE > sixty_per && u5SumCIE < seventy_per) {
       U5LevelCIE = "L4";
-    } else if (u5SumCIE > seventy_per && u5SumCIE < STUDENT_COUNT) {
+    } else if (u5SumCIE > seventy_per && u5SumCIE < STUDENT_CIE_COUNT) {
       U5LevelCIE = "L5";
     } else {
       U5LevelCIE = "Invalid";
     }
 
-    const LevelArrayCIE = [
-      U1LevelCIE,
-      U2LevelCIE,
-      U3LevelCIE,
-      U4LevelCIE,
-      U5LevelCIE,
-    ];
+    const LevelArrayCIE = [U1LevelCIE, U2Level, U3Level, U4Level, U5Level];
 
-    
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
+    console.log(LevelArraySIE);
+    console.log(LevelArrayCIE);
     const SumArrayCIE = [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE];
-    console.log(SumArrayCIE);
+    //console.log(SumArrayCIE);
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
     const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
 
@@ -284,6 +282,8 @@ const OutputTableSec = ({
       ).toFixed(1);
 
       var PercetAttainment = (100 * AvgAttainent) / 5;
+      // console.log("this is CIE", SumArrayCIE);
+      // console.log("this is SIE", SumArraySIE);
 
       AttainmentData.push([
         NameArray[i],
@@ -301,7 +301,7 @@ const OutputTableSec = ({
   }, [isUploaded]);
 
   return (
-    <div className="max-h-[450px]  w-[500px] overflow-y-scroll ">
+    <div className="max-h-[500px]  overflow-y-scroll ">
       <div className="flex justify-center">
         <p className="">Attainment Data</p>
       </div>

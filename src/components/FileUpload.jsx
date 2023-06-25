@@ -299,7 +299,7 @@ const FileUpload = ({ id }) => {
 
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
-    console.log(rowsCIE);
+  //  console.log(rowsCIE);
   };
   // console.log(attainment);
 
@@ -356,8 +356,8 @@ const FileUpload = ({ id }) => {
           >
             <BarGraph attainment={attainment} isUpdated={isUpdated} />
           </div>
-          <div className="h-full flex ">
-            <div className="  col-span-2  ">
+          <div className="h-full flex-row">
+            <div className=" flex justify-center items-center">
               <OutputTableSec
                 handleChange={handleChange}
                 attainment={attainment}
@@ -369,7 +369,7 @@ const FileUpload = ({ id }) => {
               />
             </div>
 
-            <div className="  ">
+            <div className="flex justify-center items-center  ">
               <OutputTableThird
                 rows={rows}
                 isUploaded={isUploaded}

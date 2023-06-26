@@ -17,6 +17,7 @@ import Calculate from "./Calculate";
 import calculateTable2Data from "../../utils/calculateTable2Data";
 import MainExcel from "./MainExcel";
 import calculateUnitScores from "../../utils/CalculateExcelData";
+import FileUploadCIE from "./FileUploadCIE";
 
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
@@ -28,6 +29,9 @@ const FileUpload = ({ id }) => {
   const [mappedData, setmappedData] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [rowsCIE, setRowsCIE] = useState([]);
+  const [colsCIE, setColsCIE] = useState([]);
+  const [isUploadedCIE, setIsUploadedCIE] = useState(false);
 
   const readUploadFile = async (e) => {
     let fileObj = e.target.files[0];
@@ -42,6 +46,23 @@ const FileUpload = ({ id }) => {
         setRows(rows);
         setCols(cols);
         setIsUploaded(true);
+      }
+    });
+  };
+
+  const readUploadFileCIE = async (e) => {
+    let fileObj = e.target.files[0];
+
+    ExcelRenderer(fileObj, (err, resp) => {
+      if (err) {
+        console.log(err);
+        toast.error("Oops Something Went Wrong!");
+      } else {
+        const { rows, cols } = resp;
+        cols.push({ name: "D", key: 3 });
+        setRowsCIE(rows);
+        setColsCIE(cols);
+        setIsUploadedCIE(true);
       }
     });
   };
@@ -273,133 +294,106 @@ const FileUpload = ({ id }) => {
   const handleChange = () => {
     setIsUpdated(true);
     const marksData = calculateUnitScores(setMarks);
-    // console.log(marksData);
     setMarks(marksData);
-    console.log(marks);
-    // Create a map to track rows with the same RollNo
-    //const rollNoMap = new Map();
-    //setRows(marksData);
-    // // Iterate over the data rows starting from index 1
-    // for (let i = 1; i < rows.length; i++) {
-    //   const [rollNo, u1, u2] = rows[i];
+    // console.log(marks);
 
-    //   // Check if the RollNo already exists in the map
-    //   if (rollNoMap.has(rollNo)) {
-    //     const existingRow = rollNoMap.get(rollNo);
-
-    //     // Compare u1 and u2 values and update if necessary
-    //     if (u1 > existingRow.u1) {
-    //       existingRow.u1 = u1;
-    //     }
-    //     if (u2 > existingRow.u2) {
-    //       existingRow.u2 = u2;
-    //     }
-    //   } else {
-    //     // If the RollNo doesn't exist, add it to the map
-    //     rollNoMap.set(rollNo, { u1, u2 });
-    //   }
-    // }
-
-    // const updatedData = rows.map((row) => {
-    //   if (row[0] === "RollNo" && row.at(-1) !== "Sum") {
-    //     // If it's the header row, add the 'Sum' column header
-    //     return [...row, "Sum"];
-    //   } else if (row.length < 4) {
-    //     const rollNo = row[0];
-    //     const maxMarks = rollNoMap.get(rollNo);
-    //     const sum = maxMarks.u1 + maxMarks.u2;
-    //     return [...row, sum];
-    //   }
-    //   return row;
-    // });
-
-    // if (cols.length === 4) cols.push({ name: "E", key: 4 });
-
-    // setCols(cols);
-
-    // setRows(updatedData);
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
+  //  console.log(rowsCIE);
   };
   // console.log(attainment);
 
   return (
     <div className=" p-10 min-h-screen  overflow-hidden">
-      {!isUploaded && (
-        <div
-          style={{ borderRadius: "9px" }}
-          className="flex flex-col w-full p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-center"
-        >
-          <p className="font-bold text-xl  animate-bounce">Upload File Below</p>
+      <div
+        style={{ borderRadius: "9px" }}
+        className="flex flex-col w-full p-4 gap-2 mb-10 max-w-4xl mx-auto border-4 border-dashed  items-center justify-center"
+      >
+        <p className="font-bold text-xl  animate-bounce">Upload File Below</p>
 
-          <input
-            className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
-            style={{ borderRadius: "10px" }}
-            type="file"
-            name="upload"
-            id="upload"
-            placeholder="Choose File"
-            onChange={readUploadFile}
-          />
-        </div>
-      )}
+        <input
+          className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
+          style={{ borderRadius: "10px" }}
+          type="file"
+          name="upload"
+          id="upload"
+          placeholder="Choose File"
+          onChange={readUploadFile}
+        />
+      </div>
 
-      {isUploaded && (
-        <div className="">
-          <OutputTable
-            Threshold={Threshold}
-            setsaveThreshold={setsaveThreshold}
-            setThreshold={setThreshold}
-            rows={marks}
-            setIsUploaded={setIsUploaded}
-            handleChange={handleChange}
-            isUploaded={isUploaded}
-          />
-          <div className=" grid-cols-6 my-4 ">
-            <div
-              className=" col-span-2 w-[300px] md:w-auto h-[200px] md:h-[350px] justify-center items-center  "
-              id="graph"
-            >
-              <BarGraph attainment={attainment} isUpdated={isUpdated} />
-            </div>
-            <div className="h-full flex ">
-              <div className="  col-span-2  ">
-                <OutputTableSec
-                  handleChange={handleChange}
-                  attainment={attainment}
-                  setAttainment={setAttainment}
-                  isUpdated={isUpdated}
-                  marks={marks}
-                  threshold={Threshold}
-                />
-              </div>
+      <div
+        style={{ borderRadius: "9px" }}
+        className="flex flex-col w-full p-4 gap-2 mt-10 mb-10 max-w-4xl mx-auto border-4 border-dashed  items-center justify-center"
+      >
+        <p className="font-bold text-xl  animate-bounce">Upload File Below</p>
 
-              <div className="  ">
-                <OutputTableThird
-                  rows={rows}
-                  isUploaded={isUploaded}
-                  setIsUploaded={setIsUploaded}
-                  handleChange={handleChange}
-                  mappedData={mappedData}
-                  isUpdated={isUpdated}
-                />
-              </div>
-            </div>
-          </div>
+        <input
+          className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
+          style={{ borderRadius: "10px" }}
+          type="file"
+          name="upload"
+          id="upload"
+          placeholder="Choose File"
+          onChange={readUploadFileCIE}
+        />
+      </div>
+
+      <div className="">
+        <OutputTable
+          Threshold={Threshold}
+          setsaveThreshold={setsaveThreshold}
+          setThreshold={setThreshold}
+          rows={marks}
+          setIsUploaded={setIsUploaded}
+          handleChange={handleChange}
+          isUploaded={isUploaded}
+        />
+        <div className=" grid-cols-6 my-4 ">
           <div
-            style={{ borderRadius: "10px" }}
-            className="transition duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
+            className=" col-span-2 w-[300px] md:w-auto h-[200px] md:h-[350px] justify-center items-center  "
+            id="graph"
           >
-            <MainExcel />
-            <button
-              className="flex items-center justify-center mx-auto"
-              onClick={generatePDF}
-            >
-              Generate PDF
-            </button>
+            <BarGraph attainment={attainment} isUpdated={isUpdated} />
+          </div>
+          <div className="h-full flex-row">
+            <div className=" flex justify-center items-center">
+              <OutputTableSec
+                handleChange={handleChange}
+                attainment={attainment}
+                setAttainment={setAttainment}
+                isUpdated={isUpdated}
+                marks={marks}
+                threshold={Threshold}
+                rowsCIE={rowsCIE}
+              />
+            </div>
+
+            <div className="flex justify-center items-center  ">
+              <OutputTableThird
+                rows={rows}
+                isUploaded={isUploaded}
+                setIsUploaded={setIsUploaded}
+                handleChange={handleChange}
+                mappedData={mappedData}
+                isUpdated={isUpdated}
+              />
+            </div>
           </div>
         </div>
-      )}
+        <div
+          style={{ borderRadius: "10px" }}
+          className="transition duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
+        >
+          <MainExcel />
+          <button
+            className="flex items-center justify-center mx-auto"
+            onClick={generatePDF}
+          >
+            Generate PDF
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

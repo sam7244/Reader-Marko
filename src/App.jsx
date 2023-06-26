@@ -5,7 +5,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { fetchUser } from "../utils/fetch";
 import { lectureQuery } from "../utils/data";
 import Archives from "./components/Archives";
-import Home2 from "../container/Home";
 
 const App = () => {
   const [userData, setUserData] = useState("");

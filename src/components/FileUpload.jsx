@@ -299,44 +299,50 @@ const FileUpload = ({ id }) => {
 
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
-  //  console.log(rowsCIE);
+    //  console.log(rowsCIE);
   };
   // console.log(attainment);
 
   return (
-    <div className=" p-10 min-h-screen  overflow-hidden">
-      <div
-        style={{ borderRadius: "9px" }}
-        className="flex flex-col w-full p-4 gap-2 mb-10 max-w-4xl mx-auto border-4 border-dashed  items-center justify-center"
-      >
-        <p className="font-bold text-xl  animate-bounce">Upload File Below</p>
+    <div className=" p-10 min-h-screen   overflow-hidden">
+      <div className="flex flex-col md:flex-row gap-4 ">
+        <div
+          style={{ borderRadius: "9px" }}
+          className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
+        >
+          <p className="font-bold text-white text-xl  animate-bounce">
+            Upload File Below
+          </p>
 
-        <input
-          className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
-          style={{ borderRadius: "10px" }}
-          type="file"
-          name="upload"
-          id="upload"
-          placeholder="Choose File"
-          onChange={readUploadFile}
-        />
-      </div>
+          <input
+            className=" py-4 text-md w-[250px] md:w-[340px] font-semibold md:px-4 border-2 bg-gray-200 border-dotted "
+            style={{ borderRadius: "10px" }}
+            type="file"
+            name="upload"
+            id="upload"
+            placeholder="Choose File"
+            onChange={readUploadFile}
+          />
+        </div>
 
-      <div
-        style={{ borderRadius: "9px" }}
-        className="flex flex-col w-full p-4 gap-2 mt-10 mb-10 max-w-4xl mx-auto border-4 border-dashed  items-center justify-center"
-      >
-        <p className="font-bold text-xl  animate-bounce">Upload File Below</p>
+        <div
+          style={{ borderRadius: "9px" }}
+          className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
+        >
+          <p className="font-bold text-xl text-white animate-bounce">
+            Upload File Below
+          </p>
 
-        <input
-          className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
-          style={{ borderRadius: "10px" }}
-          type="file"
-          name="upload"
-          id="upload"
-          placeholder="Choose File"
-          onChange={readUploadFileCIE}
-        />
+          <input
+            className=" py-4 md:px-4 text-md w-[250px] md:w-[340px] font-semibold  border-2 bg-gray-200 border-dotted "
+            style={{ borderRadius: "10px" }}
+            type="file"
+            name="upload"
+            id="upload"
+            placeholder="Choose File"
+            onChange={readUploadFileCIE}
+          />
+        </div>
       </div>
 
       <div className="">

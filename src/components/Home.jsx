@@ -5,7 +5,6 @@ import UserProfile from "./UserProfile";
 
 import { useState } from "react";
 import NavBar from "./NavBar";
-import Home2 from "../../container/Home";
 
 const Home = ({
   adminId,

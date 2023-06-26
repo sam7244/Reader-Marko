@@ -345,7 +345,7 @@ const FileUpload = ({ id }) => {
         </div>
       </div>
 
-      <div className="">
+      <div className="mt-2">
         <OutputTable
           Threshold={Threshold}
           setsaveThreshold={setsaveThreshold}
@@ -357,13 +357,13 @@ const FileUpload = ({ id }) => {
         />
         <div className=" grid-cols-6 my-4 ">
           <div
-            className=" col-span-2 w-[300px] md:w-auto h-[200px] md:h-[350px] justify-center items-center  "
+            className=" border-2 border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center  "
             id="graph"
           >
             <BarGraph attainment={attainment} isUpdated={isUpdated} />
           </div>
-          <div className="h-full flex-row">
-            <div className=" flex justify-center items-center">
+          <div className="flex flex-col gap-4  md:flex-row my-5">
+            <div className=" border-2 border-white  md:w-1/3">
               <OutputTableSec
                 handleChange={handleChange}
                 attainment={attainment}
@@ -375,7 +375,7 @@ const FileUpload = ({ id }) => {
               />
             </div>
 
-            <div className="flex justify-center items-center  ">
+            <div className="border-2  border-white md:w-2/3">
               <OutputTableThird
                 rows={rows}
                 isUploaded={isUploaded}

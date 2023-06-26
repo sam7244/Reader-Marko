@@ -26,7 +26,7 @@ const Home = ({
           threshold={threshold}
         />
       </div>
-      <div className="flex max-w-8xl items-center h-20 justify-center gap-5">
+      <div className="flex max-w-8xl  items-center h-20 justify-center gap-5">
         <DemoExcelExport />
         <DemoExcelExport />
       </div>

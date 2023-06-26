@@ -301,8 +301,8 @@ const OutputTableSec = ({
   }, [isUploaded]);
 
   return (
-    <div className="max-h-[500px]  overflow-y-scroll ">
-      <div className="flex justify-center">
+    <div className=" overflow-y-scroll ">
+      <div className="flex p-2 border-b border-white justify-center font-bold text-white underline">
         <p className="">Attainment Data</p>
       </div>
 

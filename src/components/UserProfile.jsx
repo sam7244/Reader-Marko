@@ -94,18 +94,20 @@ export default function UserProfile({
   };
   const navigate = useNavigate();
   return (
-    <div className="">
+    <div className="bg-white">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button variant="outline">Settings</Button>
         </SheetTrigger>
 
-        <SheetContent position="right" size="sm">
+        <SheetContent className=" bg-black" position="right" size="sm">
           <SheetHeader>
-            <SheetTitle>Settings</SheetTitle>
-            <SheetDescription>Set Threshold value below</SheetDescription>
+            <SheetTitle className="text-white">Settings</SheetTitle>
+            <SheetDescription className="text-white">
+              Set Threshold value below
+            </SheetDescription>
           </SheetHeader>
-          <div className="grid gap-4 py-4 ">
+          <div className="grid gap-4 py-4 text-white">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
                 Username
@@ -153,7 +155,7 @@ export default function UserProfile({
               </Label>
               <div className="w-[200px] col-span-3 ">
                 <input
-                  className=" py-5 text-md  font-semibold px-4 border-2 bg-gray-200 border-dotted "
+                  className=" py-5 text-md text-black font-semibold px-4 border-2 bg-gray-200 border-dotted "
                   style={{ borderRadius: "10px" }}
                   type="file"
                   name="upload"
@@ -176,7 +178,7 @@ export default function UserProfile({
                   onClick={() => {
                     navigate("/archive");
                   }}
-                  className="py-3 font-bold text-xl  px-4 flex mx-auto"
+                  className="py-3 font-bold text-xl text-black px-4 flex mx-auto"
                 >
                   Archives
                 </button>
@@ -187,7 +189,7 @@ export default function UserProfile({
             <SheetFooter className="">
               <SheetClose asChild>
                 <Button
-                  className="text-white  w-40 text-base transition duration-150 hover:scale-110  rounded-full hover:bg-gray-600 bg-black"
+                  className="w-40 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
                   onClick={saveThresholdOnChange}
                 >
                   {" "}

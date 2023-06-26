@@ -15,7 +15,7 @@ const POCODemo = () => (
       element={
         <button
           style={{ borderRadius: "14px" }}
-          className="px-8 py-2   transition duration-150  ease-in-out hover:scale-110 bg-black font-semibold text-white "
+          className="px-8 py-2  text-black transition duration-150  ease-in-out hover:scale-110 bg-white font-semibold "
         >
           Sample POCO
         </button>

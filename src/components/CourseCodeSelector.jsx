@@ -30,7 +30,7 @@ const CourseCodeSelector = ({
         <SelectTrigger className="">
           <SelectValue placeholder="Codes" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="text-white">
           {userCourses?.map((item) => (
             <SelectItem value={item.courseCode}>{item.courseCode}</SelectItem>
           ))}

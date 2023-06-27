@@ -27,7 +27,7 @@ export default function UserProfile({
   threshold,
 }) {
   const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
-  console.log(userCourses);
+
   useEffect(() => {
     if (!threshold) {
       setThreshold(
@@ -41,10 +41,9 @@ export default function UserProfile({
       }
     `;
     client.fetch(query).then((doc) => {
-      console.log(doc);
       setAdminId(doc[0]?._id);
     });
-  }, [courseCode]);
+  }, []);
 
   const [adminId, setAdminId] = useState("");
   const uploadImage = (e) => {
@@ -97,7 +96,6 @@ export default function UserProfile({
     window.location.reload();
   };
   const navigate = useNavigate();
-  console.log("threshold", threshold);
   return (
     <div className="bg-white">
       <Sheet open={open} onOpenChange={setOpen}>
@@ -151,14 +149,14 @@ export default function UserProfile({
                 className="col-span-3"
               />
             </div>
-
-            {/* <div className="grid grid-cols-4 items-center gap-4">
+            {/* 
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center ">Sample PO|CO</Label>
               <div className="ml-1  col-span-3 ">
                 <POCODemo />
               </div>
             </div> */}
-            <div className="grid grid-cols-4 items-center gap-4">
+            {/* <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center">
                 {" "}
                 <p> POCO</p>{" "}
@@ -174,7 +172,7 @@ export default function UserProfile({
                   onChange={uploadImage}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center">
                 {" "}

@@ -21,7 +21,9 @@ import FileUploadCIE from "./FileUploadCIE";
 
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
+  const [isFileUploaded, setisFileUploaded] = useState(false);
   const [setsaveThreshold, setSetsaveThreshold] = useState(Threshold);
+
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -34,6 +36,7 @@ const FileUpload = ({ id }) => {
   const [isUploadedCIE, setIsUploadedCIE] = useState(false);
 
   const readUploadFile = async (e) => {
+    setisFileUploaded(true);
     let fileObj = e.target.files[0];
 
     ExcelRenderer(fileObj, (err, resp) => {
@@ -344,62 +347,69 @@ const FileUpload = ({ id }) => {
           />
         </div>
       </div>
+      {isFileUploaded && (
+        <div className="mt-2">
+          <OutputTable
+            Threshold={Threshold}
+            setsaveThreshold={setsaveThreshold}
+            setThreshold={setThreshold}
+            rows={marks}
+            setIsUploaded={setIsUploaded}
+            handleChange={handleChange}
+            isUploaded={isUploaded}
+          />
+          <div className=" grid-cols-6 my-4 ">
+            <div
+              className={`${
+                isUpdated && "border-2"
+              }  border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center `}
+              id="graph"
+            >
+              <BarGraph attainment={attainment} isUpdated={isUpdated} />
+            </div>
+            <div className="flex flex-col gap-4  md:flex-row my-5">
+              <div
+                className={`${isUpdated && " border-2"} border-white  md:w-1/3`}
+              >
+                <OutputTableSec
+                  handleChange={handleChange}
+                  attainment={attainment}
+                  setAttainment={setAttainment}
+                  isUpdated={isUpdated}
+                  marks={marks}
+                  threshold={Threshold}
+                  rowsCIE={rowsCIE}
+                />
+              </div>
 
-      <div className="mt-2">
-        <OutputTable
-          Threshold={Threshold}
-          setsaveThreshold={setsaveThreshold}
-          setThreshold={setThreshold}
-          rows={marks}
-          setIsUploaded={setIsUploaded}
-          handleChange={handleChange}
-          isUploaded={isUploaded}
-        />
-        <div className=" grid-cols-6 my-4 ">
+              <div
+                className={`${isUpdated && "border-2"}  border-white md:w-2/3`}
+              >
+                <OutputTableThird
+                  rows={rows}
+                  isUploaded={isUploaded}
+                  setIsUploaded={setIsUploaded}
+                  handleChange={handleChange}
+                  mappedData={mappedData}
+                  isUpdated={isUpdated}
+                />
+              </div>
+            </div>
+          </div>
           <div
-            className=" border-2 border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center  "
-            id="graph"
+            style={{ borderRadius: "10px" }}
+            className="transition duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
           >
-            <BarGraph attainment={attainment} isUpdated={isUpdated} />
-          </div>
-          <div className="flex flex-col gap-4  md:flex-row my-5">
-            <div className=" border-2 border-white  md:w-1/3">
-              <OutputTableSec
-                handleChange={handleChange}
-                attainment={attainment}
-                setAttainment={setAttainment}
-                isUpdated={isUpdated}
-                marks={marks}
-                threshold={Threshold}
-                rowsCIE={rowsCIE}
-              />
-            </div>
-
-            <div className="border-2  border-white md:w-2/3">
-              <OutputTableThird
-                rows={rows}
-                isUploaded={isUploaded}
-                setIsUploaded={setIsUploaded}
-                handleChange={handleChange}
-                mappedData={mappedData}
-                isUpdated={isUpdated}
-              />
-            </div>
+            <MainExcel />
+            <button
+              className="flex items-center justify-center mx-auto"
+              onClick={generatePDF}
+            >
+              Generate PDF
+            </button>
           </div>
         </div>
-        <div
-          style={{ borderRadius: "10px" }}
-          className="transition duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
-        >
-          <MainExcel />
-          <button
-            className="flex items-center justify-center mx-auto"
-            onClick={generatePDF}
-          >
-            Generate PDF
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

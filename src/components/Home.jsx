@@ -1,7 +1,6 @@
 import React from "react";
 import FileUpload from "./FileUpload";
 import DemoExcelExport from "./DemoExcelExport";
-import UserProfile from "./UserProfile";
 
 import { useState } from "react";
 import NavBar from "./NavBar";
@@ -33,7 +32,6 @@ const Home = ({
       <div>
         <FileUpload />
       </div>
-      {/* <Home2 /> */}
     </div>
   );
 };

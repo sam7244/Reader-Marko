@@ -27,10 +27,14 @@ export default function UserProfile({
   threshold,
 }) {
   const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
+  console.log(userCourses);
   useEffect(() => {
-    setThreshold(
-      userCourses?.[0]?.threshold ? userCourses?.[0]?.threshold : 60
-    );
+    if (!threshold) {
+      setThreshold(
+        userCourses?.[0]?.threshold ? userCourses?.[0]?.threshold : 60
+      );
+    }
+
     const query = `
       *[_type == 'admin' && courseCode == '${courseCode}']{
        _id
@@ -93,6 +97,7 @@ export default function UserProfile({
     window.location.reload();
   };
   const navigate = useNavigate();
+  console.log("threshold", threshold);
   return (
     <div className="bg-white">
       <Sheet open={open} onOpenChange={setOpen}>
@@ -100,7 +105,11 @@ export default function UserProfile({
           <Button variant="outline">Settings</Button>
         </SheetTrigger>
 
-        <SheetContent className=" bg-black" position="right" size="sm">
+        <SheetContent
+          className="max-w-[350px] md:max-w-2xl bg-black"
+          position="right"
+          size="content"
+        >
           <SheetHeader>
             <SheetTitle className="text-white">Settings</SheetTitle>
             <SheetDescription className="text-white">
@@ -137,17 +146,18 @@ export default function UserProfile({
               <Input
                 onChange={(e) => setThreshold(e.target.value)}
                 id="threshold"
+                placeholder={threshold}
                 value={threshold}
                 className="col-span-3"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
+            {/* <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center ">Sample PO|CO</Label>
               <div className="ml-1  col-span-3 ">
                 <POCODemo />
               </div>
-            </div>
+            </div> */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center">
                 {" "}

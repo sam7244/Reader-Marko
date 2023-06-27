@@ -40,7 +40,7 @@ const App = () => {
       });
     }
   }, []);
-  const [threshold, setThreshold] = useState(60);
+  const [threshold, setThreshold] = useState(0);
   return (
     <>
       <Routes>

@@ -295,6 +295,7 @@ const FileUpload = ({ id }) => {
   };
 
   const handleChange = () => {
+    setIsUploaded(true);
     setIsUpdated(true);
     const marksData = calculateUnitScores(setMarks);
     setMarks(marksData);
@@ -347,7 +348,7 @@ const FileUpload = ({ id }) => {
           />
         </div>
       </div>
-      {isFileUploaded && (
+      {isUploaded && (
         <div className="mt-2">
           <OutputTable
             Threshold={Threshold}

@@ -163,9 +163,9 @@ export default function UserProfile({
                 {" "}
                 <p> POCO</p>{" "}
               </Label>
-              <div className="w-[200px] col-span-3 ">
+              <div className=" col-span-3 ">
                 <input
-                  className=" py-5 text-md text-black font-semibold px-4 border-2 bg-gray-200 border-dotted "
+                  className="w-[200px] md:w-[250px] py-5 text-md text-black font-semibold px-4 border-2 bg-gray-200 border-dotted "
                   style={{ borderRadius: "10px" }}
                   type="file"
                   name="upload"
@@ -182,7 +182,7 @@ export default function UserProfile({
               </Label>
               <div
                 style={{ borderRadius: "10px" }}
-                className=" w-[250px] transition duration-150 ease-in-out hover:scale-110 m-2 col-span-3 bg-gray-300  "
+                className=" w-[200px] md:w-[250px] transition duration-150 ease-in-out hover:scale-110  col-span-3 bg-gray-300  "
               >
                 <button
                   onClick={() => {
@@ -195,11 +195,11 @@ export default function UserProfile({
               </div>
             </div>
           </div>
-          <div className=" flex items-center justify-between py-5">
+          <div className=" flex items-center gap-3   justify-between py-5">
             <SheetFooter className="">
               <SheetClose asChild>
                 <Button
-                  className="w-40 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
+                  className="w-full text-md py-3 md:px-10 transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
                   onClick={saveThresholdOnChange}
                 >
                   {" "}
@@ -207,10 +207,10 @@ export default function UserProfile({
                 </Button>
               </SheetClose>
             </SheetFooter>
-            <SheetFooter className="">
+            <SheetFooter className=" ">
               <SheetClose asChild>
                 <Button
-                  className="w-40 text-md  transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
+                  className="w-full text-md px-10 transition duration-150 hover:scale-110 text-white rounded-full hover:bg-red-600 bg-blue-500"
                   onClick={handleClick}
                 >
                   {" "}

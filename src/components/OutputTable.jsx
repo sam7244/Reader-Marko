@@ -14,17 +14,22 @@ const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
       <div className="flex justify-between items-center">
         <div
           style={{ borderRadius: "8px" }}
-          className="h-15 m-2 bg-blue-400 rounded-lg w-20 px-4 py-2"
+          className="h-15 m-2 transition duration-150 hover:scale-105 ease-in-out bg-blue-400 rounded-lg w-20 px-4 py-2"
         >
-          <button className="" onClick={handleChange}>
+          <button className="font-bold text-white " onClick={handleChange}>
             Update
           </button>
         </div>
         <div
           style={{ borderRadius: "8px" }}
-          className="h-15 m-2 bg-red-400 rounded-lg w-25 px-4 py-2 "
+          className="h-15 m-2 transition duration-150 hover:scale-105 ease-in-out bg-red-400 rounded-lg w-25 px-4 py-2 "
         >
-          <button onClick={() => setIsUploaded(false)}>Re-Upload</button>
+          <button
+            className="font-bold text-white"
+            onClick={() => setIsUploaded(false)}
+          >
+            Re-Upload
+          </button>
         </div>
       </div>
 

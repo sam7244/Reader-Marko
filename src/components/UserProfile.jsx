@@ -106,7 +106,7 @@ export default function UserProfile({
         </SheetTrigger>
 
         <SheetContent
-          className="max-w-[350px] md:max-w-2xl bg-black"
+          className="max-w-[340px] md:max-w-2xl bg-black"
           position="right"
           size="content"
         >

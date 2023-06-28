@@ -27,7 +27,7 @@ export default function UserProfile({
   threshold,
 }) {
   const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
-
+  const dum = userCourses[0]?.mapData;
   useEffect(() => {
     if (!threshold) {
       setThreshold(
@@ -126,6 +126,7 @@ export default function UserProfile({
                 className="col-span-3"
               />
             </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right ">CourseCode:</Label>
               <div className="  col-span-3">
@@ -149,14 +150,26 @@ export default function UserProfile({
                 className="col-span-3"
               />
             </div>
-            {/* 
-            <div className="grid grid-cols-4 items-center gap-4">
+
+            {/* <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center ">Sample PO|CO</Label>
               <div className="ml-1  col-span-3 ">
                 <POCODemo />
               </div>
             </div> */}
-            {/* <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-center">
+                {" "}
+                <p> POCO</p>{" "}
+              </Label>
+              <div className=" col-span-3 ">
+                <button className="w-full rounded-[15px] flex justify-center flex-1 py-2 px-4 bg-white text-black font-bold">
+                  <a href={`${dum}?dl=`}>Manuscript</a>
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center">
                 {" "}
                 <p> POCO</p>{" "}
@@ -172,7 +185,7 @@ export default function UserProfile({
                   onChange={uploadImage}
                 />
               </div>
-            </div> */}
+            </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center">
                 {" "}

@@ -302,7 +302,9 @@ const OutputTableSec = ({
 
   return (
     <div className=" overflow-y-scroll ">
-      <div className="flex p-2 border-b border-white justify-center font-bold text-white underline">
+      <div
+        className={`flex p-2 border-b  border-white justify-center font-bold text-white underline`}
+      >
         <p className="">Attainment Data</p>
       </div>
 

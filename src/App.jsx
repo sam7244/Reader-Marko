@@ -26,6 +26,7 @@ const App = () => {
         _id,
         threshold,
         courseCode,
+        "mapData":map.asset->url,
         "lectureDetails": lectureDetails->{
         ...,
       }
@@ -41,6 +42,7 @@ const App = () => {
     }
   }, []);
   const [threshold, setThreshold] = useState(0);
+  console.log(userCourses);
   return (
     <>
       <Routes>

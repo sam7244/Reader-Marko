@@ -22,6 +22,7 @@ import FileUploadCIE from "./FileUploadCIE";
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
   const [isFileUploaded, setisFileUploaded] = useState(false);
+  const [isUploadedSEE, setIsUploadedSEE] = useState(false);
   const [setsaveThreshold, setSetsaveThreshold] = useState(Threshold);
 
   const [cols, setCols] = useState([]);
@@ -49,6 +50,7 @@ const FileUpload = ({ id }) => {
         setRows(rows);
         setCols(cols);
         setIsUploaded(true);
+        setIsUploadedSEE(true);
       }
     });
   };
@@ -348,7 +350,7 @@ const FileUpload = ({ id }) => {
           />
         </div>
       </div>
-      {isUploaded && (
+      {isUploadedCIE && isUploadedSEE && (
         <div className="mt-2">
           <OutputTable
             Threshold={Threshold}

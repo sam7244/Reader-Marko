@@ -151,12 +151,6 @@ export default function UserProfile({
               />
             </div>
 
-            {/* <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-center ">Sample PO|CO</Label>
-              <div className="ml-1  col-span-3 ">
-                <POCODemo />
-              </div>
-            </div> */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-center">
                 {" "}

@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/table";
-const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
+const OutputTable = ({ rows, handleChange, setIsUploadedCIE, isUploaded }) => {
   return (
     <div className="max-h-[450px]  border-2 border-white overflow-y-scroll ">
       <div className="flex justify-between items-center">
@@ -26,7 +26,7 @@ const OutputTable = ({ rows, handleChange, setIsUploaded, isUploaded }) => {
         >
           <button
             className="font-bold text-white"
-            onClick={() => setIsUploaded(false)}
+            onClick={() => setIsUploadedCIE(false)}
           >
             Re-Upload
           </button>

@@ -15,7 +15,8 @@ export const archiveData = `
 *[_type == 'docs']{
   'docUrl':doc.asset->url,
   lectureName->{
-   _id
+   _id,
+   _updatedAt
   }
 }
 `;

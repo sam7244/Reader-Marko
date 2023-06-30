@@ -1,9 +1,10 @@
 import React from "react";
 import Skills from "./Skills";
-const Archives = () => {
+const Archives = ({ userArchives }) => {
+  console.log(userArchives);
   return (
     <div>
-      <Skills />
+      <Skills userArchives={userArchives} />
     </div>
   );
 };

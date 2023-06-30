@@ -79,7 +79,10 @@ const App = () => {
             />
           }
         />
-        <Route path="/archive" element={<Archives />} />
+        <Route
+          path="/archive"
+          element={<Archives userArchives={userArchives} />}
+        />
       </Routes>
     </>
   );

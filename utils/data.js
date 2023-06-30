@@ -11,6 +11,15 @@ export const lectureQuery = `
 }
 `;
 
+export const archiveData = `
+*[_type == 'docs']{
+  'docUrl':doc.asset->url,
+  lectureName->{
+   _id
+  }
+}
+`;
+
 export const categories = [
   {
     name: "cars",

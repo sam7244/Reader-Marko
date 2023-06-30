@@ -3,11 +3,12 @@ import { client } from "../lib/client";
 import { Home, Login } from "./components";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { fetchUser } from "../utils/fetch";
-import { lectureQuery } from "../utils/data";
+import { archiveData, lectureQuery } from "../utils/data";
 import Archives from "./components/Archives";
 
 const App = () => {
   const [userData, setUserData] = useState("");
+  const [userArchives, setUserArchives] = useState([]);
   const [adminId, setAdminId] = useState("");
   const [id, setId] = useState("");
   const [userCourses, setUserCourses] = useState([]);
@@ -39,10 +40,17 @@ const App = () => {
 
         setThreshold(loggedUserData[0]?.threshold);
       });
+
+      client.fetch(archiveData).then((data) => {
+        const loggedUsersArchives = data.filter(
+          (item) => item.lectureName._id === user
+        );
+        setUserArchives(loggedUsersArchives);
+      });
     }
   }, []);
   const [threshold, setThreshold] = useState(0);
-  console.log(userCourses);
+
   return (
     <>
       <Routes>

@@ -8,7 +8,6 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-// import { Icons } from "@/components/icons";
 
 export function UserAuthForm({
   setAdminId,
@@ -22,15 +21,6 @@ export function UserAuthForm({
   const [email, setEmail] = React.useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
-
-  async function onSubmit(event) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,8 +56,11 @@ export function UserAuthForm({
               disabled={isLoading}
             />
           </div>
-          <div className="flex justify-center">
-            <Button disabled={isLoading}>
+          <div className="flex  justify-center">
+            <Button
+              className="bg-white border-2 transition duration-200 ease-in-out hover:border-black rounded-xl hover:text-white hover:bg-black"
+              disabled={isLoading}
+            >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Sign In with Email
             </Button>

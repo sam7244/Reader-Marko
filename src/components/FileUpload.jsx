@@ -73,7 +73,7 @@ const FileUpload = ({ id }) => {
   };
 
   useEffect(() => {
-    const marksData = calculateUnitScores(setMarks);
+    const marksData = calculateUnitScores();
     // console.log(marksData);
     setMarks(marksData);
   }, []);
@@ -299,9 +299,7 @@ const FileUpload = ({ id }) => {
   const handleChange = () => {
     setIsUploaded(true);
     setIsUpdated(true);
-    const marksData = calculateUnitScores(setMarks);
-    setMarks(marksData);
-    // console.log(marks);
+
 
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);

@@ -64,6 +64,7 @@ const FileUpload = ({ id }) => {
         toast.error("Oops Something Went Wrong!");
       } else {
         const { rows, cols } = resp;
+
         cols.push({ name: "D", key: 3 });
         setRowsCIE(rows);
         setColsCIE(cols);
@@ -72,11 +73,7 @@ const FileUpload = ({ id }) => {
     });
   };
 
-  useEffect(() => {
-    const marksData = calculateUnitScores();
-    // console.log(marksData);
-    setMarks(marksData);
-  }, []);
+  useEffect(() => {}, []);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -300,6 +297,9 @@ const FileUpload = ({ id }) => {
     setIsUploaded(true);
     setIsUpdated(true);
 
+    const marksData = calculateUnitScores(rows);
+    // console.log(marksData);
+    setMarks(marksData);
 
     const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
@@ -354,7 +354,7 @@ const FileUpload = ({ id }) => {
             Threshold={Threshold}
             setsaveThreshold={setsaveThreshold}
             setThreshold={setThreshold}
-            rows={marks}
+            rows={rows}
             setIsUploaded={setIsUploaded}
             handleChange={handleChange}
             isUploaded={isUploaded}

@@ -100,8 +100,8 @@ const OutputTableSec = ({
       }
     }
 
-    console.log("SIE", [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum]);
-    console.log("CIE", [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE]);
+    // console.log("SIE", [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum]);
+    // console.log("CIE", [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE]);
 
     let U1Level;
     let U2Level;
@@ -300,7 +300,7 @@ const OutputTableSec = ({
       ]);
     }
 
-    console.log(AttainmentData);
+    //console.log(AttainmentData);
     setAttainment(AttainmentData);
   }, [isUploaded]);
 

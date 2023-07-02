@@ -18,6 +18,8 @@ const OutputTableSec = ({
   threshold,
   rowsCIE,
 }) => {
+  console.log("SIE", marks);
+  console.log("CIE", rowsCIE);
   if (!isUpdated) {
     return (
       <div className="flex w-full justify-center items-center">
@@ -51,6 +53,12 @@ const OutputTableSec = ({
     let fifty_per = parseInt((50 * STUDENT_COUNT) / 100);
     let sixty_per = parseInt((60 * STUDENT_COUNT) / 100);
     let seventy_per = parseInt((70 * STUDENT_COUNT) / 100);
+
+    let thirty_perCIE = parseInt((30 * STUDENT_COUNT) / 100);
+    let forty_perCIE = parseInt((40 * STUDENT_COUNT) / 100);
+    let fifty_perCIE = parseInt((50 * STUDENT_COUNT) / 100);
+    let sixty_perCIE = parseInt((60 * STUDENT_COUNT) / 100);
+    let seventy_perCIE = parseInt((70 * STUDENT_CIE_COUNT) / 100);
 
     let u1 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
     let u2 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
@@ -115,159 +123,171 @@ const OutputTableSec = ({
     let U4LevelCIE;
     let U5LevelCIE;
 
-    if (u1Sum > thirty_per && u1Sum < forty_per) {
+    if (u1Sum > thirty_per && u1Sum <= forty_per) {
       U1Level = "L1";
-    } else if (u1Sum > forty_per && u1Sum < fifty_per) {
+    } else if (u1Sum > forty_per && u1Sum <= fifty_per) {
       U1Level = "L2";
-    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+    } else if (u1Sum > fifty_per && u1Sum <= sixty_per) {
       U1Level = "L3";
-    } else if (u1Sum > sixty_per && u1Sum < seventy_per) {
+    } else if (u1Sum > sixty_per && u1Sum <= seventy_per) {
       U1Level = "L4";
-    } else if (u1Sum > seventy_per && u1Sum < STUDENT_COUNT) {
+    } else if (u1Sum > seventy_per && u1Sum <= STUDENT_COUNT) {
       U1Level = "L5";
     } else {
       U1Level = "Invalid";
     }
 
-    if (u2Sum > thirty_per && u2Sum < forty_per) {
+    if (u2Sum > thirty_per && u2Sum <= forty_per) {
       U2Level = "L1";
-    } else if (u2Sum > forty_per && u2Sum < fifty_per) {
+    } else if (u2Sum > forty_per && u2Sum <= fifty_per) {
       U2Level = "L2";
-    } else if (u2Sum > fifty_per && u2Sum < sixty_per) {
+    } else if (u2Sum > fifty_per && u2Sum <= sixty_per) {
       U2Level = "L3";
-    } else if (u2Sum > sixty_per && u2Sum < seventy_per) {
+    } else if (u2Sum > sixty_per && u2Sum <= seventy_per) {
       U2Level = "L4";
-    } else if (u2Sum > seventy_per && u2Sum < STUDENT_COUNT) {
+    } else if (u2Sum > seventy_per && u2Sum <= STUDENT_COUNT) {
       U2Level = "L5";
     } else {
       U2Level = "Invalid";
     }
 
-    if (u3Sum > thirty_per && u3Sum < forty_per) {
+    if (u3Sum > thirty_per && u3Sum <= forty_per) {
       U3Level = "L1";
-    } else if (u3Sum > forty_per && u3Sum < fifty_per) {
+    } else if (u3Sum > forty_per && u3Sum <= fifty_per) {
       U3Level = "L2";
-    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+    } else if (u1Sum > fifty_per && u1Sum <= sixty_per) {
       U3Level = "L3";
-    } else if (u3Sum > sixty_per && u3Sum < seventy_per) {
+    } else if (u3Sum > sixty_per && u3Sum <= seventy_per) {
       U3Level = "L4";
-    } else if (u3Sum > seventy_per && u3Sum < STUDENT_COUNT) {
+    } else if (u3Sum > seventy_per && u3Sum <= STUDENT_COUNT) {
       U3Level = "L5";
     } else {
       U3Level = "Invalid";
     }
 
-    if (u4Sum > thirty_per && u4Sum < forty_per) {
+    if (u4Sum > thirty_per && u4Sum <= forty_per) {
       U4Level = "L1";
-    } else if (u4Sum > forty_per && u4Sum < fifty_per) {
+    } else if (u4Sum > forty_per && u4Sum <= fifty_per) {
       U4Level = "L2";
-    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+    } else if (u1Sum > fifty_per && u1Sum <= sixty_per) {
       U4Level = "L3";
-    } else if (u4Sum > sixty_per && u4Sum < seventy_per) {
+    } else if (u4Sum > sixty_per && u4Sum <= seventy_per) {
       U4Level = "L4";
-    } else if (u4Sum > seventy_per && u4Sum < STUDENT_COUNT) {
+    } else if (u4Sum > seventy_per && u4Sum <= STUDENT_COUNT) {
       U4Level = "L5";
     } else {
       U4Level = "Invalid";
     }
 
-    if (u5Sum > thirty_per && u5Sum < forty_per) {
+    if (u5Sum > thirty_per && u5Sum <= forty_per) {
       U5Level = "L1";
-    } else if (u5Sum > forty_per && u5Sum < fifty_per) {
+    } else if (u5Sum > forty_per && u5Sum <= fifty_per) {
       U5Level = "L2";
-    } else if (u1Sum > fifty_per && u1Sum < sixty_per) {
+    } else if (u1Sum > fifty_per && u1Sum <= sixty_per) {
       U5Level = "L3";
-    } else if (u5Sum > sixty_per && u5Sum < seventy_per) {
+    } else if (u5Sum > sixty_per && u5Sum <= seventy_per) {
       U5Level = "L4";
-    } else if (u5Sum > seventy_per && u5Sum < STUDENT_COUNT) {
+    } else if (u5Sum > seventy_per && u5Sum <= STUDENT_COUNT) {
       U5Level = "L5";
     } else {
       U5Level = "Invalid";
     }
 
-    if (u1SumCIE > thirty_per && u1SumCIE < forty_per) {
+    if (u1SumCIE > thirty_perCIE && u1SumCIE <= forty_perCIE) {
       U1LevelCIE = "L1";
-    } else if (u1SumCIE > forty_per && u1SumCIE < fifty_per) {
+    } else if (u1SumCIE > forty_perCIE && u1SumCIE <= fifty_perCIE) {
       U1LevelCIE = "L2";
-    } else if (u1SumCIE > fifty_per && u1SumCIE < sixty_per) {
+    } else if (u1SumCIE > fifty_perCIE && u1SumCIE <= sixty_perCIE) {
       U1LevelCIE = "L3";
-    } else if (u1SumCIE > sixty_per && u1SumCIE < seventy_per) {
+    } else if (u1SumCIE > sixty_perCIE && u1SumCIE <= seventy_perCIE) {
       U1LevelCIE = "L4";
-    } else if (u1SumCIE > seventy_per && u1SumCIE < STUDENT_CIE_COUNT) {
+    } else if (u1SumCIE > seventy_perCIE && u1SumCIE <= STUDENT_CIE_COUNT) {
       U1LevelCIE = "L5";
     } else {
       U1LevelCIE = "Invalid";
     }
 
-    if (u2SumCIE > thirty_per && u2SumCIE < forty_per) {
+    if (u2SumCIE > thirty_perCIE && u2SumCIE <= forty_perCIE) {
       U2LevelCIE = "L1";
-    } else if (u2SumCIE > forty_per && u2SumCIE < fifty_per) {
+    } else if (u2SumCIE > forty_perCIE && u2SumCIE <= fifty_perCIE) {
       U2LevelCIE = "L2";
-    } else if (u2SumCIE > fifty_per && u2SumCIE < sixty_per) {
+    } else if (u2SumCIE > fifty_perCIE && u2SumCIE <= sixty_perCIE) {
       U2LevelCIE = "L3";
-    } else if (u2SumCIE > sixty_per && u2SumCIE < seventy_per) {
+    } else if (u2SumCIE > sixty_perCIE && u2SumCIE <= seventy_perCIE) {
       U2LevelCIE = "L4";
-    } else if (u2SumCIE > seventy_per && u2SumCIE < STUDENT_CIE_COUNT) {
+    } else if (u2SumCIE > seventy_perCIE && u2SumCIE <= STUDENT_CIE_COUNT) {
       U2LevelCIE = "L5";
     } else {
       U2LevelCIE = "Invalid";
     }
 
-    if (u3SumCIE > thirty_per && u3SumCIE < forty_per) {
+    if (u3SumCIE > thirty_perCIE && u3SumCIE <= forty_perCIE) {
       U3LevelCIE = "L1";
-    } else if (u3SumCIE > forty_per && u3SumCIE < fifty_per) {
+    } else if (u3SumCIE > forty_perCIE && u3SumCIE <= fifty_perCIE) {
       U3LevelCIE = "L2";
-    } else if (u3SumCIE > fifty_per && u3SumCIE < sixty_per) {
+    } else if (u3SumCIE > fifty_perCIE && u3SumCIE <= sixty_perCIE) {
       U3LevelCIE = "L3";
-    } else if (u3SumCIE > sixty_per && u3SumCIE < seventy_per) {
+    } else if (u3SumCIE > sixty_perCIE && u3SumCIE <= seventy_perCIE) {
       U3LevelCIE = "L4";
-    } else if (u3SumCIE > seventy_per && u3SumCIE < STUDENT_CIE_COUNT) {
+    } else if (u3SumCIE > seventy_perCIE && u3SumCIE <= STUDENT_CIE_COUNT) {
       U3LevelCIE = "L5";
     } else {
       U3LevelCIE = "Invalid";
     }
 
-    if (u4SumCIE > thirty_per && u4SumCIE < forty_per) {
+    if (u4SumCIE > thirty_perCIE && u4SumCIE <= forty_perCIE) {
       U4LevelCIE = "L1";
-    } else if (u4SumCIE > forty_per && u4SumCIE < fifty_per) {
+    } else if (u4SumCIE > forty_perCIE && u4SumCIE <= fifty_perCIE) {
       U4LevelCIE = "L2";
-    } else if (u4SumCIE > fifty_per && u4SumCIE < sixty_per) {
+    } else if (u4SumCIE > fifty_perCIE && u4SumCIE <= sixty_perCIE) {
       U4LevelCIE = "L3";
-    } else if (u4SumCIE > sixty_per && u4SumCIE < seventy_per) {
+    } else if (u4SumCIE > sixty_perCIE && u4SumCIE <= seventy_perCIE) {
       U4LevelCIE = "L4";
-    } else if (u4SumCIE > seventy_per && u4SumCIE < STUDENT_CIE_COUNT) {
+    } else if (u4SumCIE > seventy_perCIE && u4SumCIE <= STUDENT_CIE_COUNT) {
       U4LevelCIE = "L5";
     } else {
       U4LevelCIE = "Invalid";
     }
 
-    if (u5SumCIE > thirty_per && u5SumCIE < forty_per) {
+    if (u5SumCIE > thirty_perCIE && u5SumCIE <= forty_perCIE) {
       U5LevelCIE = "L1";
-    } else if (u5Sum > forty_per && u5SumCIE < fifty_per) {
+    } else if (u5Sum > forty_perCIE && u5SumCIE <= fifty_perCIE) {
       U5LevelCIE = "L2";
-    } else if (u5SumCIE > fifty_per && u5SumCIE < sixty_per) {
+    } else if (u5SumCIE > fifty_perCIE && u5SumCIE <= sixty_perCIE) {
       U5LevelCIE = "L3";
-    } else if (u5SumCIE > sixty_per && u5SumCIE < seventy_per) {
+    } else if (u5SumCIE > sixty_perCIE && u5SumCIE <= seventy_perCIE) {
       U5LevelCIE = "L4";
-    } else if (u5SumCIE > seventy_per && u5SumCIE < STUDENT_CIE_COUNT) {
+    } else if (u5SumCIE > seventy_perCIE && u5SumCIE <= STUDENT_CIE_COUNT) {
       U5LevelCIE = "L5";
     } else {
       U5LevelCIE = "Invalid";
     }
+
+    console.log("percentailes", [
+      thirty_perCIE,
+      forty_perCIE,
+      fifty_perCIE,
+      seventy_perCIE,
+      seventy_perCIE,
+      STUDENT_CIE_COUNT,
+    ]);
 
     const LevelArrayCIE = [
       U1LevelCIE,
       U2LevelCIE,
       U3LevelCIE,
       U4LevelCIE,
-      U4LevelCIE,
+      U5LevelCIE,
     ];
 
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
 
     const SumArrayCIE = [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE];
+    console.log("CIE", SumArrayCIE);
 
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
+
+    console.log("SIE", SumArraySIE);
     const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
 
     const LevelMap = new Map();
@@ -277,6 +297,7 @@ const OutputTableSec = ({
     LevelMap.set("L3", 3);
     LevelMap.set("L4", 4);
     LevelMap.set("L5", 5);
+    LevelMap.set("Invalid", 0);
 
     for (let i = 0; i < 5; i++) {
       var AvgAttainent = (

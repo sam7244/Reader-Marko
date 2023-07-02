@@ -43,7 +43,7 @@ const App = () => {
 
       client.fetch(archiveData).then((data) => {
         const loggedUsersArchives = data.filter(
-          (item) => item.lectureName._id === user
+          (item) => item.lectureName?._id === user
         );
         setUserArchives(loggedUsersArchives);
       });

@@ -108,8 +108,8 @@ const OutputTableSec = ({
       }
     }
 
-    // console.log("SIE", [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum]);
-    // console.log("CIE", [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE]);
+    console.log("SIE", [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum]);
+    console.log("CIE", [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE]);
 
     let U1Level;
     let U2Level;
@@ -283,11 +283,11 @@ const OutputTableSec = ({
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
 
     const SumArrayCIE = [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE];
-    console.log("CIE", SumArrayCIE);
+    console.log("CIE ss", SumArrayCIE);
 
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
 
-    console.log("SIE", SumArraySIE);
+    console.log("SIE ss", SumArraySIE);
     const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
 
     const LevelMap = new Map();

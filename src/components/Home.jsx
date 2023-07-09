@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import FileUpload from "./FileUpload";
 import DemoExcelExport from "./DemoExcelExport";
+import { FileStateContext } from "../../utils/Context";
 import { parse } from "papaparse";
 
 import { useState } from "react";
@@ -14,8 +15,10 @@ const Home = ({
   userData,
   userCourses,
 }) => {
+  //console.log("dat from the god", userCourses);
   const [open, setOpen] = useState(false);
-  const [mappedData, setmappedData] = useState([]);
+  const { setmappedData, mappedData } = FileStateContext();
+
   useEffect(() => {
     // Assuming you have included the PapaParse library in your project
     if (!userCourses[0]?.mapData) return;
@@ -24,7 +27,7 @@ const Home = ({
       .then((response) => response.text())
       .then((csvContent) => {
         const { data, errors, meta } = parse(csvContent, { header: true });
-
+        //console.log("this is nothing");
         // Access the parsed CSV data
 
         setmappedData(data);
@@ -38,7 +41,7 @@ const Home = ({
       });
   }, [userCourses[0]?.mapData]);
 
-  console.log(mappedData);
+  console.log("this is the data", mappedData);
   return (
     <div className="min-h-scree w-full overflow-hidden bg-black  mx-auto">
       <div className="p-4">

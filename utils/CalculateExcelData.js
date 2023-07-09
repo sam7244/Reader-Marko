@@ -92,7 +92,7 @@
 let marks = [["u1", "u2", "u3", "u4", "u5"]];
 
 const calculateUnitScores = (rows) => {
-  console.log("ROWS", rows);
+  //console.log("ROWS", rows);
 
   marks = [["u1", "u2", "u3", "u4", "u5"]];
 
@@ -264,7 +264,7 @@ const calculateUnitScores = (rows) => {
     }
   }
 
-  console.log(rollNoMap);
+  //console.log(rollNoMap);
 
   rollNoMap.forEach(
     (
@@ -325,7 +325,7 @@ const calculateUnitScores = (rows) => {
       marks.push(unit);
     }
   );
-  console.log(marks);
+ // console.log(marks);
   return marks;
 };
 

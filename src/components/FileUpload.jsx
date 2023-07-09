@@ -35,6 +35,8 @@ const FileUpload = ({ id }) => {
   const [rowsCIE, setRowsCIE] = useState([]);
   const [colsCIE, setColsCIE] = useState([]);
   const [isUploadedCIE, setIsUploadedCIE] = useState(false);
+  const [AvgAttainent, setAvgAttainent] = useState([]);
+  const [updatedTable2Data, setupdatedTable2Data] = useState([]);
 
   const readUploadFile = async (e) => {
     setisFileUploaded(true);
@@ -73,7 +75,9 @@ const FileUpload = ({ id }) => {
     });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
+  }, [AvgAttainent]);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -293,16 +297,23 @@ const FileUpload = ({ id }) => {
     toast.success("Pdf Downloaded Successfully");
   };
 
+  const handleClickUpdtae = () => {
+    console.log("from the hanle click", AvgAttainent);
+    const table2Data = calculateTable2Data(AvgAttainent);
+    console.log("from the file upload", table2Data);
+
+    setmappedData(table2Data);
+  };
+
   const handleChange = () => {
     setIsUploaded(true);
     setIsUpdated(true);
 
     const marksData = calculateUnitScores(rows);
+
     // console.log(marksData);
     setMarks(marksData);
 
-    const updatedTable2Data = calculateTable2Data();
-    setmappedData(updatedTable2Data);
     //  console.log(rowsCIE);
   };
   // console.log(attainment);
@@ -380,6 +391,7 @@ const FileUpload = ({ id }) => {
                   marks={marks}
                   threshold={Threshold}
                   rowsCIE={rowsCIE}
+                  setAvgAttainent={setAvgAttainent}
                 />
               </div>
 
@@ -401,6 +413,12 @@ const FileUpload = ({ id }) => {
             style={{ borderRadius: "10px" }}
             className="transition duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
           >
+            <button
+              className="flex items-center justify-center mx-auto"
+              onClick={handleClickUpdtae}
+            >
+              update
+            </button>
             <MainExcel />
             <button
               className="flex items-center justify-center mx-auto"

@@ -267,7 +267,7 @@ const FileUpload = ({ id }) => {
         }
       },
     });
-    doc.addPage();
+    // doc.addPage();
     //addHeading("New Page");
 
 

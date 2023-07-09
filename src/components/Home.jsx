@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FileUpload from "./FileUpload";
 import DemoExcelExport from "./DemoExcelExport";
 import { FileStateContext } from "../../utils/Context";
@@ -18,8 +18,10 @@ const Home = ({
 }) => {
   //console.log("dat from the god", userCourses);
   const [open, setOpen] = useState(false);
-
-  const { mappedData, setmappedData } = FileStateContext;
+  const [mappedData, setmappedData] = useState([]);
+  useEffect(() => {
+    // Assuming you have included the PapaParse library in your project
+    if (!userCourses[0]?.mapData) return;
 
   useEffect(() => {
     fetch(userCourses[0]?.mapData)
@@ -28,7 +30,7 @@ const Home = ({
         const { data, errors, meta } = parse(csvContent, { header: true });
         console.log("this is nothing");
         // Access the parsed CSV data
-        console.log("this is the dataaaaaaa", data);
+
         setmappedData(data);
         // Access parsing errors and metadata
 
@@ -38,7 +40,7 @@ const Home = ({
       .catch((error) => {
         console.error("Error fetching or parsing CSV file:", error);
       });
-  }, []);
+  }, [userCourses[0]?.mapData]);
 
   console.log("this is the data", mappedData);
   return (
@@ -58,7 +60,6 @@ const Home = ({
       <div>
         <FileUpload />
       </div>
-     
     </div>
   );
 };

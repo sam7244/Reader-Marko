@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { FileStateContext } from "./Context";
+
 
 const weights = {
   H: 1,
@@ -117,29 +119,39 @@ const table4Data = [
 ];
 
 const calculateTable2Data = (AvgAttainent) => {
- // console.log("from the table2Dtata", AvgAttainent);
+  //console.log("from the table2Dtata", AvgAttainent);
+  const {} = FileStateContext();
   const updatedTable2Data = [];
 
-  // if (AvgAttainent?.length > 0) {
-  //   for (let i = 1; i < AvgAttainent.length; i++) {
-  //     const low = AvgAttainent[i - 1] * 0.4;
-  //     const medium = AvgAttainent[i - 1] * 0.6;
-  //     const high = AvgAttainent[i - 1] * 1;
-  //     table4Data[i].push([["CO" + i, AvgAttainent[i - 1], low, medium, high]]);
-  //     // table4Data[i].push;
-  //   }
-  // }
+  for (let i = 1; i <= AvgAttainent.length; i++) {
+    const low = AvgAttainent[i - 1] * 0.4;
+    const medium = AvgAttainent[i - 1] * 0.6;
+    const high = AvgAttainent[i - 1] * 1;
+    table4Data.push([
+      "CO" + i,
+      AvgAttainent[i - 1],
+      low.toFixed(2),
+      medium.toFixed(2),
+      high.toFixed(2),
+    ]);
+  }
 
-  console.log(table4Data);
+  console.log("table 4 data is", table4Data);
 
   for (let i = 0; i < table2Data.length; i++) {
     const row = [...table2Data[i]];
 
+    console.log("this is the row", i, "working fine");
+
     if (i > 1) {
       for (let j = 1; j < row.length; j++) {
         if (row[j] === "H" || row[j] === "M" || row[j] === "L") {
+          // console.log("this is the row", row);
+
           const co = row[0];
+
           const coAttainment = table4Data.find((row) => row[0] === co)[1];
+          //  console.log("this is the co attainment", coAttainment);
           const lowValue = table4Data.find((row) => row[0] === co)[2];
           const mediumValue = table4Data.find((row) => row[0] === co)[3];
           const highValue = table4Data.find((row) => row[0] === co)[4];
@@ -156,9 +168,12 @@ const calculateTable2Data = (AvgAttainent) => {
     }
 
     updatedTable2Data.push(row);
+    // console.log(updatedTable2Data);
   }
 
-  // Create a new row to store the average values
+  //console.log("this is the table unlimited data", updatedTable2Data);
+
+  //Create a new row to store the average values
   const avgRow = Array.from(
     { length: updatedTable2Data[0].length },
     (_, index) => {
@@ -173,7 +188,7 @@ const calculateTable2Data = (AvgAttainent) => {
     for (let row = 2; row < updatedTable2Data.length; row++) {
       // Start from row 3 to exclude row 2
       if (updatedTable2Data[row][col] !== null) {
-        sum += updatedTable2Data[row][col];
+        sum += parseInt(updatedTable2Data[row][col]);
         count++;
       }
     }
@@ -184,8 +199,9 @@ const calculateTable2Data = (AvgAttainent) => {
   // Add the average row to updatedTable2Data
   updatedTable2Data.push(avgRow);
 
-  //setmappedData(updatedTable2Data);
+  // setmappedData(updatedTable2Data);
   //console.log(updatedTable2Data);
+  //console.log("this is the data", updatedTable2Data);
   return updatedTable2Data;
 };
 

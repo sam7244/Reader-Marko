@@ -305,7 +305,9 @@ const FileUpload = ({ id }) => {
     // console.log(marksData);
     setMarks(marksData);
 
-    setmappedData(updatedTable2Data);
+    const table2Data = calculateTable2Data(AvgAttainent);
+
+    setmappedData(table2Data);
     //  console.log(rowsCIE);
   };
   // console.log(attainment);
@@ -390,14 +392,14 @@ const FileUpload = ({ id }) => {
               <div
                 className={`${isUpdated && "border-2"}  border-white md:w-2/3`}
               >
-                {/* <OutputTableThird
+                <OutputTableThird
                   rows={rows}
                   isUploaded={isUploaded}
                   setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
                   mappedData={mappedData}
                   isUpdated={isUpdated}
-                /> */}
+                />
               </div>
             </div>
           </div>

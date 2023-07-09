@@ -17,9 +17,13 @@ const OutputTableSec = ({
   marks,
   threshold,
   rowsCIE,
+  setAvgAttainent,
 }) => {
-  console.log("SIE", marks);
-  console.log("CIE", rowsCIE);
+ // console.log("SIE", marks);
+ /// console.log("CIE", rowsCIE);
+
+//  console.log("count", marks.length, rowsCIE.length);
+
   if (!isUpdated) {
     return (
       <div className="flex w-full justify-center items-center">
@@ -33,8 +37,8 @@ const OutputTableSec = ({
     AttainmentData = [["CO", "CIE", "Level", "SIE", "level", "Avg", "Total"]];
 
     const THRESH_HOLD = 60;
-    const STUDENT_COUNT = marks.length;
-    const STUDENT_CIE_COUNT = rowsCIE.length;
+    const STUDENT_COUNT = marks.length - 1;
+    const STUDENT_CIE_COUNT = rowsCIE.length - 1;
 
     var u1Sum = 0;
     var u2Sum = 0;
@@ -263,14 +267,13 @@ const OutputTableSec = ({
       U5LevelCIE = "Invalid";
     }
 
-    console.log("percentailes", [
-      thirty_perCIE,
-      forty_perCIE,
-      fifty_perCIE,
-      seventy_perCIE,
-      seventy_perCIE,
-      STUDENT_CIE_COUNT,
-    ]);
+    // console.log("percentailes", [
+    //   thirty_per,
+    //   forty_per,
+    //   fifty_per,
+    //   sixty_per,
+    //   STUDENT_COUNT,
+    // ]);
 
     const LevelArrayCIE = [
       U1LevelCIE,
@@ -283,11 +286,11 @@ const OutputTableSec = ({
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
 
     const SumArrayCIE = [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE];
-    console.log("CIE", SumArrayCIE);
+  //  console.log("CIE", SumArrayCIE);
 
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
 
-    console.log("SIE", SumArraySIE);
+//    console.log("SIE", SumArraySIE);
     const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
 
     const LevelMap = new Map();
@@ -298,6 +301,8 @@ const OutputTableSec = ({
     LevelMap.set("L4", 4);
     LevelMap.set("L5", 5);
     LevelMap.set("Invalid", 0);
+    
+    let avgAttain = [];
 
     for (let i = 0; i < 5; i++) {
       var AvgAttainent = (
@@ -306,9 +311,9 @@ const OutputTableSec = ({
         2
       ).toFixed(1);
 
+      avgAttain.push(AvgAttainent);
+
       var PercetAttainment = (100 * AvgAttainent) / 5;
-      // console.log("this is CIE", SumArrayCIE);
-      // console.log("this is SIE", SumArraySIE);
 
       AttainmentData.push([
         NameArray[i],
@@ -323,6 +328,8 @@ const OutputTableSec = ({
 
     //console.log(AttainmentData);
     setAttainment(AttainmentData);
+    //setAvgAttainent(avgAttain);
+    console.log(avgAttain);
   }, [isUploaded]);
 
   return (

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const weights = {
   H: 1,
   M: 0.6,
@@ -112,15 +114,23 @@ const table2Data = [
 
 const table4Data = [
   ["Course Outcomes", "CO Attainment", "Low", "Medium", "High"],
-  ["CO1", 4.5, 1.8, 2.7, 4.5],
-  ["CO2", 4.5, 1.8, 2.7, 4.5],
-  ["CO3", 5, 2, 3, 5],
-  ["CO4", 5, 2, 3, 5],
-  ["CO5", 5, 2, 3, 5],
 ];
 
-const calculateTable2Data = () => {
+const calculateTable2Data = (AvgAttainent) => {
+ // console.log("from the table2Dtata", AvgAttainent);
   const updatedTable2Data = [];
+
+  // if (AvgAttainent?.length > 0) {
+  //   for (let i = 1; i < AvgAttainent.length; i++) {
+  //     const low = AvgAttainent[i - 1] * 0.4;
+  //     const medium = AvgAttainent[i - 1] * 0.6;
+  //     const high = AvgAttainent[i - 1] * 1;
+  //     table4Data[i].push([["CO" + i, AvgAttainent[i - 1], low, medium, high]]);
+  //     // table4Data[i].push;
+  //   }
+  // }
+
+  console.log(table4Data);
 
   for (let i = 0; i < table2Data.length; i++) {
     const row = [...table2Data[i]];

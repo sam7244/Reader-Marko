@@ -35,6 +35,8 @@ const FileUpload = ({ id }) => {
   const [rowsCIE, setRowsCIE] = useState([]);
   const [colsCIE, setColsCIE] = useState([]);
   const [isUploadedCIE, setIsUploadedCIE] = useState(false);
+  const [AvgAttainent, setAvgAttainent] = useState([]);
+  const [updatedTable2Data, setupdatedTable2Data] = useState([]);
 
   const readUploadFile = async (e) => {
     setisFileUploaded(true);
@@ -73,7 +75,9 @@ const FileUpload = ({ id }) => {
     });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
+  }, [AvgAttainent]);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -301,7 +305,6 @@ const FileUpload = ({ id }) => {
     // console.log(marksData);
     setMarks(marksData);
 
-    const updatedTable2Data = calculateTable2Data();
     setmappedData(updatedTable2Data);
     //  console.log(rowsCIE);
   };
@@ -380,20 +383,21 @@ const FileUpload = ({ id }) => {
                   marks={marks}
                   threshold={Threshold}
                   rowsCIE={rowsCIE}
+                  setAvgAttainent={setAvgAttainent}
                 />
               </div>
 
               <div
                 className={`${isUpdated && "border-2"}  border-white md:w-2/3`}
               >
-                <OutputTableThird
+                {/* <OutputTableThird
                   rows={rows}
                   isUploaded={isUploaded}
                   setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
                   mappedData={mappedData}
                   isUpdated={isUpdated}
-                />
+                /> */}
               </div>
             </div>
           </div>

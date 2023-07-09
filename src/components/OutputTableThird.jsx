@@ -15,6 +15,7 @@ const OutputTableThird = ({
   setIsUploaded,
   mappedData,
   isUpdated,
+ 
 }) => {
   if (!isUpdated) {
     return (

@@ -6,6 +6,7 @@ import { parse } from "papaparse";
 
 import { useState } from "react";
 import NavBar from "./NavBar";
+import DemoCIEExport from "./DemoCIEExport";
 
 const Home = ({
   adminId,
@@ -17,7 +18,8 @@ const Home = ({
 }) => {
   //console.log("dat from the god", userCourses);
   const [open, setOpen] = useState(false);
-  const { setmappedData, mappedData } = FileStateContext();
+  const { setCoMapping, coMapping } = FileStateContext();
+  //console.log(userCourses);
 
   useEffect(() => {
     // Assuming you have included the PapaParse library in your project
@@ -30,7 +32,11 @@ const Home = ({
         //console.log("this is nothing");
         // Access the parsed CSV data
 
-        setmappedData(data);
+        // console.log("this is the data", data);
+
+        const arrayOfArrays = data.map((obj) => Object.values(obj));
+
+        setCoMapping(arrayOfArrays);
         // Access parsing errors and metadata
 
         // Perform operations on the CSV data
@@ -41,7 +47,7 @@ const Home = ({
       });
   }, [userCourses[0]?.mapData]);
 
-  console.log("this is the data", mappedData);
+  //console.log("this is the data", mappedData);
   return (
     <div className="min-h-scree w-full overflow-hidden bg-black  mx-auto">
       <div className="p-4">
@@ -54,7 +60,7 @@ const Home = ({
       </div>
       <div className="flex max-w-8xl  items-center h-20 justify-center gap-5">
         <DemoExcelExport />
-        <DemoExcelExport />
+        <DemoCIEExport />
       </div>
       <div>
         <FileUpload />

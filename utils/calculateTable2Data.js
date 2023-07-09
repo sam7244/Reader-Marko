@@ -1,7 +1,3 @@
-import { useEffect } from "react";
-import { FileStateContext } from "./Context";
-
-
 const weights = {
   H: 1,
   M: 0.6,
@@ -118,9 +114,12 @@ const table4Data = [
   ["Course Outcomes", "CO Attainment", "Low", "Medium", "High"],
 ];
 
-const calculateTable2Data = (AvgAttainent) => {
+const calculateTable2Data = (AvgAttainent, coMapping) => {
   //console.log("from the table2Dtata", AvgAttainent);
-  const {} = FileStateContext();
+  // console.log("this is the co Mapping", coMapping);
+  // console.log("this is the dummy", table2Data);
+  //console.log(mappedData);
+
   const updatedTable2Data = [];
 
   for (let i = 1; i <= AvgAttainent.length; i++) {
@@ -136,14 +135,28 @@ const calculateTable2Data = (AvgAttainent) => {
     ]);
   }
 
-  console.log("table 4 data is", table4Data);
+  updatedTable2Data.push([
+    "Course Outcomes",
+    "PO1",
+    "PO2",
+    "PO3",
+    "PO4",
+    "PO5",
+    "PO6",
+    "PO7",
+    "PO8",
+    "PO9",
+    "PO10",
+    "PO11",
+    "PO12",
+    "PSO1",
+    "PSO2",
+  ]);
 
-  for (let i = 0; i < table2Data.length; i++) {
-    const row = [...table2Data[i]];
+  for (let i = 0; i < coMapping.length - 1; i++) {
+    const row = [...coMapping[i]];
 
-    console.log("this is the row", i, "working fine");
-
-    if (i > 1) {
+    if (i >= 1) {
       for (let j = 1; j < row.length; j++) {
         if (row[j] === "H" || row[j] === "M" || row[j] === "L") {
           // console.log("this is the row", row);
@@ -157,17 +170,17 @@ const calculateTable2Data = (AvgAttainent) => {
           const highValue = table4Data.find((row) => row[0] === co)[4];
 
           if (row[j] === "H") {
-            row[j] = highValue;
+            row[j] = parseInt(highValue);
           } else if (row[j] === "M") {
-            row[j] = mediumValue;
+            row[j] = parseInt(mediumValue);
           } else if (row[j] === "L") {
-            row[j] = lowValue;
+            row[j] = parseInt(lowValue);
           }
         }
       }
+      updatedTable2Data.push(row);
     }
 
-    updatedTable2Data.push(row);
     // console.log(updatedTable2Data);
   }
 
@@ -185,7 +198,7 @@ const calculateTable2Data = (AvgAttainent) => {
   for (let col = 1; col < updatedTable2Data[0].length; col++) {
     let sum = 0;
     let count = 0;
-    for (let row = 2; row < updatedTable2Data.length; row++) {
+    for (let row = 1; row < updatedTable2Data.length; row++) {
       // Start from row 3 to exclude row 2
       if (updatedTable2Data[row][col] !== null) {
         sum += parseInt(updatedTable2Data[row][col]);
@@ -193,7 +206,12 @@ const calculateTable2Data = (AvgAttainent) => {
       }
     }
     const average = count > 0 ? sum / count : null;
-    avgRow[col] = average;
+    // console.log(average);
+    if (isNaN(average)) {
+      avgRow[col] = "";
+    } else {
+      avgRow[col] = average;
+    }
   }
 
   // Add the average row to updatedTable2Data
@@ -201,7 +219,7 @@ const calculateTable2Data = (AvgAttainent) => {
 
   // setmappedData(updatedTable2Data);
   //console.log(updatedTable2Data);
-  //console.log("this is the data", updatedTable2Data);
+  //  console.log("this is the data", updatedTable2Data);
   return updatedTable2Data;
 };
 

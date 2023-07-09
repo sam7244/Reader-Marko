@@ -18,6 +18,7 @@ import calculateTable2Data from "../../utils/calculateTable2Data";
 import MainExcel from "./MainExcel";
 import calculateUnitScores from "../../utils/CalculateExcelData";
 import FileUploadCIE from "./FileUploadCIE";
+import { FileStateContext } from "../../utils/Context";
 
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
@@ -37,6 +38,8 @@ const FileUpload = ({ id }) => {
   const [isUploadedCIE, setIsUploadedCIE] = useState(false);
   const [AvgAttainent, setAvgAttainent] = useState([]);
   const [updatedTable2Data, setupdatedTable2Data] = useState([]);
+
+  const { coMapping } = FileStateContext();
 
   const readUploadFile = async (e) => {
     setisFileUploaded(true);
@@ -75,9 +78,9 @@ const FileUpload = ({ id }) => {
     });
   };
 
-  useEffect(() => {
-    //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
-  }, [AvgAttainent]);
+  // useEffect(() => {
+  //   //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
+  // }, [AvgAttainent]);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -123,52 +126,52 @@ const FileUpload = ({ id }) => {
       doc.text(heading, textOffset, 15);
     };
 
-    addHeading("Table Given by the god");
-    doc.autoTable({
-      head: [marks[0]], // Use the first row as table headers
-      body: marks.slice(1), // Exclude the first row from table body
-      startY: 20, // Set the initial y-coordinate for the table
-      theme: "grid",
+    // addHeading("Table Given by the god");
+    // doc.autoTable({
+    //   head: [marks[0]], // Use the first row as table headers
+    //   body: marks.slice(1), // Exclude the first row from table body
+    //   startY: 20, // Set the initial y-coordinate for the table
+    //   theme: "grid",
 
-      styles: {
-        fontSize: 12,
-        cellPadding: 5,
-        textColor: [1, 1, 0],
-      },
-      columnStyles: {
-        // Add more column styles as needed
-      },
-      didDrawPage: function (marks) {
-        const { table, pageNumber } = marks;
-        const totalPages = doc.internal.getNumberOfPages();
+    //   styles: {
+    //     fontSize: 12,
+    //     cellPadding: 5,
+    //     textColor: [1, 1, 0],
+    //   },
+    //   columnStyles: {
+    //     // Add more column styles as needed
+    //   },
+    //   didDrawPage: function (marks) {
+    //     const { table, pageNumber } = marks;
+    //     const totalPages = doc.internal.getNumberOfPages();
 
-        if (pageNumber === totalPages) {
-          // Check if the table height exceeds the available space on the page
-          if (table.height > doc.internal.pageSize.getHeight() - 20) {
-            doc.addPage(); // Add a new page
-            doc.autoTable({
-              head: [marks[0]], // Repeat the table headers on the new page
-              body: marks.slice(1), // Use the remaining body data
-              startY: 20, // Set the initial y-coordinate for the table on the new page
+    //     if (pageNumber === totalPages) {
+    //       // Check if the table height exceeds the available space on the page
+    //       if (table.height > doc.internal.pageSize.getHeight() - 20) {
+    //         doc.addPage(); // Add a new page
+    //         doc.autoTable({
+    //           head: [marks[0]], // Repeat the table headers on the new page
+    //           body: marks.slice(1), // Use the remaining body data
+    //           startY: 20, // Set the initial y-coordinate for the table on the new page
 
-              styles: {
-                fontSize: 5,
-                cellPadding: 10,
-                textColor: [0, 0, 0],
-              },
-              columnStyles: {
-                0: { cellWidth: "auto" },
-                1: { cellWidth: "auto" },
-                2: { cellWidth: "auto" },
-                // Add more column styles as needed
-              },
-            });
-          }
-        }
-      },
-    });
+    //           styles: {
+    //             fontSize: 5,
+    //             cellPadding: 10,
+    //             textColor: [0, 0, 0],
+    //           },
+    //           columnStyles: {
+    //             0: { cellWidth: "auto" },
+    //             1: { cellWidth: "auto" },
+    //             2: { cellWidth: "auto" },
+    //             // Add more column styles as needed
+    //           },
+    //         });
+    //       }
+    //     }
+    //   },
+    // });
 
-    doc.addPage();
+    // doc.addPage();
 
     addHeading("Attainment Table");
     doc.autoTable({
@@ -214,12 +217,16 @@ const FileUpload = ({ id }) => {
         }
       },
     });
+
     doc.addPage();
+
+    // Save the current transformation matrix
+    doc.saveGraphicsState();
 
     addHeading("Mapped Data");
     doc.autoTable({
-      head: [mappedData[0], mappedData[1]], // Use the first row as table headers
-      body: mappedData.slice(2), // Exclude the first row from table body
+      head: [mappedData[0]], // Use the first row as table headers
+      body: mappedData.slice(1), // Exclude the first row from table body
       startY: 20, // Set the initial y-coordinate for the table
       theme: "grid",
 
@@ -240,8 +247,8 @@ const FileUpload = ({ id }) => {
           if (table.height > doc.internal.pageSize.getHeight() - 20) {
             doc.addPage(); // Add a new page
             doc.autoTable({
-              head: [mappedData[0], mappedData[1]], // Repeat the table headers on the new page
-              body: mappedData.slice(2), // Use the remaining body data
+              head: [mappedData[0]], // Repeat the table headers on the new page
+              body: mappedData.slice(1), // Use the remaining body data
               startY: 20, // Set the initial y-coordinate for the table on the new page
 
               styles: {
@@ -260,8 +267,82 @@ const FileUpload = ({ id }) => {
         }
       },
     });
+    doc.addPage();
+    //addHeading("New Page");
+
+
+    // Generate the rotated table on a single page
+    // const generateRotatedTable = (data) => {
+    //   // Convert the data into a format suitable for rendering as a rotated table
+    //   const rotatedData = [];
+    //   const maxColumns = Math.max(...data.map((row) => row.length));
+
+    //   for (let colIndex = 0; colIndex < maxColumns; colIndex++) {
+    //     const rotatedRow = [];
+    //     for (let rowIndex = data.length - 1; rowIndex >= 0; rowIndex--) {
+    //       const cellData = data[rowIndex][colIndex] || ""; // Handle empty cells
+    //       rotatedRow.push(cellData);
+    //     }
+    //     rotatedData.push(rotatedRow);
+    //   }
+
+    //   // Render the rotated table using autoTable plugin
+    //   doc.autoTable({
+    //     head: [[""]], // Use an empty header row
+    //     body: rotatedData,
+    //     startY,
+    //     theme: "grid",
+    //     styles: {
+    //       fontSize: 7,
+    //       cellPadding: 5,
+    //       textColor: [1, 1, 0],
+    //     },
+    //     columnStyles: {
+    //       0: { cellWidth: "auto" },
+    //       // Add more column styles as needed
+    //     },
+    //     didDrawCell: function (data) {
+    //       const cellContent = data.cell.raw || "";
+    //       const cellX = data.cell.x;
+    //       const cellY = data.cell.y;
+    //       const cellWidth = data.cell.width;
+    //       const cellHeight = data.cell.height;
+
+    //       doc.setTextColor(0, 0, 0);
+    //       doc.setFontSize(7);
+    //       // doc.text(cellContent, cellX + cellWidth / 2, cellY + cellHeight / 2, {
+    //       //   align: "center",
+    //       //   baseline: "middle",
+    //       //   angle: -90,
+    //       // });
+    //     },
+    //     didDrawPage: function (data) {
+    //       const { table, pageNumber } = data;
+    //       const totalPages = doc.internal.getNumberOfPages();
+
+    //       if (pageNumber === totalPages) {
+    //         // Check if the table height exceeds the available space on the page
+    //         if (table.height > doc.internal.pageSize.getHeight() - 20) {
+    //           doc.addPage(); // Add a new page
+    //           startY = 20; // Reset the startY for the new page
+    //         }
+    //       }
+    //     },
+    //   });
+
+    //   // Update the startY for the next table
+    //   startY += doc.internal.pageSize.getHeight() - 20;
+    // };
+
+    // // Generate the rotated table
+    // generateRotatedTable([
+    //   mappedData[0],
+    //   mappedData[1],
+    //   ...mappedData.slice(2),
+    // ]);
 
     doc.addPage();
+    doc.restoreGraphicsState();
 
     addHeading("Bar Graph");
     // Capture the graph element as an image
@@ -299,7 +380,7 @@ const FileUpload = ({ id }) => {
 
   const handleClickUpdtae = () => {
     console.log("from the hanle click", AvgAttainent);
-    const table2Data = calculateTable2Data(AvgAttainent);
+    const table2Data = calculateTable2Data(AvgAttainent, coMapping);
     console.log("from the file upload", table2Data);
 
     setmappedData(table2Data);
@@ -316,7 +397,6 @@ const FileUpload = ({ id }) => {
 
     //  console.log(rowsCIE);
   };
-  // console.log(attainment);
 
   return (
     <div className=" p-10 min-h-screen   overflow-hidden">
@@ -326,7 +406,7 @@ const FileUpload = ({ id }) => {
           className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
         >
           <p className="font-bold text-white text-xl  animate-bounce">
-            Upload File Below
+            Upload SIE File
           </p>
 
           <input
@@ -345,7 +425,7 @@ const FileUpload = ({ id }) => {
           className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
         >
           <p className="font-bold text-xl text-white animate-bounce">
-            Upload File Below
+            Upload CIE File
           </p>
 
           <input

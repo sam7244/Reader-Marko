@@ -325,7 +325,7 @@ const calculateUnitScores = (rows) => {
       marks.push(unit);
     }
   );
-  // console.log(marks);
+  console.log(marks);
   return marks;
 };
 

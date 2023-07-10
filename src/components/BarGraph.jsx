@@ -33,6 +33,20 @@ const BarGraph = ({ attainment, isUpdated }) => {
     };
 
     const options = {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "CO DATA",
+          },
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Percentage reached",
+          },
+        },
+      },
       responsive: true,
       maintainAspectRatio: false,
     };

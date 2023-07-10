@@ -5,12 +5,12 @@ const FileContext = React.createContext();
 export const StateContextProvider = ({ children }) => {
   // states and all the functionality done here
   // all the states and function goes here
-  const [mappedData, setmappedData] = useState([]);
+  const [coMapping, setCoMapping] = useState([]);
   return (
     <FileContext.Provider
       value={{
-        setmappedData,
-        mappedData,
+        coMapping,
+        setCoMapping,
       }}
     >
       {children}

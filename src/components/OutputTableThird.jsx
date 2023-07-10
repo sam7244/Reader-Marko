@@ -15,7 +15,6 @@ const OutputTableThird = ({
   setIsUploaded,
   mappedData,
   isUpdated,
- 
 }) => {
   if (!isUpdated) {
     return (
@@ -56,6 +55,7 @@ const OutputTableThird = ({
                   className="font-medium text-white"
                 >
                   {val}
+                
                 </TableCell>
               ))}
             </TableRow>

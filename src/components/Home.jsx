@@ -33,7 +33,7 @@ const Home = ({
         // Access the parsed CSV data
 
         // console.log("this is the data", data);
-
+        // console.log(data);
         const arrayOfArrays = data.map((obj) => Object.values(obj));
 
         setCoMapping(arrayOfArrays);
@@ -47,7 +47,6 @@ const Home = ({
       });
   }, [userCourses[0]?.mapData]);
 
-  //console.log("this is the data", mappedData);
   return (
     <div className="min-h-scree w-full overflow-hidden bg-black  mx-auto">
       <div className="p-4">

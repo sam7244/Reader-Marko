@@ -270,7 +270,6 @@ const FileUpload = ({ id }) => {
     // doc.addPage();
     //addHeading("New Page");
 
-
     // Generate the rotated table on a single page
     // const generateRotatedTable = (data) => {
     //   // Convert the data into a format suitable for rendering as a rotated table
@@ -379,9 +378,10 @@ const FileUpload = ({ id }) => {
   };
 
   const handleClickUpdtae = () => {
-    console.log("from the hanle click", AvgAttainent);
+    generatePDF();
+    // console.log("from the hanle click", AvgAttainent);
     const table2Data = calculateTable2Data(AvgAttainent, coMapping);
-    console.log("from the file upload", table2Data);
+    // console.log("from the file upload", table2Data);
 
     setmappedData(table2Data);
   };
@@ -491,21 +491,21 @@ const FileUpload = ({ id }) => {
           </div>
           <div
             style={{ borderRadius: "10px" }}
-            className="transition duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
+            className="transition  duration-150 hover:scale-105 ease-in-out border-2 mx-auto mt-2 bg-red-400 text-white font-bold py-3  w-[200px] flex justify-end  px-6"
           >
             <button
               className="flex items-center justify-center mx-auto"
               onClick={handleClickUpdtae}
             >
-              update
+              Update And Generate
             </button>
             <MainExcel />
-            <button
+            {/* <button
               className="flex items-center justify-center mx-auto"
-              onClick={generatePDF}
+              // onClick={}
             >
               Generate PDF
-            </button>
+            </button> */}
           </div>
         </div>
       )}

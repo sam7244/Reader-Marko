@@ -329,7 +329,7 @@ const OutputTableSec = ({
     //console.log(AttainmentData);
     setAttainment(AttainmentData);
     setAvgAttainent(avgAttain);
-    console.log(avgAttain);
+    // console.log(avgAttain);
   }, [isUploaded]);
 
   return (

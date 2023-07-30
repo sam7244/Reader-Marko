@@ -378,7 +378,6 @@ const FileUpload = ({ id }) => {
   };
 
   const handleClickUpdtae = () => {
-    generatePDF();
     // console.log("from the hanle click", AvgAttainent);
     const table2Data = calculateTable2Data(AvgAttainent, coMapping);
     // console.log("from the file upload", table2Data);
@@ -500,12 +499,12 @@ const FileUpload = ({ id }) => {
               Update And Generate
             </button>
             <MainExcel />
-            {/* <button
+            <button
               className="flex items-center justify-center mx-auto"
-              // onClick={}
+              onClick={generatePDF}
             >
               Generate PDF
-            </button> */}
+            </button>
           </div>
         </div>
       )}

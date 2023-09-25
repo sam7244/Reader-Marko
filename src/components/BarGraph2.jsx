@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarGraph = ({ attainment, isUpdated }) => {
+const BarGraph2 = ({ mappedData, isUpdated }) => {
   if (!isUpdated) {
     return (
       <div className="flex justify-center items-center">
@@ -17,9 +17,9 @@ const BarGraph = ({ attainment, isUpdated }) => {
     const ctx = chartRef.current.getContext("2d");
 
     // Extract labels and data from the attainment array
-    const labels = attainment.slice(1).map((row) => row[0]);
-    const data = attainment.slice(1).map((row) => row[row.length - 2]);
-   // console.log("this is  the data", data);
+    const labels = mappedData[0];
+    const data = mappedData[6];
+    console.log("this is  the data grapgh 2", mappedData);
     const chartData = {
       labels: labels,
       datasets: [
@@ -68,10 +68,10 @@ const BarGraph = ({ attainment, isUpdated }) => {
         chartInstance.destroy();
       }
     };
-  }, [attainment]);
+  }, [mappedData]);
 
   return <canvas ref={chartRef} />;
 };
 
-export default BarGraph;
-BarGraph.__isStatic = true;
+export default BarGraph2;
+BarGraph2.__isStatic = true;

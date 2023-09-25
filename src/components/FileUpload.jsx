@@ -19,6 +19,7 @@ import MainExcel from "./MainExcel";
 import calculateUnitScores from "../../utils/CalculateExcelData";
 import FileUploadCIE from "./FileUploadCIE";
 import { FileStateContext } from "../../utils/Context";
+import BarGraph2 from "./BarGraph2";
 
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
@@ -173,7 +174,7 @@ const FileUpload = ({ id }) => {
 
     // doc.addPage();
 
-    addHeading("Attainment Table");
+    addHeading("CO Attainment");
     doc.autoTable({
       head: [attainment[0]], // Use the first row as table headers
       body: attainment.slice(1), // Exclude the first row from table body
@@ -220,10 +221,33 @@ const FileUpload = ({ id }) => {
 
     doc.addPage();
 
+    addHeading("COs Attainment");
+    // Capture the graph element as an image
+    const graphElement = document.getElementById("graph");
+    const canvas = await html2canvas(graphElement);
+    const imageData = canvas.toDataURL("image/png");
+
+    // Calculate the PDF dimensions
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = doc.internal.pageSize.getHeight();
+
+    // Calculate the image dimensions
+    const imageWidth = pdfWidth - 10;
+    const imageHeight = pdfHeight / 4 + 10;
+
+    // Calculate the image position in the middle of the PDF
+    const imageX = (pdfWidth - imageWidth) / 2;
+    const imageY = 25;
+
+    // Add the image to the PDF
+    doc.addImage(imageData, "PNG", imageX, imageY, imageWidth, imageHeight);
+
     // Save the current transformation matrix
     doc.saveGraphicsState();
 
-    addHeading("Mapped Data");
+    doc.addPage();
+
+    addHeading("CO-PO Attainment");
     doc.autoTable({
       head: [mappedData[0]], // Use the first row as table headers
       body: mappedData.slice(1), // Exclude the first row from table body
@@ -267,103 +291,16 @@ const FileUpload = ({ id }) => {
         }
       },
     });
-    // doc.addPage();
-    //addHeading("New Page");
-
-
-    // Generate the rotated table on a single page
-    // const generateRotatedTable = (data) => {
-    //   // Convert the data into a format suitable for rendering as a rotated table
-    //   const rotatedData = [];
-    //   const maxColumns = Math.max(...data.map((row) => row.length));
-
-    //   for (let colIndex = 0; colIndex < maxColumns; colIndex++) {
-    //     const rotatedRow = [];
-    //     for (let rowIndex = data.length - 1; rowIndex >= 0; rowIndex--) {
-    //       const cellData = data[rowIndex][colIndex] || ""; // Handle empty cells
-    //       rotatedRow.push(cellData);
-    //     }
-    //     rotatedData.push(rotatedRow);
-    //   }
-
-    //   // Render the rotated table using autoTable plugin
-    //   doc.autoTable({
-    //     head: [[""]], // Use an empty header row
-    //     body: rotatedData,
-    //     startY,
-    //     theme: "grid",
-    //     styles: {
-    //       fontSize: 7,
-    //       cellPadding: 5,
-    //       textColor: [1, 1, 0],
-    //     },
-    //     columnStyles: {
-    //       0: { cellWidth: "auto" },
-    //       // Add more column styles as needed
-    //     },
-    //     didDrawCell: function (data) {
-    //       const cellContent = data.cell.raw || "";
-    //       const cellX = data.cell.x;
-    //       const cellY = data.cell.y;
-    //       const cellWidth = data.cell.width;
-    //       const cellHeight = data.cell.height;
-
-    //       doc.setTextColor(0, 0, 0);
-    //       doc.setFontSize(7);
-    //       // doc.text(cellContent, cellX + cellWidth / 2, cellY + cellHeight / 2, {
-    //       //   align: "center",
-    //       //   baseline: "middle",
-    //       //   angle: -90,
-    //       // });
-    //     },
-    //     didDrawPage: function (data) {
-    //       const { table, pageNumber } = data;
-    //       const totalPages = doc.internal.getNumberOfPages();
-
-    //       if (pageNumber === totalPages) {
-    //         // Check if the table height exceeds the available space on the page
-    //         if (table.height > doc.internal.pageSize.getHeight() - 20) {
-    //           doc.addPage(); // Add a new page
-    //           startY = 20; // Reset the startY for the new page
-    //         }
-    //       }
-    //     },
-    //   });
-
-    //   // Update the startY for the next table
-    //   startY += doc.internal.pageSize.getHeight() - 20;
-    // };
-
-    // // Generate the rotated table
-    // generateRotatedTable([
-    //   mappedData[0],
-    //   mappedData[1],
-    //   ...mappedData.slice(2),
-    // ]);
 
     doc.addPage();
     doc.restoreGraphicsState();
+    addHeading("CO -> PO Attainment");
 
-    addHeading("Bar Graph");
-    // Capture the graph element as an image
-    const graphElement = document.getElementById("graph");
-    const canvas = await html2canvas(graphElement);
-    const imageData = canvas.toDataURL("image/png");
+    const graphElement1 = document.getElementById("graph1");
+    const canvas1 = await html2canvas(graphElement1);
+    const imageData1 = canvas1.toDataURL("image/png");
 
-    // Calculate the PDF dimensions
-    const pdfWidth = doc.internal.pageSize.getWidth();
-    const pdfHeight = doc.internal.pageSize.getHeight();
-
-    // Calculate the image dimensions
-    const imageWidth = pdfWidth - 10;
-    const imageHeight = pdfHeight / 4 + 10;
-
-    // Calculate the image position in the middle of the PDF
-    const imageX = (pdfWidth - imageWidth) / 2;
-    const imageY = 25;
-
-    // Add the image to the PDF
-    doc.addImage(imageData, "PNG", imageX, imageY, imageWidth, imageHeight);
+    doc.addImage(imageData1, "PNG", imageX, imageY, imageWidth, imageHeight);
 
     // Save the PDF
     const pdf = doc.output("blob");
@@ -379,9 +316,9 @@ const FileUpload = ({ id }) => {
   };
 
   const handleClickUpdtae = () => {
-    console.log("from the hanle click", AvgAttainent);
+    //  console.log("from the hanle click", AvgAttainent);
     const table2Data = calculateTable2Data(AvgAttainent, coMapping);
-    console.log("from the file upload", table2Data);
+    //console.log("from the file upload", table2Data);
 
     setmappedData(table2Data);
   };
@@ -459,6 +396,7 @@ const FileUpload = ({ id }) => {
             >
               <BarGraph attainment={attainment} isUpdated={isUpdated} />
             </div>
+
             <div className="flex flex-col gap-4  md:flex-row my-5">
               <div
                 className={`${isUpdated && " border-2"} border-white  md:w-1/3`}
@@ -487,6 +425,14 @@ const FileUpload = ({ id }) => {
                   isUpdated={isUpdated}
                 />
               </div>
+            </div>
+            <div
+              className={`${
+                isUpdated && "border-2"
+              }  border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center `}
+              id="graph1"
+            >
+              <BarGraph2 mappedData={mappedData} isUpdated={isUpdated} />
             </div>
           </div>
           <div

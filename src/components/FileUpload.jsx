@@ -329,10 +329,10 @@ const FileUpload = ({ id }) => {
 
     const marksData = calculateUnitScores(rows);
 
-    // console.log(marksData);
+    console.log("this is the SIE data", marksData);
     setMarks(marksData);
-
-    //  console.log(rowsCIE);
+    //console.log("the row data", rows);
+    //console.log("this is the row CIE", rowsCIE);
   };
 
   return (

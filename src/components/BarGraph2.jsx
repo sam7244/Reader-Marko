@@ -19,7 +19,7 @@ const BarGraph2 = ({ mappedData, isUpdated }) => {
     // Extract labels and data from the attainment array
     const labels = mappedData[0];
     const data = mappedData[6];
-    console.log("this is  the data grapgh 2", mappedData);
+    //console.log("this is  the data grapgh 2", mappedData);
     const chartData = {
       labels: labels,
       datasets: [

@@ -40,6 +40,8 @@ const OutputTableSec = ({
     const STUDENT_COUNT = marks.length - 1;
     const STUDENT_CIE_COUNT = rowsCIE.length - 1;
 
+   // console.log("sie count", STUDENT_COUNT, "cie count", STUDENT_CIE_COUNT);
+
     var u1Sum = 0;
     var u2Sum = 0;
     var u3Sum = 0;
@@ -58,23 +60,25 @@ const OutputTableSec = ({
     let sixty_per = parseInt((60 * STUDENT_COUNT) / 100);
     let seventy_per = parseInt((70 * STUDENT_COUNT) / 100);
 
-    let thirty_perCIE = parseInt((30 * STUDENT_COUNT) / 100);
-    let forty_perCIE = parseInt((40 * STUDENT_COUNT) / 100);
-    let fifty_perCIE = parseInt((50 * STUDENT_COUNT) / 100);
-    let sixty_perCIE = parseInt((60 * STUDENT_COUNT) / 100);
+    let thirty_perCIE = parseInt((30 * STUDENT_CIE_COUNT) / 100);
+    let forty_perCIE = parseInt((40 * STUDENT_CIE_COUNT) / 100);
+    let fifty_perCIE = parseInt((50 * STUDENT_CIE_COUNT) / 100);
+    let sixty_perCIE = parseInt((60 * STUDENT_CIE_COUNT) / 100);
     let seventy_perCIE = parseInt((70 * STUDENT_CIE_COUNT) / 100);
 
-    let u1 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
-    let u2 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
-    let u3 = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
-    let u4 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
-    let u5 = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
+    let u1 = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
+    let u2 = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
+    let u3 = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
+    let u4 = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
+    let u5 = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
 
     let u1CIE = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
     let u2CIE = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
     let u3CIE = ((THRESH_HOLD * 8) / 100 - 0.1).toFixed(1);
     let u4CIE = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
     let u5CIE = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
+
+    console.log(" threshhold", u1);
 
     for (var i = 1; i < marks.length; i++) {
       if (marks[i][0] > u1) {
@@ -93,21 +97,24 @@ const OutputTableSec = ({
         u5Sum++;
       }
     }
+    //console.log("this is the roe cie", rowsCIE);
 
     for (var i = 1; i < rowsCIE.length; i++) {
-      if (rowsCIE[i][2] > u1CIE) {
+      if (rowsCIE[i][0] > u1CIE) {
         u1SumCIE++;
       }
-      if (rowsCIE[i][3] > u2CIE) {
+      if (rowsCIE[i][1] > u2CIE) {
         u2SumCIE++;
       }
-      if (rowsCIE[i][4] > u3CIE) {
+      if (rowsCIE[i][2] > u3CIE) {
         u3SumCIE++;
       }
-      if (rowsCIE[i][5] > u4CIE) {
+      if (rowsCIE[i][3] > u4CIE) {
         u4SumCIE++;
       }
-      if (rowsCIE[i][6] > u5CIE) {
+
+      let av = rowsCIE[i][4] + rowsCIE[i][5];
+      if (av > u5CIE) {
         u5SumCIE++;
       }
     }
@@ -329,7 +336,7 @@ const OutputTableSec = ({
     //console.log(AttainmentData);
     setAttainment(AttainmentData);
     setAvgAttainent(avgAttain);
-    console.log(avgAttain);
+    // console.log(avgAttain);
   }, [isUploaded]);
 
   return (

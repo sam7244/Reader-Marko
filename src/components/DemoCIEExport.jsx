@@ -14,7 +14,7 @@ const DemoCIEExport = () => (
       filename="example.xlsx"
       element={
         <button className="px-3 py-2  text-xl  bg-white text-black font-semibold  rounded-xl ">
-          DownLoad CIE Formate
+          DownLoad CIE Format
         </button>
       }
     >

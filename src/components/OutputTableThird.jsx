@@ -24,6 +24,8 @@ const OutputTableThird = ({
     );
   }
 
+  console.log("this is the rows", mappedData);
+
   return (
     <div className="md:h-[400px] max-h-[450px]  overflow-y-scroll ">
       <div className="flex  justify-center border-b p-2 border-white">
@@ -55,7 +57,6 @@ const OutputTableThird = ({
                   className="font-medium text-white"
                 >
                   {val}
-                
                 </TableCell>
               ))}
             </TableRow>

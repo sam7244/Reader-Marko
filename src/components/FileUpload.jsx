@@ -19,6 +19,7 @@ import MainExcel from "./MainExcel";
 import calculateUnitScores from "../../utils/CalculateExcelData";
 import FileUploadCIE from "./FileUploadCIE";
 import { FileStateContext } from "../../utils/Context";
+import BarGraph2 from "./BarGraph2";
 
 const FileUpload = ({ id }) => {
   const [Threshold, setThreshold] = useState(0);
@@ -173,7 +174,7 @@ const FileUpload = ({ id }) => {
 
     // doc.addPage();
 
-    addHeading("Attainment Table");
+    addHeading("CO Attainment");
     doc.autoTable({
       head: [attainment[0]], // Use the first row as table headers
       body: attainment.slice(1), // Exclude the first row from table body
@@ -220,10 +221,33 @@ const FileUpload = ({ id }) => {
 
     doc.addPage();
 
+    addHeading("COs Attainment");
+    // Capture the graph element as an image
+    const graphElement = document.getElementById("graph");
+    const canvas = await html2canvas(graphElement);
+    const imageData = canvas.toDataURL("image/png");
+
+    // Calculate the PDF dimensions
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = doc.internal.pageSize.getHeight();
+
+    // Calculate the image dimensions
+    const imageWidth = pdfWidth - 10;
+    const imageHeight = pdfHeight / 4 + 10;
+
+    // Calculate the image position in the middle of the PDF
+    const imageX = (pdfWidth - imageWidth) / 2;
+    const imageY = 25;
+
+    // Add the image to the PDF
+    doc.addImage(imageData, "PNG", imageX, imageY, imageWidth, imageHeight);
+
     // Save the current transformation matrix
     doc.saveGraphicsState();
 
-    addHeading("Mapped Data");
+    doc.addPage();
+
+    addHeading("CO-PO Attainment");
     doc.autoTable({
       head: [mappedData[0]], // Use the first row as table headers
       body: mappedData.slice(1), // Exclude the first row from table body
@@ -267,6 +291,7 @@ const FileUpload = ({ id }) => {
         }
       },
     });
+
     // doc.addPage();
     //addHeading("New Page");
 
@@ -340,29 +365,16 @@ const FileUpload = ({ id }) => {
     //   ...mappedData.slice(2),
     // ]);
 
+
     doc.addPage();
     doc.restoreGraphicsState();
+    addHeading("CO -> PO Attainment");
 
-    addHeading("Bar Graph");
-    // Capture the graph element as an image
-    const graphElement = document.getElementById("graph");
-    const canvas = await html2canvas(graphElement);
-    const imageData = canvas.toDataURL("image/png");
+    const graphElement1 = document.getElementById("graph1");
+    const canvas1 = await html2canvas(graphElement1);
+    const imageData1 = canvas1.toDataURL("image/png");
 
-    // Calculate the PDF dimensions
-    const pdfWidth = doc.internal.pageSize.getWidth();
-    const pdfHeight = doc.internal.pageSize.getHeight();
-
-    // Calculate the image dimensions
-    const imageWidth = pdfWidth - 10;
-    const imageHeight = pdfHeight / 4 + 10;
-
-    // Calculate the image position in the middle of the PDF
-    const imageX = (pdfWidth - imageWidth) / 2;
-    const imageY = 25;
-
-    // Add the image to the PDF
-    doc.addImage(imageData, "PNG", imageX, imageY, imageWidth, imageHeight);
+    doc.addImage(imageData1, "PNG", imageX, imageY, imageWidth, imageHeight);
 
     // Save the PDF
     const pdf = doc.output("blob");
@@ -378,9 +390,11 @@ const FileUpload = ({ id }) => {
   };
 
   const handleClickUpdtae = () => {
+
     // console.log("from the hanle click", AvgAttainent);
     const table2Data = calculateTable2Data(AvgAttainent, coMapping);
     // console.log("from the file upload", table2Data);
+
 
     setmappedData(table2Data);
   };
@@ -391,10 +405,10 @@ const FileUpload = ({ id }) => {
 
     const marksData = calculateUnitScores(rows);
 
-    // console.log(marksData);
+    console.log("this is the SIE data", marksData);
     setMarks(marksData);
-
-    //  console.log(rowsCIE);
+    //console.log("the row data", rows);
+    //console.log("this is the row CIE", rowsCIE);
   };
 
   return (
@@ -458,6 +472,7 @@ const FileUpload = ({ id }) => {
             >
               <BarGraph attainment={attainment} isUpdated={isUpdated} />
             </div>
+
             <div className="flex flex-col gap-4  md:flex-row my-5">
               <div
                 className={`${isUpdated && " border-2"} border-white  md:w-1/3`}
@@ -486,6 +501,14 @@ const FileUpload = ({ id }) => {
                   isUpdated={isUpdated}
                 />
               </div>
+            </div>
+            <div
+              className={`${
+                isUpdated && "border-2"
+              }  border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center `}
+              id="graph1"
+            >
+              <BarGraph2 mappedData={mappedData} isUpdated={isUpdated} />
             </div>
           </div>
           <div

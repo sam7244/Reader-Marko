@@ -302,16 +302,16 @@ const calculateUnitScores = (rows) => {
       },
       key
     ) => {
-      let u1q1 = a1 + b1 + c1;
-      let u1q2 = a2 + b2 + c2;
-      let u2q1 = a3 + b3 + c3;
-      let u2q2 = a4 + b4 + c4;
-      let u3q1 = a5 + b5 + c5;
-      let u3q2 = a6 + b6 + c6;
-      let u4q1 = a7 + b7 + c7;
-      let u4q2 = a8 + b8 + c8;
-      let u5q1 = a9 + b9 + c9;
-      let u5q2 = a10 + b10 + c10;
+      let u1q1 = parseFloat(a1) + parseFloat(b1) + parseFloat(c1);
+      let u1q2 = parseFloat(a2) + parseFloat(b2) + parseFloat(c2);
+      let u2q1 = parseFloat(a3) + parseFloat(b3) + parseFloat(c3);
+      let u2q2 = parseFloat(a4) + parseFloat(b4) + parseFloat(c4);
+      let u3q1 = parseFloat(a5) + parseFloat(b5) + parseFloat(c5);
+      let u3q2 = parseFloat(a6) + parseFloat(b6) + parseFloat(c6);
+      let u4q1 = parseFloat(a7) + parseFloat(b7) + parseFloat(c7);
+      let u4q2 = parseFloat(a8) + parseFloat(b8) + parseFloat(c8);
+      let u5q1 = parseFloat(a9) + parseFloat(b9) + parseFloat(c9);
+      let u5q2 = parseFloat(a10) + parseFloat(b10) + parseFloat(c10);
 
       let u1, u2, u3, u4, u5;
 
@@ -325,7 +325,7 @@ const calculateUnitScores = (rows) => {
       marks.push(unit);
     }
   );
- // console.log(marks);
+  // console.log(marks);
   return marks;
 };
 

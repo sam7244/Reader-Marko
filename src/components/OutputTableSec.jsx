@@ -40,7 +40,7 @@ const OutputTableSec = ({
     const STUDENT_COUNT = marks.length - 1;
     const STUDENT_CIE_COUNT = rowsCIE.length - 1;
 
-   // console.log("sie count", STUDENT_COUNT, "cie count", STUDENT_CIE_COUNT);
+    // console.log("sie count", STUDENT_COUNT, "cie count", STUDENT_CIE_COUNT);
 
     var u1Sum = 0;
     var u2Sum = 0;
@@ -65,6 +65,19 @@ const OutputTableSec = ({
     let fifty_perCIE = parseInt((50 * STUDENT_CIE_COUNT) / 100);
     let sixty_perCIE = parseInt((60 * STUDENT_CIE_COUNT) / 100);
     let seventy_perCIE = parseInt((70 * STUDENT_CIE_COUNT) / 100);
+
+    console.log(
+      "the percentailes",
+      thirty_perCIE,
+      " ",
+      forty_perCIE,
+      " ",
+      fifty_perCIE,
+      " ",
+      sixty_perCIE,
+      " ",
+      seventy_perCIE
+    );
 
     let u1 = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
     let u2 = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
@@ -183,7 +196,7 @@ const OutputTableSec = ({
     } else if (u1Sum > fifty_per && u1Sum <= sixty_per) {
       U4Level = "L3";
     } else if (u4Sum > sixty_per && u4Sum <= seventy_per) {
-      U4Level = "L4";
+      U4Level = "L4"; 
     } else if (u4Sum > seventy_per && u4Sum <= STUDENT_COUNT) {
       U4Level = "L5";
     } else {
@@ -204,15 +217,15 @@ const OutputTableSec = ({
       U5Level = "Invalid";
     }
 
-    if (u1SumCIE > thirty_perCIE && u1SumCIE <= forty_perCIE) {
+    if (u1SumCIE > thirty_perCIE && u1SumCIE < forty_perCIE) {
       U1LevelCIE = "L1";
-    } else if (u1SumCIE > forty_perCIE && u1SumCIE <= fifty_perCIE) {
+    } else if (u1SumCIE >= forty_perCIE && u1SumCIE < fifty_perCIE) {
       U1LevelCIE = "L2";
-    } else if (u1SumCIE > fifty_perCIE && u1SumCIE <= sixty_perCIE) {
+    } else if (u1SumCIE >= fifty_perCIE && u1SumCIE < sixty_perCIE) {
       U1LevelCIE = "L3";
-    } else if (u1SumCIE > sixty_perCIE && u1SumCIE <= seventy_perCIE) {
+    } else if (u1SumCIE >= sixty_perCIE && u1SumCIE < seventy_perCIE) {
       U1LevelCIE = "L4";
-    } else if (u1SumCIE > seventy_perCIE && u1SumCIE <= STUDENT_CIE_COUNT) {
+    } else if (u1SumCIE >= seventy_perCIE && u1SumCIE <= STUDENT_CIE_COUNT) {
       U1LevelCIE = "L5";
     } else {
       U1LevelCIE = "Invalid";
@@ -293,7 +306,7 @@ const OutputTableSec = ({
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
 
     const SumArrayCIE = [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE];
-    //console.log("CIE ss", SumArrayCIE);
+    console.log("we are here", SumArrayCIE);
 
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
 

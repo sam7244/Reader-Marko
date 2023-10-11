@@ -116,7 +116,7 @@ const table4Data = [
 
 const calculateTable2Data = (AvgAttainent, coMapping) => {
   //console.log("from the table2Dtata", AvgAttainent);
-  // console.log("this is the co Mapping", coMapping);
+  console.log("this is the co Mapping", coMapping);
   // console.log("this is the dummy", table2Data);
   //console.log(mappedData);
 

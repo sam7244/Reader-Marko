@@ -13,6 +13,9 @@ const App = () => {
   const [id, setId] = useState("");
   const [userCourses, setUserCourses] = useState([]);
   const navigate = useNavigate();
+  
+  console.log("copo data", userCourses);
+
   useEffect(() => {
     const query = lectureQuery;
     client.fetch(query).then((data) => {

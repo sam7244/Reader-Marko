@@ -42,6 +42,8 @@ const FileUpload = ({ id }) => {
 
   const { coMapping } = FileStateContext();
 
+  console.log("this is the first and the", coMapping);
+
   const readUploadFile = async (e) => {
     setisFileUploaded(true);
     let fileObj = e.target.files[0];
@@ -79,9 +81,9 @@ const FileUpload = ({ id }) => {
     });
   };
 
-  // useEffect(() => {
-  //   //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
-  // }, [AvgAttainent]);
+  useEffect(() => {
+    //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
+  }, [AvgAttainent]);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -321,6 +323,7 @@ const FileUpload = ({ id }) => {
     //console.log("from the file upload", table2Data);
 
     setmappedData(table2Data);
+    console.log("this is where we can find the mapped data", table2Data);
   };
 
   const handleChange = () => {

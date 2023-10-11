@@ -13,6 +13,7 @@ const CourseCodeSelector = ({
   setCourseCode,
   setThreshold,
 }) => {
+ 
   return (
     <div className="col-span-3">
       <Select
@@ -34,9 +35,11 @@ const CourseCodeSelector = ({
           {userCourses?.map((item, idx) => (
             <SelectItem
               key={`${item - courseCode}-${idx}`}
-              value={item.courseCode}
+              value={item?.courseCode}
             >
-              {item.courseCode}
+
+              {item?.courseCode}
+              
             </SelectItem>
           ))}
         </SelectContent>

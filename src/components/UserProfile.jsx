@@ -72,6 +72,7 @@ export default function UserProfile({
       })
       .catch((e) => {
         toast.error("Please select the barcode", { position: "bottom-right" });
+        console.log(e);
       });
   };
 

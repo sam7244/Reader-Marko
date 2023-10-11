@@ -18,6 +18,7 @@ const Home = ({
 }) => {
   //console.log("dat from the god", userCourses);
   const [open, setOpen] = useState(false);
+  const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
   const { setCoMapping, coMapping } = FileStateContext();
   //console.log(userCourses);
 
@@ -55,6 +56,8 @@ const Home = ({
           adminId={adminId}
           setThreshold={setThreshold}
           threshold={threshold}
+          courseCode={courseCode}
+          setCourseCode={setCourseCode}
         />
       </div>
       <div className="flex max-w-8xl  items-center h-20 justify-center gap-5">
@@ -62,7 +65,7 @@ const Home = ({
         <DemoCIEExport />
       </div>
       <div>
-        <FileUpload />
+        <FileUpload courseCode={courseCode} />
       </div>
     </div>
   );

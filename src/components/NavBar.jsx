@@ -1,7 +1,7 @@
 import React from "react";
 import Marquee from "react-fast-marquee";
 import UserProfile from "./UserProfile";
-const NavBar = ({ threshold, setThreshold, adminId, userCourses }) => {
+const NavBar = ({ threshold, setThreshold, adminId, userCourses,courseCode,setCourseCode }) => {
   //console.log("^^^", threshold);
   return (
     <div className="h-20 max-w-7xl mx-auto flex items-center gap-5 md:gap-3 justify-between px-4 py-1">
@@ -21,6 +21,8 @@ const NavBar = ({ threshold, setThreshold, adminId, userCourses }) => {
         adminId={adminId}
         setThreshold={setThreshold}
         threshold={threshold}
+        courseCode={courseCode}
+        setCourseCode={setCourseCode}
       />
     </div>
   );

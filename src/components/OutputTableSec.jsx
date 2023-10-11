@@ -18,6 +18,7 @@ const OutputTableSec = ({
   threshold,
   rowsCIE,
   setAvgAttainent,
+  courseCode,
 }) => {
   // console.log("SIE", marks);
   /// console.log("CIE", rowsCIE);
@@ -196,7 +197,7 @@ const OutputTableSec = ({
     } else if (u1Sum > fifty_per && u1Sum <= sixty_per) {
       U4Level = "L3";
     } else if (u4Sum > sixty_per && u4Sum <= seventy_per) {
-      U4Level = "L4"; 
+      U4Level = "L4";
     } else if (u4Sum > seventy_per && u4Sum <= STUDENT_COUNT) {
       U4Level = "L5";
     } else {
@@ -311,7 +312,13 @@ const OutputTableSec = ({
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];
 
     //console.log("SIE ss", SumArraySIE);
-    const NameArray = ["C502.1", "C502.2", "C502.3", "C502.4", "C502.5"];
+    const NameArray = [
+      courseCode + ".1",
+      courseCode + ".2",
+      courseCode + ".3",
+      courseCode + ".4",
+      courseCode + ".5",
+    ];
 
     const LevelMap = new Map();
 

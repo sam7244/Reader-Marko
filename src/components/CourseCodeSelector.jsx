@@ -13,6 +13,7 @@ const CourseCodeSelector = ({
   setCourseCode,
   setThreshold,
 }) => {
+  console.log("the inside course code is", courseCode);
   return (
     <div className="col-span-3">
       <Select

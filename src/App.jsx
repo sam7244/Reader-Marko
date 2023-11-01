@@ -14,6 +14,8 @@ const App = () => {
   const [id, setId] = useState("");
   const [userCourses, setUserCourses] = useState([]);
   const navigate = useNavigate();
+
+
   useEffect(() => {
     const query = lectureQuery;
     client.fetch(query).then((data) => {

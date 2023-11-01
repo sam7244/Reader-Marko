@@ -13,7 +13,7 @@ const CourseCodeSelector = ({
   setCourseCode,
   setThreshold,
 }) => {
- 
+
   return (
     <div className="col-span-3">
       <Select

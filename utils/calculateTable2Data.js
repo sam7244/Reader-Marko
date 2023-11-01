@@ -4,121 +4,18 @@ const weights = {
   L: 0.4,
 };
 
-const table2Data = [
-  [
-    "Course Outcomes",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PO",
-    "PSO",
-    "PSO",
-  ],
-  [null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2],
-  [
-    "CO1",
-    "H",
-    "H",
-    null,
-    null,
-    "H",
-    null,
-    null,
-    null,
-    "M",
-    null,
-    null,
-    null,
-    "H",
-    "H",
-  ],
-  [
-    "CO2",
-    "H",
-    "H",
-    null,
-    null,
-    "H",
-    null,
-    null,
-    null,
-    "H",
-    null,
-    null,
-    null,
-    "H",
-    "H",
-  ],
-  [
-    "CO3",
-    "H",
-    "H",
-    null,
-    null,
-    "H",
-    null,
-    null,
-    null,
-    "M",
-    null,
-    null,
-    null,
-    "H",
-    "H",
-  ],
-  [
-    "CO4",
-    "H",
-    "H",
-    null,
-    null,
-    "H",
-    null,
-    null,
-    null,
-    "H",
-    null,
-    null,
-    null,
-    "H",
-    "H",
-  ],
-  [
-    "CO5",
-    "H",
-    "H",
-    null,
-    null,
-    "H",
-    null,
-    null,
-    null,
-    "M",
-    null,
-    null,
-    null,
-    "H",
-    "H",
-  ],
-];
-
 const table4Data = [
   ["Course Outcomes", "CO Attainment", "Low", "Medium", "High"],
 ];
 
-const calculateTable2Data = (AvgAttainent, coMapping) => {
+const calculateTable2Data = (AvgAttainent, coMapping, courseCode) => {
   //console.log("from the table2Dtata", AvgAttainent);
-  // console.log("this is the co Mapping", coMapping);
+  console.log("this is the co Mapping", coMapping);
   // console.log("this is the dummy", table2Data);
+  console.log("this is where the i can find the", courseCode);
   //console.log(mappedData);
+
+  const name = toString(courseCode);
 
   const updatedTable2Data = [];
 
@@ -136,7 +33,7 @@ const calculateTable2Data = (AvgAttainent, coMapping) => {
   }
 
   updatedTable2Data.push([
-    "Course Outcomes",
+    "CO",
     "PO1",
     "PO2",
     "PO3",
@@ -162,7 +59,7 @@ const calculateTable2Data = (AvgAttainent, coMapping) => {
           // console.log("this is the row", row);
 
           const co = row[0];
-
+          //console.log("this is the code", co);
           const coAttainment = table4Data.find((row) => row[0] === co)[1];
           //  console.log("this is the co attainment", coAttainment);
           const lowValue = table4Data.find((row) => row[0] === co)[2];
@@ -177,7 +74,9 @@ const calculateTable2Data = (AvgAttainent, coMapping) => {
             row[j] = parseInt(lowValue);
           }
         }
+        //row[0] = name + i;
       }
+
       updatedTable2Data.push(row);
     }
 

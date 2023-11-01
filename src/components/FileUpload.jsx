@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
+import calculateLabData from "../../utils/calculateLabData";
 
 import "jspdf-autotable";
 import { client } from "../../lib/client";
@@ -21,7 +22,7 @@ import FileUploadCIE from "./FileUploadCIE";
 import { FileStateContext } from "../../utils/Context";
 import BarGraph2 from "./BarGraph2";
 
-const FileUpload = ({ id }) => {
+const FileUpload = ({ courseCode }) => {
   const [Threshold, setThreshold] = useState(0);
   const [isFileUploaded, setisFileUploaded] = useState(false);
   const [isUploadedSEE, setIsUploadedSEE] = useState(false);
@@ -39,8 +40,11 @@ const FileUpload = ({ id }) => {
   const [isUploadedCIE, setIsUploadedCIE] = useState(false);
   const [AvgAttainent, setAvgAttainent] = useState([]);
   const [updatedTable2Data, setupdatedTable2Data] = useState([]);
+  const [labData, setLabData] = useState([]);
 
   const { coMapping } = FileStateContext();
+
+  //console.log("this is the first and the", coMapping);
 
   const readUploadFile = async (e) => {
     setisFileUploaded(true);
@@ -79,9 +83,10 @@ const FileUpload = ({ id }) => {
     });
   };
 
-  // useEffect(() => {
-  //   //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
-  // }, [AvgAttainent]);
+  useEffect(() => {
+    console.log("cource code is", courseCode);
+    //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
+  }, [AvgAttainent, courseCode]);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -125,6 +130,15 @@ const FileUpload = ({ id }) => {
         doc.internal.scaleFactor;
       const textOffset = (doc.internal.pageSize.getWidth() - textWidth) / 2;
       doc.text(heading, textOffset, 15);
+    };
+
+    const addHeading1 = (heading) => {
+      doc.setFontSize(16);
+      const textWidth =
+        (doc.getStringUnitWidth(heading) * doc.internal.getFontSize()) /
+        doc.internal.scaleFactor;
+      const textOffset = (doc.internal.pageSize.getWidth() - textWidth) / 2;
+      doc.text(heading, textOffset, 140);
     };
 
     // addHeading("Table Given by the god");
@@ -219,9 +233,9 @@ const FileUpload = ({ id }) => {
       },
     });
 
-    doc.addPage();
+    //  doc.addPage();
 
-    addHeading("COs Attainment");
+    addHeading1("COs Attainment Graph");
     // Capture the graph element as an image
     const graphElement = document.getElementById("graph");
     const canvas = await html2canvas(graphElement);
@@ -237,7 +251,7 @@ const FileUpload = ({ id }) => {
 
     // Calculate the image position in the middle of the PDF
     const imageX = (pdfWidth - imageWidth) / 2;
-    const imageY = 25;
+    const imageY = 150;
 
     // Add the image to the PDF
     doc.addImage(imageData, "PNG", imageX, imageY, imageWidth, imageHeight);
@@ -365,10 +379,8 @@ const FileUpload = ({ id }) => {
     //   ...mappedData.slice(2),
     // ]);
 
-
-    doc.addPage();
     doc.restoreGraphicsState();
-    addHeading("CO -> PO Attainment");
+    addHeading1("CO -> PO Attainment Graph");
 
     const graphElement1 = document.getElementById("graph1");
     const canvas1 = await html2canvas(graphElement1);
@@ -390,13 +402,12 @@ const FileUpload = ({ id }) => {
   };
 
   const handleClickUpdtae = () => {
-
     // console.log("from the hanle click", AvgAttainent);
-    const table2Data = calculateTable2Data(AvgAttainent, coMapping);
+    const table2Data = calculateTable2Data(AvgAttainent, coMapping, courseCode);
     // console.log("from the file upload", table2Data);
 
-
     setmappedData(table2Data);
+    console.log("this is where we can find the mapped data", table2Data);
   };
 
   const handleChange = () => {
@@ -404,9 +415,12 @@ const FileUpload = ({ id }) => {
     setIsUpdated(true);
 
     const marksData = calculateUnitScores(rows);
-
-    console.log("this is the SIE data", marksData);
     setMarks(marksData);
+    const labelData = calculateLabData();
+    console.log("this is the label data", labelData);
+    setLabData(labelData);
+    //console.log("this is the SIE data", marksData);
+
     //console.log("the row data", rows);
     //console.log("this is the row CIE", rowsCIE);
   };
@@ -470,7 +484,11 @@ const FileUpload = ({ id }) => {
               }  border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center `}
               id="graph"
             >
-              <BarGraph attainment={attainment} isUpdated={isUpdated} />
+              <BarGraph
+                attainment={attainment}
+                isUpdated={isUpdated}
+                courseCode={courseCode}
+              />
             </div>
 
             <div className="flex flex-col gap-4  md:flex-row my-5">
@@ -486,6 +504,7 @@ const FileUpload = ({ id }) => {
                   threshold={Threshold}
                   rowsCIE={rowsCIE}
                   setAvgAttainent={setAvgAttainent}
+                  courseCode={courseCode}
                 />
               </div>
 

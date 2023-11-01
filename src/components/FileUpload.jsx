@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
+import calculateLabData from "../../utils/calculateLabData";
 
 import "jspdf-autotable";
 import { client } from "../../lib/client";
@@ -39,6 +40,7 @@ const FileUpload = ({ courseCode }) => {
   const [isUploadedCIE, setIsUploadedCIE] = useState(false);
   const [AvgAttainent, setAvgAttainent] = useState([]);
   const [updatedTable2Data, setupdatedTable2Data] = useState([]);
+  const [labData, setLabData] = useState([]);
 
   const { coMapping } = FileStateContext();
 
@@ -413,9 +415,12 @@ const FileUpload = ({ courseCode }) => {
     setIsUpdated(true);
 
     const marksData = calculateUnitScores(rows);
-
-    //console.log("this is the SIE data", marksData);
     setMarks(marksData);
+    const labelData = calculateLabData();
+    console.log("this is the label data", labelData);
+    setLabData(labelData);
+    //console.log("this is the SIE data", marksData);
+
     //console.log("the row data", rows);
     //console.log("this is the row CIE", rowsCIE);
   };

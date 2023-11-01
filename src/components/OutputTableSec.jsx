@@ -92,7 +92,7 @@ const OutputTableSec = ({
     let u4CIE = ((THRESH_HOLD * 7) / 100 - 0.1).toFixed(1);
     let u5CIE = ((THRESH_HOLD * 20) / 100 - 0.1).toFixed(1);
 
-    console.log(" threshhold", u1);
+    //console.log(" threshhold", u1);
 
     for (var i = 1; i < marks.length; i++) {
       if (marks[i][0] > u1) {
@@ -306,7 +306,13 @@ const OutputTableSec = ({
 
     const LevelArraySIE = [U1Level, U2Level, U3Level, U4Level, U5Level];
 
-    const SumArrayCIE = [u1SumCIE, u2SumCIE, u3SumCIE, u4SumCIE, u5SumCIE];
+    const SumArrayCIE = [
+      u1SumCIE - 1,
+      u2SumCIE - 1,
+      u3SumCIE - 1,
+      u4SumCIE - 1,
+      u5SumCIE - 1,
+    ];
     console.log("we are here", SumArrayCIE);
 
     const SumArraySIE = [u1Sum, u2Sum, u3Sum, u4Sum, u5Sum];

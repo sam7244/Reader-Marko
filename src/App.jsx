@@ -13,6 +13,8 @@ const App = () => {
   const [adminId, setAdminId] = useState("");
   const [id, setId] = useState("");
   const [userCourses, setUserCourses] = useState([]);
+  const [userLabCourses, setUserLabCourses] = useState([])
+  const [labThreshold, setLabThreshold] = useState(0)
   const navigate = useNavigate();
 
 
@@ -30,16 +32,38 @@ const App = () => {
         _id,
         threshold,
         courseCode,
+        "labMapping":lab.asset->url,
         "mapData":map.asset->url,
         "lectureDetails": lectureDetails->{
         ...,
       }
 }`;
+const query2 = `
+*[_type == "adminLab"] {
+  _id,
+  threshold,
+  courseCode,
+  "labMapping":labMap.asset->url,
+
+  "lectureDetails": lectureDetails->{
+  ...,
+}
+}`;
+
       client.fetch(query).then((data) => {
         const loggedUserData = data.filter(
           (item) => item.lectureDetails._id === user
         );
         setUserCourses(loggedUserData);
+
+        setThreshold(loggedUserData[0]?.threshold);
+      });
+      
+      client.fetch(query2).then((data) => {
+        const loggedUserData = data.filter(
+          (item) => item.lectureDetails._id === user
+        );
+        setUserLabCourses(loggedUserData)
 
         setThreshold(loggedUserData[0]?.threshold);
       });
@@ -53,7 +77,7 @@ const App = () => {
     }
   }, []);
   const [threshold, setThreshold] = useState(0);
- 
+ console.log(userLabCourses)
   return (
     <>
       <Routes>
@@ -75,10 +99,10 @@ const App = () => {
           <Session/>
           }
         />
-        <Route path="/lab" element={<Lab userCourses={userCourses}
+        <Route path="/lab" element={<Lab userCourses={userLabCourses}
           adminId={adminId}
-          setThreshold={setThreshold}
-          threshold={threshold}
+          setThreshold={setLabThreshold}
+          threshold={labThreshold}
           userData={userData}
           id={id}/>}/>
         <Route path="/home" element={<Home  userCourses={userCourses}

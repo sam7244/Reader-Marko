@@ -20,20 +20,22 @@ const Lab = ({
   const [open, setOpen] = useState(false);
   const { setCoMapping, coMapping } = FileStateContext();
   //console.log(userCourses);
+  const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode)
 
   useEffect(() => {
     // Assuming you have included the PapaParse library in your project
-    if (!userCourses[0]?.mapData) return;
+    if (!userCourses[0]?.labMapping) return;
+    
 
-    fetch(userCourses[0]?.mapData)
+    fetch(userCourses[0]?.labMapping)
       .then((response) => response.text())
       .then((csvContent) => {
-        console.log(csvContent);
+        
         const { data, errors, meta } = parse(csvContent, { header: true });
         //console.log("this is nothing");
         // Access the parsed CSV data
 
-        // console.log("this is the data", data);
+        console.log("this is the data", data);
 
         const arrayOfArrays = data.map((obj) => Object.values(obj));
         // console.log(arrayOfArrays)
@@ -46,7 +48,7 @@ const Lab = ({
       .catch((error) => {
         console.error("Error fetching or parsing CSV file:", error);
       });
-  }, [userCourses[0]?.mapData]);
+  }, [userCourses[0]?.labMapping]);
 
   return (
     <div className="min-h-scree w-full overflow-hidden bg-black  mx-auto">
@@ -56,6 +58,8 @@ const Lab = ({
           adminId={adminId}
           setThreshold={setThreshold}
           threshold={threshold}
+          setCourseCode={setCourseCode}
+          courseCode={courseCode}
         />
       </div>
       <div className="flex max-w-8xl  items-center h-20 justify-center gap-5">

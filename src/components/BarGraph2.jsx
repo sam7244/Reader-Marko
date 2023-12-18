@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
 const BarGraph2 = ({ mappedData, isUpdated }) => {
+  console.log("dfskndjndskjfngkdnkfgndfngndfg", mappedData);
   if (!isUpdated) {
     return (
       <div className="flex justify-center items-center">

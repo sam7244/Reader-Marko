@@ -8,8 +8,9 @@ import jsPDF from "jspdf";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
 import calculateLabData from "../../utils/calculateLabData";
-
+import OutputLabTableSec from "./OutputLabTableSec";
 import "jspdf-autotable";
+import calculateLabTable2Data from "../../utils/CalculateLabTable2Data";
 import { client } from "../../lib/client";
 import data from "../../utils/getData";
 import OutputTable from "./OutputTable";
@@ -21,8 +22,10 @@ import calculateUnitScores from "../../utils/CalculateExcelData";
 import FileUploadCIE from "./FileUploadCIE";
 import { FileStateContext } from "../../utils/Context";
 import BarGraph2 from "./BarGraph2";
+import OutputLabTableThird from "./OutputLabTableThird";
+import BarLabGraph2 from "./BarLabGraph2";
 
-const FileUpload = ({ courseCode }) => {
+const LabUpload = ({ courseCode }) => {
   const [Threshold, setThreshold] = useState(0);
   const [isFileUploaded, setisFileUploaded] = useState(false);
   const [isUploadedSEE, setIsUploadedSEE] = useState(false);
@@ -35,9 +38,6 @@ const FileUpload = ({ courseCode }) => {
   const [mappedData, setmappedData] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [rowsCIE, setRowsCIE] = useState([]);
-  const [colsCIE, setColsCIE] = useState([]);
-  const [isUploadedCIE, setIsUploadedCIE] = useState(false);
   const [AvgAttainent, setAvgAttainent] = useState([]);
   const [updatedTable2Data, setupdatedTable2Data] = useState([]);
 
@@ -60,24 +60,6 @@ const FileUpload = ({ courseCode }) => {
         setCols(cols);
         setIsUploaded(true);
         setIsUploadedSEE(true);
-      }
-    });
-  };
-
-  const readUploadFileCIE = async (e) => {
-    let fileObj = e.target.files[0];
-
-    ExcelRenderer(fileObj, (err, resp) => {
-      if (err) {
-        console.log(err);
-        toast.error("Oops Something Went Wrong!");
-      } else {
-        const { rows, cols } = resp;
-
-        cols.push({ name: "D", key: 3 });
-        setRowsCIE(rows);
-        setColsCIE(cols);
-        setIsUploadedCIE(true);
       }
     });
   };
@@ -329,7 +311,11 @@ const FileUpload = ({ courseCode }) => {
 
   const handleClickUpdtae = () => {
     // console.log("from the hanle click", AvgAttainent);
-    const table2Data = calculateTable2Data(AvgAttainent, coMapping, courseCode);
+    const table2Data = calculateLabTable2Data(
+      AvgAttainent,
+      coMapping,
+      courseCode
+    );
     // console.log("from the file upload", table2Data);
 
     setmappedData(table2Data);
@@ -340,9 +326,14 @@ const FileUpload = ({ courseCode }) => {
     setIsUploaded(true);
     setIsUpdated(true);
 
-    const marksData = calculateUnitScores(rows);
+    const marksData = calculateLabData(rows);
     setMarks(marksData);
-   
+
+    console.log(
+      "*************************************this is extra",
+      marksData
+    );
+
     //console.log("this is the SIE data", marksData);
 
     //console.log("the row data", rows);
@@ -357,7 +348,7 @@ const FileUpload = ({ courseCode }) => {
           className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
         >
           <p className="font-bold text-white text-xl  animate-bounce">
-            Upload SIE File
+            Upload Lab File
           </p>
 
           <input
@@ -370,27 +361,8 @@ const FileUpload = ({ courseCode }) => {
             onChange={readUploadFile}
           />
         </div>
-
-        <div
-          style={{ borderRadius: "9px" }}
-          className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
-        >
-          <p className="font-bold text-xl text-white animate-bounce">
-            Upload CIE File
-          </p>
-
-          <input
-            className=" py-4 md:px-4 text-md w-[250px] md:w-[340px] font-semibold  border-2 bg-gray-200 border-dotted "
-            style={{ borderRadius: "10px" }}
-            type="file"
-            name="upload"
-            id="upload"
-            placeholder="Choose File"
-            onChange={readUploadFileCIE}
-          />
-        </div>
       </div>
-      {isUploadedCIE && isUploadedSEE && (
+      {isUploadedSEE && (
         <div className="mt-2">
           <OutputTable
             Threshold={Threshold}
@@ -419,14 +391,13 @@ const FileUpload = ({ courseCode }) => {
               <div
                 className={`${isUpdated && " border-2"} border-white  md:w-1/3`}
               >
-                <OutputTableSec
+                <OutputLabTableSec
                   handleChange={handleChange}
                   attainment={attainment}
                   setAttainment={setAttainment}
                   isUpdated={isUpdated}
                   marks={marks}
                   threshold={Threshold}
-                  rowsCIE={rowsCIE}
                   setAvgAttainent={setAvgAttainent}
                   courseCode={courseCode}
                 />
@@ -435,9 +406,8 @@ const FileUpload = ({ courseCode }) => {
               <div
                 className={`${isUpdated && "border-2"}  border-white md:w-2/3`}
               >
-                <OutputTableThird
+                <OutputLabTableThird
                   rows={rows}
-                  isUploaded={isUploaded}
                   setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
                   mappedData={mappedData}
@@ -451,7 +421,7 @@ const FileUpload = ({ courseCode }) => {
               }  border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center `}
               id="graph1"
             >
-              <BarGraph2 mappedData={mappedData} isUpdated={isUpdated} />
+              <BarLabGraph2 mappedData={mappedData} isUpdated={isUpdated} />
             </div>
           </div>
           <div
@@ -478,4 +448,4 @@ const FileUpload = ({ courseCode }) => {
   );
 };
 
-export default FileUpload;
+export default LabUpload;

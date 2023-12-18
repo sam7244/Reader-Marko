@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarGraph = ({ attainment, isUpdated ,courseCode}) => {
+const BarLabGraph2 = ({ mappedData, isUpdated }) => {
+  console.log("dfskndjndskjfngkdnkfgndfngndfg", mappedData);
   if (!isUpdated) {
     return (
       <div className="flex justify-center items-center">
@@ -9,7 +10,6 @@ const BarGraph = ({ attainment, isUpdated ,courseCode}) => {
       </div>
     );
   }
-
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -18,9 +18,9 @@ const BarGraph = ({ attainment, isUpdated ,courseCode}) => {
     const ctx = chartRef.current.getContext("2d");
 
     // Extract labels and data from the attainment array
-    const labels = attainment.slice(1).map((row) => row[0]);
-    const data = attainment.slice(1).map((row) => row[row.length - 2]);
-
+    const labels = mappedData[0];
+    const data = mappedData[4];
+    //console.log("this is  the data grapgh 2", mappedData);
     const chartData = {
       labels: labels,
       datasets: [
@@ -62,24 +62,6 @@ const BarGraph = ({ attainment, isUpdated ,courseCode}) => {
         data: chartData,
         options: options,
       });
-
-      // Draw data labels above the bars
-      const datasets = chartInstance.data.datasets[0].data;
-      const meta = chartInstance.getDatasetMeta(0);
-      const barWidth = meta.barWidth;
-      const offset = barWidth / 2;
-
-      ctx.save();
-      ctx.fillStyle = "black";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "bottom";
-      ctx.font = "12px Arial";
-
-      for (let i = 0; i < datasets.length; i++) {
-        ctx.fillText(datasets[i], meta.data[i].x + offset, meta.data[i].y - 10);
-      }
-
-      ctx.restore();
     }
 
     return () => {
@@ -87,10 +69,10 @@ const BarGraph = ({ attainment, isUpdated ,courseCode}) => {
         chartInstance.destroy();
       }
     };
-  }, [attainment]);
+  }, [mappedData]);
 
   return <canvas ref={chartRef} />;
 };
 
-export default BarGraph;
-BarGraph.__isStatic = true;
+export default BarLabGraph2;
+BarLabGraph2.__isStatic = true;

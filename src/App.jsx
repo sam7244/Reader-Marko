@@ -5,7 +5,8 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { fetchUser } from "../utils/fetch";
 import { archiveData, lectureQuery } from "../utils/data";
 import Archives from "./components/Archives";
-
+import Session from "./components/Session";
+import Lab from "./components/Lab";
 const App = () => {
   const [userData, setUserData] = useState("");
   const [userArchives, setUserArchives] = useState([]);
@@ -13,6 +14,8 @@ const App = () => {
   const [id, setId] = useState("");
   const [userCourses, setUserCourses] = useState([]);
   const navigate = useNavigate();
+
+
   useEffect(() => {
     const query = lectureQuery;
     client.fetch(query).then((data) => {
@@ -69,16 +72,21 @@ const App = () => {
         <Route
           path="/*"
           element={
-            <Home
-              userCourses={userCourses}
-              adminId={adminId}
-              setThreshold={setThreshold}
-              threshold={threshold}
-              userData={userData}
-              id={id}
-            />
+          <Session/>
           }
         />
+        <Route path="/lab" element={<Lab userCourses={userCourses}
+          adminId={adminId}
+          setThreshold={setThreshold}
+          threshold={threshold}
+          userData={userData}
+          id={id}/>}/>
+        <Route path="/home" element={<Home  userCourses={userCourses}
+          adminId={adminId}
+          setThreshold={setThreshold}
+          threshold={threshold}
+          userData={userData}
+          id={id}/>}/>
         <Route
           path="/archive"
           element={<Archives userArchives={userArchives} />}

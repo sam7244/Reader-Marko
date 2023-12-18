@@ -25,8 +25,9 @@ export default function UserProfile({
   setThreshold,
   setOpen,
   threshold,
+  courseCode,
+  setCourseCode,
 }) {
-  const [courseCode, setCourseCode] = useState(userCourses[0]?.courseCode);
   const dum = userCourses[0]?.mapData;
   useEffect(() => {
     if (!threshold) {

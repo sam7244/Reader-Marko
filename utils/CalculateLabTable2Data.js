@@ -1,5 +1,3 @@
-import { CloudFog } from "lucide-react";
-
 const weights = {
   H: 1,
   M: 0.6,
@@ -10,12 +8,38 @@ const table4Data = [
   ["Course Outcomes", "CO Attainment", "Low", "Medium", "High"],
 ];
 
+let coMapping1 = [
+  [
+    "Course Outcomes",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PO",
+    "PSO",
+    "PSO",
+  ],
+  ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "1", "2"],
+  ["CO1", "L", "H", "", "", "H", "", "", "", "", "", "", "H", "H", ""],
+  ["CO2", "H", "H", "", "", "M", "", "", "", "", "", "", "H", "H", ""],
+];
+
 const calculateTable2Data = (AvgAttainent, coMapping, courseCode) => {
   console.log(
     "from the table2Dtata+++++++++++++++++++++++++++++++++++++++++",
     AvgAttainent
   );
-  console.log("this is the co Mapping", coMapping);
+  console.log(
+    "this is the co Mapping &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",
+    coMapping
+  );
   // console.log("this is the dummy", table2Data);
   console.log("this is where the i can find the", courseCode);
   //console.log(mappedData);
@@ -57,8 +81,8 @@ const calculateTable2Data = (AvgAttainent, coMapping, courseCode) => {
     "PSO2",
   ]);
 
-  for (let i = 0; i < coMapping.length - 1; i++) {
-    const row = [...coMapping[i]];
+  for (let i = 0; i < coMapping1.length; i++) {
+    const row = [...coMapping1[i]];
 
     if (i >= 1) {
       for (let j = 1; j < row.length; j++) {
@@ -104,7 +128,7 @@ const calculateTable2Data = (AvgAttainent, coMapping, courseCode) => {
   for (let col = 1; col < updatedTable2Data[0].length; col++) {
     let sum = 0;
     let count = 0;
-    for (let row = 1; row < updatedTable2Data.length; row++) {
+    for (let row = 2; row < updatedTable2Data.length; row++) {
       // Start from row 3 to exclude row 2
       if (updatedTable2Data[row][col] !== null) {
         sum += parseInt(updatedTable2Data[row][col]);
@@ -116,7 +140,7 @@ const calculateTable2Data = (AvgAttainent, coMapping, courseCode) => {
     if (isNaN(average)) {
       avgRow[col] = "";
     } else {
-      avgRow[col] = average;
+      avgRow[col] = average.toFixed(2);
     }
   }
 

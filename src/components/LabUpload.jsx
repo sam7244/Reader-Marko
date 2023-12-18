@@ -7,8 +7,10 @@ import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
 import OutputTableSec from "./OutputTableSec";
 import BarGraph from "./BarGraph";
-
+import calculateLabData from "../../utils/calculateLabData";
+import OutputLabTableSec from "./OutputLabTableSec";
 import "jspdf-autotable";
+import calculateLabTable2Data from "../../utils/CalculateLabTable2Data";
 import { client } from "../../lib/client";
 import data from "../../utils/getData";
 import OutputTable from "./OutputTable";
@@ -20,8 +22,10 @@ import calculateUnitScores from "../../utils/CalculateExcelData";
 import FileUploadCIE from "./FileUploadCIE";
 import { FileStateContext } from "../../utils/Context";
 import BarGraph2 from "./BarGraph2";
+import OutputLabTableThird from "./OutputLabTableThird";
+import BarLabGraph2 from "./BarLabGraph2";
 
-const LabUpload = ({ id }) => {
+const LabUpload = ({ courseCode }) => {
   const [Threshold, setThreshold] = useState(0);
   const [isFileUploaded, setisFileUploaded] = useState(false);
   const [isUploadedSEE, setIsUploadedSEE] = useState(false);
@@ -34,13 +38,12 @@ const LabUpload = ({ id }) => {
   const [mappedData, setmappedData] = useState([]);
   const [marks, setMarks] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [rowsCIE, setRowsCIE] = useState([]);
-  const [colsCIE, setColsCIE] = useState([]);
-  const [isUploadedCIE, setIsUploadedCIE] = useState(false);
   const [AvgAttainent, setAvgAttainent] = useState([]);
   const [updatedTable2Data, setupdatedTable2Data] = useState([]);
 
   const { coMapping } = FileStateContext();
+
+  //console.log("this is the first and the", coMapping);
 
   const readUploadFile = async (e) => {
     setisFileUploaded(true);
@@ -61,27 +64,10 @@ const LabUpload = ({ id }) => {
     });
   };
 
-  const readUploadFileCIE = async (e) => {
-    let fileObj = e.target.files[0];
-
-    ExcelRenderer(fileObj, (err, resp) => {
-      if (err) {
-        console.log(err);
-        toast.error("Oops Something Went Wrong!");
-      } else {
-        const { rows, cols } = resp;
-
-        cols.push({ name: "D", key: 3 });
-        setRowsCIE(rows);
-        setColsCIE(cols);
-        setIsUploadedCIE(true);
-      }
-    });
-  };
-
-  // useEffect(() => {
-  //   //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
-  // }, [AvgAttainent]);
+  useEffect(() => {
+    console.log("cource code is", courseCode);
+    //setupdatedTable2Data(calculateTable2Data(AvgAttainent));
+  }, [AvgAttainent, courseCode]);
 
   const uploadPDFToSanity = async (pdfFile) => {
     // Create a new Sanity document for the PDF
@@ -127,6 +113,61 @@ const LabUpload = ({ id }) => {
       doc.text(heading, textOffset, 15);
     };
 
+    const addHeading1 = (heading) => {
+      doc.setFontSize(16);
+      const textWidth =
+        (doc.getStringUnitWidth(heading) * doc.internal.getFontSize()) /
+        doc.internal.scaleFactor;
+      const textOffset = (doc.internal.pageSize.getWidth() - textWidth) / 2;
+      doc.text(heading, textOffset, 140);
+    };
+
+    // addHeading("Table Given by the god");
+    // doc.autoTable({
+    //   head: [marks[0]], // Use the first row as table headers
+    //   body: marks.slice(1), // Exclude the first row from table body
+    //   startY: 20, // Set the initial y-coordinate for the table
+    //   theme: "grid",
+
+    //   styles: {
+    //     fontSize: 12,
+    //     cellPadding: 5,
+    //     textColor: [1, 1, 0],
+    //   },
+    //   columnStyles: {
+    //     // Add more column styles as needed
+    //   },
+    //   didDrawPage: function (marks) {
+    //     const { table, pageNumber } = marks;
+    //     const totalPages = doc.internal.getNumberOfPages();
+
+    //     if (pageNumber === totalPages) {
+    //       // Check if the table height exceeds the available space on the page
+    //       if (table.height > doc.internal.pageSize.getHeight() - 20) {
+    //         doc.addPage(); // Add a new page
+    //         doc.autoTable({
+    //           head: [marks[0]], // Repeat the table headers on the new page
+    //           body: marks.slice(1), // Use the remaining body data
+    //           startY: 20, // Set the initial y-coordinate for the table on the new page
+
+    //           styles: {
+    //             fontSize: 5,
+    //             cellPadding: 10,
+    //             textColor: [0, 0, 0],
+    //           },
+    //           columnStyles: {
+    //             0: { cellWidth: "auto" },
+    //             1: { cellWidth: "auto" },
+    //             2: { cellWidth: "auto" },
+    //             // Add more column styles as needed
+    //           },
+    //         });
+    //       }
+    //     }
+    //   },
+    // });
+
+    // doc.addPage();
 
     addHeading("CO Attainment");
     doc.autoTable({
@@ -173,9 +214,9 @@ const LabUpload = ({ id }) => {
       },
     });
 
-    doc.addPage();
+    //  doc.addPage();
 
-    addHeading("COs Attainment");
+    addHeading1("COs Attainment Graph");
     // Capture the graph element as an image
     const graphElement = document.getElementById("graph");
     const canvas = await html2canvas(graphElement);
@@ -191,7 +232,7 @@ const LabUpload = ({ id }) => {
 
     // Calculate the image position in the middle of the PDF
     const imageX = (pdfWidth - imageWidth) / 2;
-    const imageY = 25;
+    const imageY = 150;
 
     // Add the image to the PDF
     doc.addImage(imageData, "PNG", imageX, imageY, imageWidth, imageHeight);
@@ -246,11 +287,8 @@ const LabUpload = ({ id }) => {
       },
     });
 
-
-
-    doc.addPage();
     doc.restoreGraphicsState();
-    addHeading("CO -> PO Attainment");
+    addHeading1("CO -> PO Attainment Graph");
 
     const graphElement1 = document.getElementById("graph1");
     const canvas1 = await html2canvas(graphElement1);
@@ -272,23 +310,32 @@ const LabUpload = ({ id }) => {
   };
 
   const handleClickUpdtae = () => {
-
     // console.log("from the hanle click", AvgAttainent);
-    const table2Data = calculateTable2Data(AvgAttainent, coMapping);
+    const table2Data = calculateLabTable2Data(
+      AvgAttainent,
+      coMapping,
+      courseCode
+    );
     // console.log("from the file upload", table2Data);
 
-
     setmappedData(table2Data);
+    console.log("this is where we can find the mapped data", table2Data);
   };
 
   const handleChange = () => {
     setIsUploaded(true);
     setIsUpdated(true);
 
-    const marksData = calculateUnitScores(rows);
-
-    console.log("this is the SIE data", marksData);
+    const marksData = calculateLabData(rows);
     setMarks(marksData);
+
+    console.log(
+      "*************************************this is extra",
+      marksData
+    );
+
+    //console.log("this is the SIE data", marksData);
+
     //console.log("the row data", rows);
     //console.log("this is the row CIE", rowsCIE);
   };
@@ -301,7 +348,7 @@ const LabUpload = ({ id }) => {
           className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
         >
           <p className="font-bold text-white text-xl  animate-bounce">
-            Upload SIE File
+            Upload Lab File
           </p>
 
           <input
@@ -314,27 +361,8 @@ const LabUpload = ({ id }) => {
             onChange={readUploadFile}
           />
         </div>
-
-        {/* <div
-          style={{ borderRadius: "9px" }}
-          className="flex flex-col w-full mb-2 p-4 gap-2 max-w-4xl mx-auto border-4 border-dashed  items-center justify-around"
-        >
-          <p className="font-bold text-xl text-white animate-bounce">
-            Upload CIE File
-          </p>
-
-          <input
-            className=" py-4 md:px-4 text-md w-[250px] md:w-[340px] font-semibold  border-2 bg-gray-200 border-dotted "
-            style={{ borderRadius: "10px" }}
-            type="file"
-            name="upload"
-            id="upload"
-            placeholder="Choose File"
-            onChange={readUploadFileCIE}
-          />
-        </div> */}
       </div>
-      {isUploadedCIE && isUploadedSEE && (
+      {isUploadedSEE && (
         <div className="mt-2">
           <OutputTable
             Threshold={Threshold}
@@ -352,31 +380,34 @@ const LabUpload = ({ id }) => {
               }  border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center `}
               id="graph"
             >
-              <BarGraph attainment={attainment} isUpdated={isUpdated} />
+              <BarGraph
+                attainment={attainment}
+                isUpdated={isUpdated}
+                courseCode={courseCode}
+              />
             </div>
 
             <div className="flex flex-col gap-4  md:flex-row my-5">
               <div
                 className={`${isUpdated && " border-2"} border-white  md:w-1/3`}
               >
-                <OutputTableSec
+                <OutputLabTableSec
                   handleChange={handleChange}
                   attainment={attainment}
                   setAttainment={setAttainment}
                   isUpdated={isUpdated}
                   marks={marks}
                   threshold={Threshold}
-                  rowsCIE={rowsCIE}
                   setAvgAttainent={setAvgAttainent}
+                  courseCode={courseCode}
                 />
               </div>
 
               <div
                 className={`${isUpdated && "border-2"}  border-white md:w-2/3`}
               >
-                <OutputTableThird
+                <OutputLabTableThird
                   rows={rows}
-                  isUploaded={isUploaded}
                   setIsUploaded={setIsUploaded}
                   handleChange={handleChange}
                   mappedData={mappedData}
@@ -390,7 +421,7 @@ const LabUpload = ({ id }) => {
               }  border-white p-2 col-span-2 w-[295px] md:w-auto h-[200px] md:h-[350px] justify-center items-center `}
               id="graph1"
             >
-              <BarGraph2 mappedData={mappedData} isUpdated={isUpdated} />
+              <BarLabGraph2 mappedData={mappedData} isUpdated={isUpdated} />
             </div>
           </div>
           <div

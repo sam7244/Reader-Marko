@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarGraph2 = ({ mappedData, isUpdated }) => {
+const BarLabGraph2 = ({ mappedData, isUpdated }) => {
   console.log("dfskndjndskjfngkdnkfgndfngndfg", mappedData);
   if (!isUpdated) {
     return (
@@ -19,7 +19,7 @@ const BarGraph2 = ({ mappedData, isUpdated }) => {
 
     // Extract labels and data from the attainment array
     const labels = mappedData[0];
-    const data = mappedData[6];
+    const data = mappedData[4];
     //console.log("this is  the data grapgh 2", mappedData);
     const chartData = {
       labels: labels,
@@ -74,5 +74,5 @@ const BarGraph2 = ({ mappedData, isUpdated }) => {
   return <canvas ref={chartRef} />;
 };
 
-export default BarGraph2;
-BarGraph2.__isStatic = true;
+export default BarLabGraph2;
+BarLabGraph2.__isStatic = true;

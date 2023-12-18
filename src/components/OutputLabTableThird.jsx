@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Table,
   TableBody,
@@ -9,7 +10,7 @@ import {
   TableRow,
 } from "../../components/ui/table";
 
-const OutputTableThird = ({
+const OutputLabTableThird = ({
   rows,
   handleChange,
   setIsUploaded,
@@ -67,4 +68,4 @@ const OutputTableThird = ({
   );
 };
 
-export default OutputTableThird;
+export default OutputLabTableThird;

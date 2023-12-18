@@ -28,13 +28,13 @@ const Lab = ({
     fetch(userCourses[0]?.mapData)
       .then((response) => response.text())
       .then((csvContent) => {
-        console.log(csvContent)
+        console.log(csvContent);
         const { data, errors, meta } = parse(csvContent, { header: true });
         //console.log("this is nothing");
         // Access the parsed CSV data
-        
+
         // console.log("this is the data", data);
-         
+
         const arrayOfArrays = data.map((obj) => Object.values(obj));
         // console.log(arrayOfArrays)
         setCoMapping(arrayOfArrays);
@@ -47,7 +47,7 @@ const Lab = ({
         console.error("Error fetching or parsing CSV file:", error);
       });
   }, [userCourses[0]?.mapData]);
- 
+
   return (
     <div className="min-h-scree w-full overflow-hidden bg-black  mx-auto">
       <div className="p-4">

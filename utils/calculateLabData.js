@@ -19,11 +19,12 @@ const data = [
 
 let marks = [["u1", "u2", "m1", "m2"]];
 
-const calculateLabData = () => {
+const calculateLabData = (rows) => {
+  console.log("***********************", rows);
   marks = [["u1", "u2", "m1", "m2"]];
 
-  for (let i = 1; i < data.length; i++) {
-    const row = data[i];
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
     const [unit, mse1, t1, t2, t3] = row;
 
     let fiftyFiveUnit = 0.55 * unit;

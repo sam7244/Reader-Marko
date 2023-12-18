@@ -36,7 +36,7 @@ const Home = ({
         // console.log("this is the data", data);
          
         const arrayOfArrays = data.map((obj) => Object.values(obj));
-        // console.log(arrayOfArrays)
+
         setCoMapping(arrayOfArrays);
         // Access parsing errors and metadata
 
